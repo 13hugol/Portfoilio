@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bhugol Gautam - Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Matrix Background -->
+    <canvas id="matrix-bg"></canvas>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-bracket">[</span>
+                <span class="logo-text">BG</span>
+                <span class="logo-bracket">]</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link">~/home</a>
+                <a href="#about" class="nav-link">./about</a>
+                <a href="#skills" class="nav-link">--skills</a>
+                <a href="#projects" class="nav-link">git projects</a>
+                <a href="#contact" class="nav-link">sudo contact</a>
+            </div>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Terminal Cursor -->
+    <div class="terminal-cursor">_</div>
+
+    <!-- Home Section -->
+    <section id="home" class="section home-section">
+        <div class="container">
+            <div class="home-content">
+                <div class="terminal-window">
+                    <div class="terminal-header">
+                        <div class="terminal-buttons">
+                            <span class="btn close"></span>
+                            <span class="btn minimize"></span>
+                            <span class="btn maximize"></span>
+                        </div>
+                        <div class="terminal-title">bhugol@portfolio:~$</div>
+                    </div>
+                    <div class="terminal-body">
+                        <div class="terminal-line">
+                            <span class="prompt">bhugol@portfolio:~$</span>
+                            <span class="command" id="typing-command"></span>
+                            <span class="cursor">|</span>
+                        </div>
+                        <div class="terminal-output" id="terminal-output"></div>
+                    </div>
+                </div>
+                <div class="social-links">
+                    <a href="https://github.com/BhugolGautam222" target="_blank" class="social-link">
+                        <i class="fab fa-github"></i>
+                        <span>GitHub</span>
+                    </a>
+                    <a href="https://www.linkedin.com/in/bhugol-gautam-b33300310/" target="_blank" class="social-link">
+                        <i class="fab fa-linkedin"></i>
+                        <span>LinkedIn</span>
+                    </a>
+                    <a href="https://www.facebook.com/Bhugol.gamer/" target="_blank" class="social-link">
+                        <i class="fab fa-facebook"></i>
+                        <span>Facebook</span>
+                    </a>
+                    <a href="https://www.instagram.com/loki616_/" target="_blank" class="social-link">
+                        <i class="fab fa-instagram"></i>
+                        <span>Instagram</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section about-section">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-bracket">[</span>
+                <span class="title-text">About Me</span>
+                <span class="title-bracket">]</span>
+            </h2>
+            <div class="about-content">
+                <div class="profile-section">
+                    <div class="profile-container">
+                        <div class="profile-image-wrapper">
+                            <div class="profile-image">
+                                <img src="profile.png" alt="Bhugol Gautam" class="profile-pic">
+                                <div class="profile-overlay">
+                                <div class="hacker-text">AI_PROCESSING</div>
+                                </div>
+                            </div>
+                            <div class="profile-effects">
+                                <div class="scanning-line"></div>
+                                <div class="hologram-effect"></div>
+                            </div>
+                        </div>
+                        <div class="profile-info">
+                            <div class="status-indicator">
+                                <span class="status-dot"></span>
+                                <span class="status-text">ONLINE - EXPLORING AI FRONTIERS</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-buttons">
+                            <span class="btn close"></span>
+                            <span class="btn minimize"></span>
+                            <span class="btn maximize"></span>
+                        </div>
+                        <div class="terminal-title">about.txt</div>
+                    </div>
+                    <div class="about-body">
+                        <div class="code-block">
+                            <span class="comment">// Life Philosophy</span><br>
+                            <span class="keyword">const</span> <span class="variable">motto</span> = <span class="string">"Jack of all trades, master of none,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;but oftentimes better than master of one"</span>;<br><br>
+                            
+                            <span class="comment">// Current Status</span><br>
+                            <span class="keyword">class</span> <span class="class-name">BhugolGautam</span> {<br>
+                            &nbsp;&nbsp;<span class="keyword">constructor</span>() {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.<span class="property">university</span> = <span class="string">"Coventry University"</span>;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.<span class="property">interests</span> = [<span class="string">"AI & Machine Learning"</span>, <span class="string">"Computer Vision"</span>, <span class="string">"Programming"</span>];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.<span class="property">currentSkills</span> = [<span class="string">"Python"</span>, <span class="string">"C#"</span>, <span class="string">"JavaScript"</span>];<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.<span class="property">learningPath</span> = <span class="string">"Building foundation for AI development"</span>;
+                            &nbsp;&nbsp;}<br>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section skills-section">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-bracket">[</span>
+                <span class="title-text">Skills & Technologies</span>
+                <span class="title-bracket">]</span>
+            </h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Programming Languages</h3>
+                    <div class="skills-list">
+                        <div class="skill-item" data-level="85">
+                            <i class="fab fa-python"></i>
+                            <span>Python</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-level="80">
+                            <i class="fas fa-code"></i>
+                            <span>C#</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-level="75">
+                            <i class="fab fa-js-square"></i>
+                            <span>JavaScript</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3>Frameworks & Technologies</h3>
+                    <div class="skills-list">
+                        <div class="skill-item" data-level="75">
+                            <i class="fab fa-unity"></i>
+                            <span>Unity</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-level="70">
+                            <i class="fab fa-html5"></i>
+                            <span>Web Development</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-level="65">
+                            <i class="fab fa-android"></i>
+                            <span>Android System</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Specialization Areas</h3>
+                    <div class="skills-list">
+                        <div class="skill-item" data-level="80">
+                            <i class="fas fa-gamepad"></i>
+                            <span>Game Development</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-level="75">
+                            <i class="fas fa-database"></i>
+                            <span>Backend Systems</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-level="70">
+                            <i class="fas fa-cogs"></i>
+                            <span>System Modification</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Future Goals</h3>
+                    <div class="skills-list">
+                        <div class="skill-item" data-level="25">
+                            <i class="fas fa-robot"></i>
+                            <span>Machine Learning</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-level="20">
+                            <i class="fas fa-camera"></i>
+                            <span>Computer Vision</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-level="30">
+                            <i class="fas fa-network-wired"></i>
+                            <span>Neural Networks</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section projects-section">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-bracket">[</span>
+                <span class="title-text">Featured Projects</span>
+                <span class="title-bracket">]</span>
+            </h2>
+            <div class="projects-grid">
+                <div class="project-card" data-tech="C#">
+                    <div class="project-header">
+                        <div class="project-title">Bahun-D-Run</div>
+                        <div class="project-tech">C#</div>
+                    </div>
+                    <div class="project-description">
+                        A game project inspired by Bahun ko Khasi video from Twake Productions. Built for school with creative gameplay mechanics.
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/BhugolGautam222/Bahun-D-Run" target="_blank" class="project-link">
+                            <i class="fab fa-github"></i> Code
+                        </a>
+                    </div>
+                    <div class="project-tags">
+                        <span class="tag">Game Development</span>
+                        <span class="tag">C#</span>
+                        <span class="tag">Unity</span>
+                    </div>
+                </div>
+
+                <div class="project-card" data-tech="Python">
+                    <div class="project-header">
+                        <div class="project-title">Exhibitio Khwopa</div>
+                        <div class="project-tech">Python</div>
+                    </div>
+                    <div class="project-description">
+                        A comprehensive exhibition management system built with Python, designed to handle event coordination and management.
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/BhugolGautam222/Exhibitio_Khwopa" target="_blank" class="project-link">
+                            <i class="fab fa-github"></i> Code
+                        </a>
+                    </div>
+                    <div class="project-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Management System</span>
+                        <span class="tag">Backend</span>
+                    </div>
+                </div>
+
+                <div class="project-card" data-tech="JavaScript">
+                    <div class="project-header">
+                        <div class="project-title">NewHoly</div>
+                        <div class="project-tech">JavaScript</div>
+                    </div>
+                    <div class="project-description">
+                        A modern web application built with JavaScript, showcasing dynamic functionality and interactive user experience.
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/BhugolGautam222/NewHoly" target="_blank" class="project-link">
+                            <i class="fab fa-github"></i> Code
+                        </a>
+                    </div>
+                    <div class="project-tags">
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">Web App</span>
+                        <span class="tag">Frontend</span>
+                    </div>
+                </div>
+
+                <div class="project-card" data-tech="Android">
+                    <div class="project-header">
+                        <div class="project-title">MagiskOnWSA</div>
+                        <div class="project-tech">Android</div>
+                    </div>
+                    <div class="project-description">
+                        Integration of Magisk root and Google Apps into Windows Subsystem for Android - a complex system modification project.
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/BhugolGautam222/MagiskOnWSA" target="_blank" class="project-link">
+                            <i class="fab fa-github"></i> Code
+                        </a>
+                    </div>
+                    <div class="project-tags">
+                        <span class="tag">Android</span>
+                        <span class="tag">System Modification</span>
+                        <span class="tag">WSA</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section contact-section">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-bracket">[</span>
+                <span class="title-text">Get In Touch</span>
+                <span class="title-bracket">]</span>
+            </h2>
+            <div class="contact-content">
+                <div class="contact-terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-buttons">
+                            <span class="btn close"></span>
+                            <span class="btn minimize"></span>
+                            <span class="btn maximize"></span>
+                        </div>
+                        <div class="terminal-title">contact.sh</div>
+                    </div>
+                    <div class="contact-body">
+                        <div class="contact-info">
+                            <div class="contact-line">
+                                <span class="prompt">$</span>
+                                <span class="command">cat contact_info.txt</span>
+                            </div>
+                            <div class="contact-output">
+                                <div class="contact-item">
+                                    <i class="fas fa-envelope"></i>
+                                    <span>Ready to collaborate on exciting projects</span>
+                                </div>
+                                <div class="contact-item">
+                                    <i class="fas fa-university"></i>
+                                    <span>Currently studying at Coventry University</span>
+                                </div>
+                                <div class="contact-item">
+                                    <i class="fas fa-code"></i>
+                                    <span>Always up for coding challenges and hackathons</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="contact-links">
+                            <a href="https://github.com/BhugolGautam222" target="_blank" class="contact-link">
+                                <i class="fab fa-github"></i>
+                                <span>GitHub</span>
+                            </a>
+                            <a href="https://www.linkedin.com/in/bhugol-gautam-b33300310/" target="_blank" class="contact-link">
+                                <i class="fab fa-linkedin"></i>
+                                <span>LinkedIn</span>
+                            </a>
+                            <a href="https://www.facebook.com/Bhugol.gamer/" target="_blank" class="contact-link">
+                                <i class="fab fa-facebook"></i>
+                                <span>Facebook</span>
+                            </a>
+                            <a href="https://www.instagram.com/loki616_/" target="_blank" class="contact-link">
+                                <i class="fab fa-instagram"></i>
+                                <span>Instagram</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
