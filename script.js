@@ -190,7 +190,7 @@ class ScrollAnimations {
         }, options);
         
         // Observe all sections and skill items
-        document.querySelectorAll('.section, .skill-item, .project-card').forEach(el => {
+        document.querySelectorAll('.section, .skill-item, .project-card, .certificate-card').forEach(el => {
             observer.observe(el);
         });
     }
@@ -424,6 +424,129 @@ class ParticleSystem {
     }
 }
 
+// Certificate Image Modal
+class CertificateModal {
+    constructor() {
+        this.modal = null;
+        this.init();
+    }
+    
+    init() {
+        // Create modal element
+        this.modal = document.createElement('div');
+        this.modal.className = 'cert-image-modal';
+        this.modal.innerHTML = `
+            <div class="cert-modal-content">
+                <div class="cert-modal-close">
+                    <i class="fas fa-times"></i>
+                </div>
+                <img src="" alt="Certificate" />
+            </div>
+        `;
+        document.body.appendChild(this.modal);
+        
+        // Add event listeners
+        this.bindEvents();
+    }
+    
+    bindEvents() {
+        // Add click listeners to all certificate previews
+        document.querySelectorAll('.certificate-preview').forEach(preview => {
+            preview.addEventListener('click', (e) => {
+                const img = preview.querySelector('.cert-image');
+                if (img) {
+                    this.openModal(img.src, img.alt);
+                }
+            });
+        });
+        
+        // Close modal events
+        const closeBtn = this.modal.querySelector('.cert-modal-close');
+        closeBtn.addEventListener('click', () => this.closeModal());
+        
+        this.modal.addEventListener('click', (e) => {
+            if (e.target === this.modal) {
+                this.closeModal();
+            }
+        });
+        
+        // ESC key to close
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.modal.classList.contains('active')) {
+                this.closeModal();
+            }
+        });
+    }
+    
+    openModal(imageSrc, imageAlt) {
+        const img = this.modal.querySelector('img');
+        img.src = imageSrc;
+        img.alt = imageAlt;
+        
+        this.modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    
+    closeModal() {
+        this.modal.classList.remove('active');
+        document.body.style.overflow = '';
+        
+        // Clear image source after animation
+        setTimeout(() => {
+            const img = this.modal.querySelector('img');
+            img.src = '';
+            img.alt = '';
+        }, 300);
+    }
+}
+
+// Image error handling
+class CertificateImageHandler {
+    constructor() {
+        this.init();
+    }
+    
+    init() {
+        document.querySelectorAll('.cert-image').forEach(img => {
+            img.addEventListener('error', (e) => {
+                this.handleImageError(e.target);
+            });
+            
+            img.addEventListener('load', (e) => {
+                this.handleImageLoad(e.target);
+            });
+        });
+    }
+    
+    handleImageError(img) {
+        const preview = img.closest('.certificate-preview');
+        if (preview) {
+            preview.innerHTML = `
+                <div class="cert-image-placeholder">
+                    <i class="fas fa-image"></i>
+                    <div class="placeholder-text">
+                        Certificate image will be displayed here
+                    </div>
+                </div>
+            `;
+            
+            // Remove click functionality for placeholder
+            preview.style.cursor = 'default';
+            preview.onclick = null;
+        }
+    }
+    
+    handleImageLoad(img) {
+        // Add a subtle animation when image loads
+        img.style.opacity = '0';
+        img.style.transition = 'opacity 0.3s ease';
+        
+        setTimeout(() => {
+            img.style.opacity = '1';
+        }, 100);
+    }
+}
+
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize all components
@@ -436,6 +559,10 @@ document.addEventListener('DOMContentLoaded', () => {
     new ProjectFilter();
     new MobileNav();
     new ThemeManager();
+    
+    // Initialize certificate functionality
+    new CertificateModal();
+    new CertificateImageHandler();
     
     // Add particle system on larger screens
     if (window.innerWidth > 768) {

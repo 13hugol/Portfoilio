@@ -793,6 +793,387 @@ body {
     font-size: 0.8rem;
 }
 
+/* Certificates Section */
+.certificates-section {
+    background: linear-gradient(135deg, rgba(255, 107, 107, 0.05) 0%, rgba(0, 255, 65, 0.05) 100%);
+}
+
+.certificates-terminal {
+    background: var(--terminal-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), var(--glow);
+    overflow: hidden;
+}
+
+.certificates-body {
+    padding: 2rem;
+}
+
+.certificates-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.certificate-card {
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.certificate-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-color), var(--primary-color), var(--secondary-color));
+}
+
+.certificate-card:hover {
+    border-color: var(--primary-color);
+    box-shadow: 
+        0 0 30px rgba(0, 255, 65, 0.3),
+        0 10px 40px rgba(0, 0, 0, 0.5);
+    transform: translateY(-5px);
+}
+
+.certificate-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem;
+    background: rgba(0, 255, 65, 0.05);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.certificate-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background: rgba(0, 255, 65, 0.1);
+    border: 2px solid var(--primary-color);
+    border-radius: 50%;
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+    transition: all 0.3s ease;
+}
+
+.certificate-card:hover .certificate-icon {
+    transform: scale(1.1);
+    box-shadow: 0 0 30px rgba(0, 255, 65, 0.5);
+}
+
+.certificate-meta {
+    text-align: right;
+}
+
+.file-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.8rem;
+}
+
+.file-permissions {
+    color: var(--secondary-color);
+    font-weight: 600;
+}
+
+.file-size {
+    color: var(--accent-color);
+}
+
+.file-date {
+    color: var(--text-muted);
+}
+
+.certificate-content {
+    padding: 2rem;
+}
+
+.certificate-title {
+    color: var(--primary-color);
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    font-family: 'Fira Code', monospace;
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+}
+
+.certificate-description {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.certificate-description p {
+    margin: 0;
+}
+
+.certificate-details {
+    margin-bottom: 1.5rem;
+}
+
+.detail-item {
+    display: flex;
+    margin-bottom: 0.8rem;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.9rem;
+}
+
+.detail-item .label {
+    color: var(--secondary-color);
+    font-weight: 600;
+    width: 100px;
+    flex-shrink: 0;
+}
+
+.detail-item .value {
+    color: var(--text-primary);
+}
+
+.certificate-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.cert-tag {
+    background: rgba(0, 255, 65, 0.1);
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-family: 'Fira Code', monospace;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.cert-tag:hover {
+    background: rgba(0, 255, 65, 0.2);
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+}
+
+.terminal-footer {
+    border-top: 1px solid var(--border-color);
+    padding-top: 1rem;
+    margin-top: 2rem;
+}
+
+.command-output {
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+/* Certificate Image Styles */
+.certificate-image-section {
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.certificate-image-section:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+}
+
+.certificate-preview {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 16/9;
+    background: var(--bg-tertiary);
+    cursor: pointer;
+}
+
+.cert-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.3s ease;
+    filter: brightness(0.9) contrast(1.1);
+}
+
+.certificate-preview:hover .cert-image {
+    transform: scale(1.05);
+    filter: brightness(1.1) contrast(1.2);
+}
+
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(2px);
+}
+
+.certificate-preview:hover .image-overlay {
+    opacity: 1;
+}
+
+.image-overlay i {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    animation: pulse 2s infinite;
+}
+
+.image-overlay span {
+    color: var(--primary-color);
+    font-family: 'Fira Code', monospace;
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+/* Certificate Image Modal/Lightbox Effect */
+.cert-image-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.cert-image-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.cert-modal-content {
+    max-width: 95vw;
+    max-height: 95vh;
+    position: relative;
+    border: 2px solid var(--primary-color);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 50px rgba(0, 255, 65, 0.5);
+    animation: modalSlideIn 0.3s ease-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cert-modal-content img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
+
+.cert-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(0, 0, 0, 0.8);
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.cert-modal-close:hover {
+    background: var(--primary-color);
+    color: var(--bg-primary);
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+    transform: scale(1.1);
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: scale(0.8) translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Fallback for missing images */
+.cert-image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, 
+        rgba(0, 255, 65, 0.1) 0%, 
+        rgba(0, 212, 170, 0.1) 50%,
+        rgba(255, 107, 107, 0.1) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    font-family: 'Fira Code', monospace;
+    text-align: center;
+    padding: 2rem;
+}
+
+.cert-image-placeholder i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.cert-image-placeholder .placeholder-text {
+    font-size: 0.9rem;
+    opacity: 0.7;
+    max-width: 200px;
+}
+
 /* Contact Section */
 .contact-section {
     background: radial-gradient(ellipse at center, rgba(0, 212, 170, 0.1) 0%, transparent 70%);
@@ -915,6 +1296,25 @@ body {
     
     .contact-links {
         grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .certificates-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .certificate-card {
+        margin-bottom: 1rem;
+    }
+    
+    .certificate-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .certificate-meta {
+        text-align: center;
     }
     
     .profile-image {
