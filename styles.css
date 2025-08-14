@@ -379,7 +379,20 @@ body {
     height: 200px;
     margin: 0 auto 1.5rem;
     cursor: pointer;
+    animation: babal 2s infinite;
 }
+@keyframes babal {
+    0%{
+        scale: 1;
+    }
+    50%{
+        scale: 1.1;
+    }
+    100%{
+        scale: 1;
+    }
+}
+ 
 
 .profile-image img {
     width: 100%;
