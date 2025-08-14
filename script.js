@@ -1,984 +1,907 @@
-// Bhugol Gautam Portfolio - Interactive JavaScript
-
-// Initialize AOS (Animate On Scroll)
+// DOM Content Loaded Event
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize all components
+    initializeLoading();
+    initializeHeader();
+    initializeNavigation();
+    initializeTheme();
+    initializeAnimations();
+    initializeSkillBars();
+    initializeCertificates();
+    initializeParticles();
+    initializeMatrixRain();
+    initializeEasterEggs();
+    initializeToasts();
+    initializeCustomCursor();
+    initializePhysicsEffects();
+    
+    // Initialize AOS (Animate On Scroll)
     AOS.init({
-        duration: 800,
-        delay: 100,
+        duration: 1000,
         once: true,
-        mirror: false
+        offset: 100
     });
 });
 
-// Theme Management
-class ThemeManager {
-    constructor() {
-        this.themeToggle = document.getElementById('theme-toggle');
-        this.themeIcon = document.getElementById('theme-icon');
-        this.initializeTheme();
-        this.attachEventListeners();
-    }
-
-    initializeTheme() {
-        const savedTheme = localStorage.getItem('theme');
-        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        
-        if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
-            this.setDarkTheme();
-        } else {
-            this.setLightTheme();
-        }
-    }
-
-    attachEventListeners() {
-        this.themeToggle?.addEventListener('click', () => this.toggleTheme());
-        
-        // Listen for system theme changes
-        window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
-            if (!localStorage.getItem('theme')) {
-                e.matches ? this.setDarkTheme() : this.setLightTheme();
-            }
-        });
-    }
-
-    toggleTheme() {
-        const isDark = document.documentElement.classList.contains('dark');
-        isDark ? this.setLightTheme() : this.setDarkTheme();
-    }
-
-    setDarkTheme() {
-        document.documentElement.classList.add('dark');
-        if (this.themeIcon) {
-            this.themeIcon.className = 'fas fa-sun';
-        }
-        localStorage.setItem('theme', 'dark');
-    }
-
-    setLightTheme() {
-        document.documentElement.classList.remove('dark');
-        if (this.themeIcon) {
-            this.themeIcon.className = 'fas fa-moon';
-        }
-        localStorage.setItem('theme', 'light');
-    }
+// Loading Screen
+function initializeLoading() {
+    const loadingScreen = document.getElementById('loading-screen');
+    
+    // Hide loading screen after animation
+    setTimeout(() => {
+        loadingScreen.classList.add('fade-out');
+        setTimeout(() => {
+            loadingScreen.style.display = 'none';
+        }, 500);
+    }, 3500);
 }
 
-// Navigation Management
-class NavigationManager {
-    constructor() {
-        this.mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-        this.mobileMenu = document.getElementById('mobile-menu');
-        this.navLinks = document.querySelectorAll('a[href^="#"]');
-        this.attachEventListeners();
-    }
-
-    attachEventListeners() {
-        // Mobile menu toggle
-        this.mobileMenuToggle?.addEventListener('click', () => this.toggleMobileMenu());
-
-        // Smooth scrolling for all anchor links
-        this.navLinks.forEach(link => {
-            link.addEventListener('click', (e) => this.handleNavClick(e));
-        });
-
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('nav')) {
-                this.closeMobileMenu();
-            }
-        });
-
-        // Handle scroll for header styling
-        window.addEventListener('scroll', () => this.handleScroll());
-    }
-
-    toggleMobileMenu() {
-        this.mobileMenu.classList.toggle('hidden');
-        this.mobileMenuToggle.classList.toggle('active');
-        
-        // Improved hamburger animation using CSS classes
-        const isOpen = !this.mobileMenu.classList.contains('hidden');
-        
-        // Add visual feedback
-        if (isOpen) {
-            this.mobileMenu.style.animation = 'slideDown 0.3s ease-out';
-        } else {
-            this.mobileMenu.style.animation = 'slideUp 0.3s ease-out';
-        }
-    }
-
-    closeMobileMenu() {
-        if (this.mobileMenu && !this.mobileMenu.classList.contains('hidden')) {
-            this.mobileMenu.classList.add('hidden');
-            this.mobileMenuToggle?.classList.remove('active');
-        }
-    }
-
-    handleNavClick(e) {
-        const href = e.currentTarget.getAttribute('href');
-        if (href.startsWith('#')) {
-            e.preventDefault();
-            this.scrollToSection(href.substring(1));
-            this.closeMobileMenu();
-        }
-    }
-
-    scrollToSection(sectionId) {
-        const section = document.getElementById(sectionId);
-        if (section) {
-            const offset = 80; // Account for fixed header
-            const sectionTop = section.offsetTop - offset;
-            
-            window.scrollTo({
-                top: sectionTop,
-                behavior: 'smooth'
-            });
-        }
-    }
-
-    handleScroll() {
-        const header = document.querySelector('header');
+// Header Scroll Effect
+function initializeHeader() {
+    const header = document.querySelector('.header');
+    
+    window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
-            header?.classList.add('backdrop-blur-lg', 'bg-white/90', 'dark:bg-secondary/90');
+            header.classList.add('scrolled');
         } else {
-            header?.classList.remove('backdrop-blur-lg', 'bg-white/90', 'dark:bg-secondary/90');
+            header.classList.remove('scrolled');
         }
+    });
+}
+
+// Navigation
+function initializeNavigation() {
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    // Mobile menu toggle
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+    });
+    
+    // Close mobile menu when link is clicked
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+        });
+    });
+    
+    // Active link highlighting
+    window.addEventListener('scroll', () => {
+        let current = '';
+        const sections = document.querySelectorAll('section');
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (scrollY >= sectionTop - 200) {
+                current = section.getAttribute('id');
+            }
+        });
+        
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + current) {
+                link.classList.add('active');
+            }
+        });
+    });
+}
+
+// Theme Switching
+function initializeTheme() {
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    const icon = themeToggle.querySelector('i');
+    
+    // Load saved theme
+    const savedTheme = localStorage.getItem('portfolio-theme');
+    if (savedTheme) {
+        body.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+    }
+    
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = body.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        
+        body.setAttribute('data-theme', newTheme);
+        localStorage.setItem('portfolio-theme', newTheme);
+        updateThemeIcon(newTheme);
+        
+        // Add transition effect
+        body.style.transition = 'all 0.3s ease';
+        setTimeout(() => {
+            body.style.transition = '';
+        }, 300);
+    });
+    
+    function updateThemeIcon(theme) {
+        icon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
     }
 }
 
-// Skills Animation Manager
-class SkillsManager {
-    constructor() {
-        this.skillItems = document.querySelectorAll('.skill-item');
-        this.systemStats = document.querySelector('.system-stats');
-        this.observeSkills();
-        this.observeSystemStats();
-    }
-
-    observeSkills() {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    this.animateSkill(entry.target);
-                }
-            });
-        }, { threshold: 0.3 });
-
-        this.skillItems.forEach(item => observer.observe(item));
-    }
-
-    observeSystemStats() {
-        if (this.systemStats) {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        this.animateSystemStats();
-                    }
-                });
-            }, { threshold: 0.3 });
-
-            observer.observe(this.systemStats);
-        }
-    }
-
-    animateSystemStats() {
-        const systemSkillBars = document.querySelectorAll('.system-skill-bar');
-        
-        systemSkillBars.forEach((bar, index) => {
-            const targetWidth = parseInt(bar.dataset.width);
-            
-            setTimeout(() => {
-                bar.style.width = `${targetWidth}%`;
-            }, index * 200 + 500); // Stagger animations
+// Skill Bars Animation
+function initializeSkillBars() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateSkillBars(entry.target);
+            }
         });
-    }
+    }, { threshold: 0.5 });
+    
+    // Observe hero skill bars
+    document.querySelectorAll('.status-panel .skill-bar').forEach(bar => {
+        observer.observe(bar);
+    });
+    
+    // Observe skills section bars
+    document.querySelectorAll('.skills .skill-item').forEach(item => {
+        observer.observe(item);
+    });
+}
 
-    animateSkill(skillItem) {
-        const progressBar = skillItem.querySelector('.skill-progress');
-        const percentage = skillItem.querySelector('.skill-percentage');
+function animateSkillBars(container) {
+    const skillFills = container.querySelectorAll('.skill-fill, .skill-progress');
+    const skillPercents = container.querySelectorAll('.skill-percent, .skill-level');
+    
+    skillFills.forEach((fill, index) => {
+        const targetWidth = fill.getAttribute('data-width');
+        const percent = skillPercents[index];
+        const targetPercent = percent.getAttribute('data-percent') || percent.getAttribute('data-level');
         
-        if (!progressBar || !percentage) return;
+        // Ensure skill bar starts at 0% width
+        fill.style.width = '0%';
         
-        const targetLevel = parseInt(progressBar.dataset.level);
+        // Force a reflow to ensure the 0% width is applied
+        fill.offsetHeight;
         
-        if (isNaN(targetLevel)) return;
-
         // Animate progress bar
         setTimeout(() => {
-            progressBar.style.width = `${targetLevel}%`;
-        }, 100);
-
-        // Animate percentage counter
-        this.animateCounter(percentage, 0, targetLevel, 1000);
-
-        // Add entrance animation
-        skillItem.classList.add('animate');
-    }
-
-    animateCounter(element, start, end, duration) {
-        const range = end - start;
-        const minTimer = 50;
-        const stepTime = Math.abs(Math.floor(duration / range));
-        const timer = Math.max(stepTime, minTimer);
+            fill.style.width = targetWidth + '%';
+        }, index * 200);
         
-        let current = start;
-        const increment = range > 0 ? 1 : -1;
-        
-        const counter = setInterval(() => {
-            current += increment;
-            element.textContent = `${current}%`;
-            
-            if (current === end) {
-                clearInterval(counter);
-            }
-        }, timer);
+        // Animate counter
+        if (percent) {
+            animateCounter(percent, 0, targetPercent, 2000 + (index * 200));
+        }
+    });
+}
+
+function animateCounter(element, start, end, duration) {
+    const increment = end / (duration / 16);
+    let current = start;
+    
+    const timer = setInterval(() => {
+        current += increment;
+        if (current >= end) {
+            current = end;
+            clearInterval(timer);
+        }
+        element.textContent = Math.round(current) + '%';
+    }, 16);
+}
+
+// Certificates Modal
+function initializeCertificates() {
+    const modal = document.getElementById('cert-modal');
+    const closeModal = document.querySelector('.close-modal');
+    const certImage = document.getElementById('cert-image');
+    const certTitle = document.getElementById('cert-title');
+    const certDescription = document.getElementById('cert-description');
+    
+    // Certificate data
+    const certificates = {
+        'opencv-cert': {
+            title: 'OpenCV Certification',
+            description: 'Completed comprehensive training in Computer Vision using OpenCV library. Gained expertise in image processing, feature detection, and computer vision algorithms.',
+            image: 'opencv-cert.jpg'
+        },
+        'it-help-cert': {
+            title: 'IT Help Team Event Certificate',
+            description: 'Recognition for providing technical support and assistance during university IT help events. Demonstrated strong problem-solving and communication skills.',
+            image: 'it-help-cert.jpg'
+        },
+        'unity-cert': {
+            title: 'Unity Game Development Certificate',
+            description: 'Certified in Unity game development, covering game mechanics, physics, scripting, and deployment across multiple platforms.',
+            image: 'unity-cert.jpg'
+        }
+    };
+    
+    // Close modal events
+    closeModal.addEventListener('click', () => {
+        closeModal.style.display = 'none';
+        modal.classList.remove('show');
+    });
+    
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('show');
+        }
+    });
+    
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('show')) {
+            modal.classList.remove('show');
+        }
+    });
+    
+    // Global function for opening modals
+    window.openCertModal = function(certId) {
+        const cert = certificates[certId];
+        if (cert) {
+            certTitle.textContent = cert.title;
+            certDescription.textContent = cert.description;
+            certImage.src = cert.image;
+            certImage.alt = cert.title;
+            modal.classList.add('show');
+        }
+    };
+}
+
+// Particles System
+function initializeParticles() {
+    const particlesContainer = document.querySelector('.particles');
+    if (!particlesContainer) return;
+    
+    const particleCount = 50;
+    
+    for (let i = 0; i < particleCount; i++) {
+        createParticle(particlesContainer);
     }
 }
 
-// Modal Manager
-class ModalManager {
-    constructor() {
-        this.modal = document.getElementById('modal');
-        this.modalBody = document.getElementById('modal-body');
-        this.attachEventListeners();
-        this.setupModalData();
-    }
+function createParticle(container) {
+    const particle = document.createElement('div');
+    particle.style.cssText = `
+        position: absolute;
+        width: 2px;
+        height: 2px;
+        background-color: var(--text-primary);
+        border-radius: 50%;
+        opacity: 0.3;
+        pointer-events: none;
+    `;
+    
+    // Random position
+    particle.style.left = Math.random() * 100 + '%';
+    particle.style.top = Math.random() * 100 + '%';
+    
+    container.appendChild(particle);
+    animateParticle(particle);
+}
 
-    attachEventListeners() {
-        // Close modal when clicking outside
-        this.modal?.addEventListener('click', (e) => {
-            if (e.target === this.modal) {
-                this.closeModal();
-            }
-        });
-
-        // Close modal with Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                this.closeModal();
-            }
-        });
-    }
-
-    setupModalData() {
-        this.certificateData = {
-            'opencv-cert': {
-                title: 'OpenCV Certification',
-                type: 'Computer Vision',
-                content: `
-                    <div class="certificate-details">
-                        <div class="certificate-header">
-                            <span class="certificate-badge">🏆 CERTIFIED</span>
-                            <span class="certificate-date">2024</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-4">OpenCV Computer Vision Certification</h3>
-                        <div class="certificate-description">
-                            <p>Comprehensive certification in computer vision using OpenCV library. Covered advanced topics including:</p>
-                            <ul class="list-disc list-inside mt-3 space-y-1">
-                                <li>Image Processing and Enhancement</li>
-                                <li>Object Detection and Recognition</li>
-                                <li>Feature Extraction and Matching</li>
-                                <li>Video Processing and Analysis</li>
-                                <li>Machine Learning for Computer Vision</li>
-                            </ul>
-                        </div>
-                        <div class="certificate-skills mt-4">
-                            <h4 class="font-semibold mb-2">Skills Acquired:</h4>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="skill-tag">OpenCV</span>
-                                <span class="skill-tag">Python</span>
-                                <span class="skill-tag">Image Processing</span>
-                                <span class="skill-tag">Object Detection</span>
-                                <span class="skill-tag">Computer Vision</span>
-                            </div>
-                        </div>
-                    </div>
-                `
-            },
-            'it-help-cert': {
-                title: 'IT Help Team Event Certificate',
-                type: 'Technical Support',
-                content: `
-                    <div class="certificate-details">
-                        <div class="certificate-header">
-                            <span class="certificate-badge">🛠️ TECHNICAL SUPPORT</span>
-                            <span class="certificate-date">2024</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-4">IT Help Team Event Certificate</h3>
-                        <div class="certificate-description">
-                            <p>Successfully participated in IT support event as Technical Support Specialist. Responsibilities included:</p>
-                            <ul class="list-disc list-inside mt-3 space-y-1">
-                                <li>Hardware and Software Troubleshooting</li>
-                                <li>Network Configuration and Maintenance</li>
-                                <li>System Administration Tasks</li>
-                                <li>User Support and Training</li>
-                                <li>Documentation and Knowledge Base Management</li>
-                            </ul>
-                        </div>
-                        <div class="certificate-skills mt-4">
-                            <h4 class="font-semibold mb-2">Skills Demonstrated:</h4>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="skill-tag">IT Support</span>
-                                <span class="skill-tag">System Administration</span>
-                                <span class="skill-tag">Network Troubleshooting</span>
-                                <span class="skill-tag">Hardware Maintenance</span>
-                                <span class="skill-tag">Customer Service</span>
-                            </div>
-                        </div>
-                    </div>
-                `
-            },
-            'unity-cert': {
-                title: 'Unity Game Development Certificate',
-                type: 'Game Development',
-                content: `
-                    <div class="certificate-details">
-                        <div class="certificate-header">
-                            <span class="certificate-badge">🎮 GAME DEVELOPER</span>
-                            <span class="certificate-date">2024</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-4">Unity Game Development Certificate</h3>
-                        <div class="certificate-description">
-                            <p>Completed comprehensive Unity 3D game development certification. Mastered essential game development concepts:</p>
-                            <ul class="list-disc list-inside mt-3 space-y-1">
-                                <li>Unity 3D Engine and Editor</li>
-                                <li>C# Programming for Games</li>
-                                <li>Game Physics and Mechanics</li>
-                                <li>Interactive System Design</li>
-                                <li>Game Optimization and Performance</li>
-                                <li>Cross-platform Deployment</li>
-                            </ul>
-                        </div>
-                        <div class="certificate-skills mt-4">
-                            <h4 class="font-semibold mb-2">Technologies Mastered:</h4>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="skill-tag">Unity 3D</span>
-                                <span class="skill-tag">C#</span>
-                                <span class="skill-tag">Game Design</span>
-                                <span class="skill-tag">Interactive Systems</span>
-                                <span class="skill-tag">Game Physics</span>
-                            </div>
-                        </div>
-                    </div>
-                `
-            }
-        };
-    }
-
-    openModal(certificateId) {
-        const data = this.certificateData[certificateId];
-        if (data && this.modalBody) {
-            this.modalBody.innerHTML = data.content;
-            this.modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
+function animateParticle(particle) {
+    const duration = 3000 + Math.random() * 2000;
+    const startX = parseFloat(particle.style.left);
+    const startY = parseFloat(particle.style.top);
+    const endX = startX + (Math.random() - 0.5) * 20;
+    const endY = startY + (Math.random() - 0.5) * 20;
+    
+    particle.animate([
+        { 
+            left: startX + '%', 
+            top: startY + '%', 
+            opacity: 0.3 
+        },
+        { 
+            left: endX + '%', 
+            top: endY + '%', 
+            opacity: 0 
         }
-    }
+    ], {
+        duration: duration,
+        easing: 'ease-out'
+    }).onfinish = () => {
+        // Reset particle
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        animateParticle(particle);
+    };
+}
 
-    closeModal() {
-        this.modal?.classList.remove('active');
-        document.body.style.overflow = 'auto';
-        
-        // Clear modal content after animation
-        setTimeout(() => {
-            if (this.modalBody) {
-                this.modalBody.innerHTML = '';
-            }
-        }, 300);
+// Matrix Rain Effect
+function initializeMatrixRain() {
+    const matrixContainer = document.querySelector('.matrix-rain');
+    if (!matrixContainer) return;
+    
+    const characters = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+    const columnCount = Math.floor(window.innerWidth / 20);
+    
+    for (let i = 0; i < columnCount; i++) {
+        createMatrixColumn(matrixContainer, characters, i);
     }
 }
 
-// Contact Form Manager
-class ContactFormManager {
-    constructor() {
-        this.form = document.getElementById('contact-form');
-        this.attachEventListeners();
-    }
-
-    attachEventListeners() {
-        this.form?.addEventListener('submit', (e) => this.handleSubmit(e));
-    }
-
-    async handleSubmit(e) {
-        e.preventDefault();
-        
-        const formData = new FormData(this.form);
-        const data = {
-            name: formData.get('name'),
-            email: formData.get('email'),
-            message: formData.get('message')
-        };
-
-        // Validate form
-        if (!this.validateForm(data)) {
-            return;
-        }
-
-        // Show loading state
-        const submitBtn = this.form.querySelector('button[type="submit"]');
-        const originalContent = submitBtn.innerHTML;
-        submitBtn.innerHTML = '<div class="loading-spinner"></div> Sending...';
-        submitBtn.disabled = true;
-
-        try {
-            // Simulate form submission (replace with actual endpoint)
-            await this.submitForm(data);
+function createMatrixColumn(container, characters, columnIndex) {
+    const column = document.createElement('div');
+    column.style.cssText = `
+        position: absolute;
+        left: ${columnIndex * 20}px;
+        top: 0;
+        width: 20px;
+        height: 100%;
+        font-family: 'Courier New', monospace;
+        font-size: 14px;
+        color: var(--text-primary);
+        opacity: 0.1;
+        overflow: hidden;
+        pointer-events: none;
+    `;
+    
+    container.appendChild(column);
+    
+    // Animate matrix characters
+    setInterval(() => {
+        if (Math.random() < 0.05) {
+            const char = document.createElement('div');
+            char.textContent = characters[Math.floor(Math.random() * characters.length)];
+            char.style.cssText = `
+                animation: matrix-fall 3s linear forwards;
+                opacity: 0.3;
+            `;
+            column.appendChild(char);
             
-            this.showToast('Message sent successfully! Thank you for reaching out.', 'success');
-            this.form.reset();
-        } catch (error) {
-            this.showToast('Failed to send message. Please try again.', 'error');
-        } finally {
-            // Restore button state
-            submitBtn.innerHTML = originalContent;
-            submitBtn.disabled = false;
-        }
-    }
-
-    validateForm(data) {
-        const { name, email, message } = data;
-        
-        if (!name.trim()) {
-            this.showToast('Please enter your name.', 'error');
-            return false;
-        }
-        
-        if (!this.isValidEmail(email)) {
-            this.showToast('Please enter a valid email address.', 'error');
-            return false;
-        }
-        
-        if (!message.trim()) {
-            this.showToast('Please enter your message.', 'error');
-            return false;
-        }
-        
-        return true;
-    }
-
-    isValidEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-    }
-
-    async submitForm(data) {
-        // Replace this with your actual form submission endpoint
-        // Example: Formspree, Netlify Forms, or custom API
-        
-        // Simulated API call
-        return new Promise((resolve, reject) => {
             setTimeout(() => {
-                // Simulate random success/failure for demo
-                Math.random() > 0.2 ? resolve(data) : reject(new Error('Network error'));
-            }, 1500);
-        });
+                if (char.parentNode) {
+                    char.parentNode.removeChild(char);
+                }
+            }, 3000);
+        }
+    }, 100);
+}
+
+// Add CSS for matrix animation
+const matrixStyle = document.createElement('style');
+matrixStyle.textContent = `
+    @keyframes matrix-fall {
+        0% {
+            transform: translateY(-100vh);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(100vh);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(matrixStyle);
+
+// Easter Eggs
+function initializeEasterEggs() {
+    let konamiCode = [];
+    const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA'];
+    
+    document.addEventListener('keydown', (e) => {
+        konamiCode.push(e.code);
         
-        // Example with Formspree:
-        /*
-        const response = await fetch('https://formspree.io/f/your-form-id', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-        
-        if (!response.ok) {
-            throw new Error('Failed to submit form');
+        if (konamiCode.length > konamiSequence.length) {
+            konamiCode.shift();
         }
         
-        return response.json();
-        */
+        if (JSON.stringify(konamiCode) === JSON.stringify(konamiSequence)) {
+            activateSecretMode();
+            konamiCode = [];
+        }
+    });
+}
+
+function activateSecretMode() {
+    showToast('🎮 Secret mode activated! Welcome to the Matrix!', 'success');
+    
+    // Add special effects
+    document.body.style.filter = 'hue-rotate(180deg)';
+    
+    setTimeout(() => {
+        document.body.style.filter = '';
+        showToast('Matrix mode deactivated. Reality restored.', 'success');
+    }, 5000);
+}
+
+// Animation Utilities
+function initializeAnimations() {
+    // Typewriter effect for loading screen
+    const typingElements = document.querySelectorAll('.typing-text');
+    typingElements.forEach(element => {
+        typeWriter(element);
+    });
+    
+    // Button ripple effects
+    document.addEventListener('click', (e) => {
+        if (e.target.matches('.terminal-btn, .cta-button')) {
+            createRipple(e);
+        }
+    });
+}
+
+function typeWriter(element) {
+    const text = element.textContent;
+    element.textContent = '';
+    let i = 0;
+    
+    const timer = setInterval(() => {
+        element.textContent += text.charAt(i);
+        i++;
+        if (i > text.length) {
+            clearInterval(timer);
+        }
+    }, 100);
+}
+
+function createRipple(e) {
+    const button = e.currentTarget;
+    const ripple = document.createElement('span');
+    const rect = button.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    const x = e.clientX - rect.left - size / 2;
+    const y = e.clientY - rect.top - size / 2;
+    
+    ripple.style.cssText = `
+        position: absolute;
+        width: ${size}px;
+        height: ${size}px;
+        left: ${x}px;
+        top: ${y}px;
+        background-color: rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        transform: scale(0);
+        animation: ripple 0.6s ease-out;
+        pointer-events: none;
+        z-index: 1;
+    `;
+    
+    button.appendChild(ripple);
+    
+    setTimeout(() => {
+        ripple.remove();
+    }, 600);
+}
+
+// Add ripple animation CSS
+const rippleStyle = document.createElement('style');
+rippleStyle.textContent = `
+    @keyframes ripple {
+        to {
+            transform: scale(2);
+            opacity: 0;
+        }
     }
+`;
+document.head.appendChild(rippleStyle);
 
-    showToast(message, type = 'success') {
-        // Remove existing toasts
-        const existingToasts = document.querySelectorAll('.toast');
-        existingToasts.forEach(toast => toast.remove());
+// Toast Notifications
+function initializeToasts() {
+    // Toast container already exists in HTML
+}
 
-        // Create new toast
-        const toast = document.createElement('div');
-        toast.className = `toast ${type}`;
-        toast.textContent = message;
-        
-        document.body.appendChild(toast);
-        
-        // Show toast
-        setTimeout(() => toast.classList.add('show'), 100);
-        
-        // Hide toast after 3 seconds
+function showToast(message, type = 'success', duration = 3000) {
+    const toastContainer = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    
+    toast.className = `toast ${type}`;
+    toast.textContent = message;
+    
+    toastContainer.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.classList.add('fade-out');
         setTimeout(() => {
-            toast.classList.remove('show');
-            setTimeout(() => toast.remove(), 300);
-        }, 3000);
-    }
+            toast.remove();
+        }, 300);
+    }, duration);
 }
 
 // Utility Functions
-function scrollToSection(sectionId) {
+
+// Scroll to section
+window.scrollToSection = function(sectionId) {
     const section = document.getElementById(sectionId);
     if (section) {
-        const offset = 80;
-        const sectionTop = section.offsetTop - offset;
+        const headerHeight = document.querySelector('.header').offsetHeight;
+        const sectionTop = section.offsetTop - headerHeight;
         
         window.scrollTo({
             top: sectionTop,
             behavior: 'smooth'
         });
     }
-}
+};
 
-function downloadCV() {
-    // Create CV download link
+// Download CV function
+window.downloadCV = function() {
     const link = document.createElement('a');
-    link.href = 'cv.pdf'; // Your CV file
+    link.href = 'cv.pdf';
     link.download = 'Bhugol_Gautam_CV.pdf';
     
-    // Check if file exists, if not show message
+    // Check if file exists
     fetch('cv.pdf')
         .then(response => {
             if (response.ok) {
-                // File exists, download it
-                document.body.appendChild(link);
                 link.click();
-                document.body.removeChild(link);
-                
-                // Show success toast
                 showToast('CV download started!', 'success');
             } else {
-                throw new Error('File not found');
+                showToast('CV file not found. Please contact me directly.', 'error');
             }
         })
         .catch(() => {
-            // File doesn't exist, show message
-            showToast('CV file not found. Please contact me directly for my resume!', 'info');
+            showToast('CV file not found. Please contact me directly.', 'error');
         });
-}
+};
 
-// Helper function to show toasts
-function showToast(message, type = 'success') {
-    // Remove existing toasts
-    const existingToasts = document.querySelectorAll('.toast');
-    existingToasts.forEach(toast => toast.remove());
-
-    // Create new toast
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    toast.textContent = message;
-    
-    // Add styles
-    toast.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 10000;
-        padding: 12px 24px;
-        border-radius: 8px;
-        color: white;
-        font-family: 'Inter', sans-serif;
-        font-weight: 500;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        transform: translateX(100%);
-        transition: transform 0.3s ease;
-        max-width: 400px;
-        word-wrap: break-word;
-    `;
-    
-    // Set background color based on type
-    switch(type) {
-        case 'success':
-            toast.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-            break;
-        case 'error':
-            toast.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
-            break;
-        case 'info':
-            toast.style.background = 'linear-gradient(135deg, #3b82f6, #2563eb)';
-            break;
-        default:
-            toast.style.background = 'linear-gradient(135deg, #6b7280, #4b5563)';
+// Smooth scroll for all internal links
+document.addEventListener('click', (e) => {
+    if (e.target.matches('a[href^="#"]')) {
+        e.preventDefault();
+        const targetId = e.target.getAttribute('href').substring(1);
+        scrollToSection(targetId);
     }
-    
-    document.body.appendChild(toast);
-    
-    // Show toast
-    setTimeout(() => {
-        toast.style.transform = 'translateX(0)';
-    }, 100);
-    
-    // Hide toast after 4 seconds
-    setTimeout(() => {
-        toast.style.transform = 'translateX(100%)';
-        setTimeout(() => toast.remove(), 300);
-    }, 4000);
-}
-
-function openModal(modalId) {
-    window.modalManager?.openModal(modalId);
-}
-
-function closeModal() {
-    window.modalManager?.closeModal();
-}
-
-// Performance Monitoring
-class PerformanceMonitor {
-    constructor() {
-        this.startTime = performance.now();
-        this.logPerformance();
-    }
-
-    logPerformance() {
-        window.addEventListener('load', () => {
-            const loadTime = performance.now() - this.startTime;
-            console.log(`🚀 Portfolio loaded in ${loadTime.toFixed(2)}ms`);
-            
-            // Log other performance metrics
-            if ('connection' in navigator) {
-                console.log(`📶 Connection: ${navigator.connection.effectiveType}`);
-            }
-        });
-    }
-}
-
-// Loading Screen Manager
-class LoadingScreenManager {
-    constructor() {
-        this.loadingScreen = document.getElementById('loading-screen');
-        this.init();
-    }
-    
-    init() {
-        // Auto-hide loading screen after animations complete
-        setTimeout(() => {
-            this.hideLoadingScreen();
-        }, 3000);
-    }
-    
-    hideLoadingScreen() {
-        if (this.loadingScreen) {
-            this.loadingScreen.classList.add('fade-out');
-            
-            // Remove from DOM after transition
-            setTimeout(() => {
-                this.loadingScreen.remove();
-            }, 800);
-        }
-    }
-}
-
-// Cyberpunk Enhancement Manager
-class CyberpunkEnhancer {
-    constructor() {
-        this.initializeParticleSystem();
-        this.initializeTypewriterEffects();
-        this.enhanceTerminalButtons();
-        this.initializeMatrixBackground();
-    }
-
-    showWelcomeMessage() {
-        const welcomeMsg = document.createElement('div');
-        welcomeMsg.className = 'welcome-message';
-        welcomeMsg.innerHTML = `
-            <div class="font-mono text-accent-cyan">
-                <div class="mb-2">> Initializing portfolio...</div>
-                <div class="mb-2">> Loading user profile...</div>
-                <div class="mb-2">> Connecting to neural network...</div>
-                <div class="text-accent-lime font-bold">>>> ACCESS GRANTED <<<</div>
-                <div class="text-xs mt-4 text-gray-400">Welcome to Bhugol Gautam's Digital Space</div>
-            </div>
-        `;
-        document.body.appendChild(welcomeMsg);
-        
-        setTimeout(() => {
-            welcomeMsg.classList.add('fade-out');
-            setTimeout(() => welcomeMsg.remove(), 500);
-        }, 3000);
-    }
-
-    initializeParticleSystem() {
-        const particleContainer = document.createElement('div');
-        particleContainer.className = 'particles';
-        document.body.appendChild(particleContainer);
-        
-        for (let i = 0; i < 20; i++) {
-            this.createParticle(particleContainer);
-        }
-        
-        setInterval(() => {
-            if (Math.random() > 0.7) {
-                this.createParticle(particleContainer);
-            }
-        }, 2000);
-    }
-    
-    createParticle(container) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.animationDuration = (5 + Math.random() * 10) + 's';
-        particle.style.opacity = 0.3 + Math.random() * 0.7;
-        
-        const colors = ['#00f6ff', '#a3ff12', '#9d4edd'];
-        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-        
-        container.appendChild(particle);
-        
-        setTimeout(() => {
-            particle.remove();
-        }, 15000);
-    }
-
-    initializeTypewriterEffects() {
-        const typingElements = document.querySelectorAll('.typing-text');
-        typingElements.forEach((element, index) => {
-            const text = element.getAttribute('data-text') || element.textContent;
-            element.textContent = '';
-            setTimeout(() => {
-                this.typeWriter(element, text, 100);
-            }, index * 500);
-        });
-    }
-    
-    typeWriter(element, text, speed = 100) {
-        let i = 0;
-        const timer = setInterval(() => {
-            if (i < text.length) {
-                element.textContent += text.charAt(i);
-                i++;
-            } else {
-                clearInterval(timer);
-            }
-        }, speed);
-    }
-
-    enhanceTerminalButtons() {
-        const terminalBtns = document.querySelectorAll('.terminal-btn');
-        terminalBtns.forEach(btn => {
-            btn.addEventListener('mouseenter', () => {
-                this.playTypingSound();
-            });
-            
-            btn.addEventListener('click', (e) => {
-                this.createRippleEffect(e.target, e);
-            });
-        });
-    }
-    
-    createRippleEffect(element, event) {
-        const rect = element.getBoundingClientRect();
-        const ripple = document.createElement('span');
-        const size = Math.max(rect.width, rect.height);
-        const x = event.clientX - rect.left - size / 2;
-        const y = event.clientY - rect.top - size / 2;
-        
-        ripple.style.width = ripple.style.height = size + 'px';
-        ripple.style.left = x + 'px';
-        ripple.style.top = y + 'px';
-        ripple.classList.add('ripple');
-        
-        element.appendChild(ripple);
-        
-        setTimeout(() => {
-            ripple.remove();
-        }, 600);
-    }
-    
-    playTypingSound() {
-        // Subtle audio feedback simulation (visual only)
-        document.body.style.animation = 'subtle-flash 0.1s ease-out';
-        setTimeout(() => {
-            document.body.style.animation = '';
-        }, 100);
-    }
-
-    initializeMatrixBackground() {
-        // Subtle matrix effect for hero section
-        const heroSection = document.getElementById('hero');
-        if (heroSection) {
-            this.createMatrixRain(heroSection);
-        }
-    }
-    
-    createMatrixRain(container) {
-        const matrixContainer = document.createElement('div');
-        matrixContainer.className = 'matrix-bg';
-        container.appendChild(matrixContainer);
-        
-        setInterval(() => {
-            if (Math.random() > 0.95) {
-                this.dropMatrixChar(matrixContainer);
-            }
-        }, 100);
-    }
-    
-    dropMatrixChar(container) {
-        const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
-        const char = document.createElement('div');
-        char.className = 'matrix-char';
-        char.textContent = chars[Math.floor(Math.random() * chars.length)];
-        char.style.left = Math.random() * 100 + '%';
-        char.style.animationDuration = (2 + Math.random() * 5) + 's';
-        
-        container.appendChild(char);
-        
-        setTimeout(() => {
-            char.remove();
-        }, 7000);
-    }
-}
-
-// Enhanced Theme Manager for Cyberpunk
-class EnhancedThemeManager extends ThemeManager {
-    constructor() {
-        super();
-        this.initializeCyberpunkElements();
-    }
-    
-    initializeCyberpunkElements() {
-        // Add subtle glow to certain elements
-        this.addGlowEffects();
-        // Initialize section title animations
-        this.initializeSectionTitles();
-    }
-    
-    addGlowEffects() {
-        const glowElements = document.querySelectorAll('.project-card, .certificate-card, .skill-item');
-        glowElements.forEach(element => {
-            element.addEventListener('mouseenter', () => {
-                element.style.transition = 'all 0.3s ease';
-                element.style.filter = 'drop-shadow(0 0 10px rgba(0, 246, 255, 0.3))';
-            });
-            
-            element.addEventListener('mouseleave', () => {
-                element.style.filter = '';
-            });
-        });
-    }
-    
-    initializeSectionTitles() {
-        const sectionTitles = document.querySelectorAll('h2[data-aos]');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('terminal-typing');
-                }
-            });
-        }, { threshold: 0.5 });
-        
-        sectionTitles.forEach(title => {
-            observer.observe(title);
-        });
-    }
-}
-
-// Konami Code Easter Egg
-class KonamiCode {
-    constructor() {
-        this.sequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA'];
-        this.userInput = [];
-        this.listen();
-    }
-    
-    listen() {
-        document.addEventListener('keydown', (e) => {
-            this.userInput.push(e.code);
-            if (this.userInput.length > this.sequence.length) {
-                this.userInput.shift();
-            }
-            if (this.userInput.join(',') === this.sequence.join(',')) {
-                this.activate();
-            }
-        });
-    }
-    
-    activate() {
-        document.body.classList.add('konami-activated');
-        const message = document.createElement('div');
-        message.className = 'welcome-message';
-        message.innerHTML = `
-            <div class="font-mono text-center">
-                <div class="text-2xl mb-4">🎮 KONAMI CODE ACTIVATED! 🎮</div>
-                <div class="text-accent-lime">You found the secret! 🚀</div>
-                <div class="text-sm mt-2">Thanks for exploring!</div>
-            </div>
-        `;
-        document.body.appendChild(message);
-        
-        setTimeout(() => {
-            document.body.classList.remove('konami-activated');
-            message.classList.add('fade-out');
-            setTimeout(() => message.remove(), 500);
-        }, 5000);
-    }
-}
-
-// Initialize all managers when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize loading screen first
-    window.loadingScreenManager = new LoadingScreenManager();
-    
-    // Initialize enhanced managers
-    window.themeManager = new EnhancedThemeManager();
-    window.navigationManager = new NavigationManager();
-    window.skillsManager = new SkillsManager();
-    window.modalManager = new ModalManager();
-    window.contactFormManager = new ContactFormManager();
-    window.performanceMonitor = new PerformanceMonitor();
-    window.cyberpunkEnhancer = new CyberpunkEnhancer();
-    window.konamiCode = new KonamiCode();
-    
-    // Debug skill bars
-    setTimeout(() => {
-        console.log('🔍 Debugging skill bars:');
-        const skillItems = document.querySelectorAll('.skill-item');
-        console.log(`Found ${skillItems.length} skill items:`, skillItems);
-        
-        const systemStats = document.querySelector('.system-stats');
-        console.log('System stats found:', systemStats);
-        
-        const systemSkillBars = document.querySelectorAll('.system-skill-bar');
-        console.log(`Found ${systemSkillBars.length} system skill bars:`, systemSkillBars);
-        
-        // Manually trigger animations for testing
-        if (skillItems.length === 0) {
-            console.warn('❌ No skill items found! Check HTML structure.');
-        }
-        
-        // Fallback animation trigger
-        setTimeout(() => {
-            console.log('⚡ Triggering fallback animations...');
-            // Animate system stats immediately
-            systemSkillBars.forEach((bar, index) => {
-                const targetWidth = parseInt(bar.dataset.width);
-                if (targetWidth) {
-                    setTimeout(() => {
-                        bar.style.width = `${targetWidth}%`;
-                        console.log(`Animated system bar ${index} to ${targetWidth}%`);
-                    }, index * 200);
-                }
-            });
-            
-            // Animate main skill bars
-            skillItems.forEach((item, index) => {
-                const progressBar = item.querySelector('.skill-progress');
-                const percentage = item.querySelector('.skill-percentage');
-                if (progressBar && percentage) {
-                    const targetLevel = parseInt(progressBar.dataset.level);
-                    if (targetLevel) {
-                        setTimeout(() => {
-                            progressBar.style.width = `${targetLevel}%`;
-                            percentage.textContent = `${targetLevel}%`;
-                            console.log(`Animated skill bar ${index} to ${targetLevel}%`);
-                        }, index * 300);
-                    }
-                }
-            });
-        }, 3000);
-    }, 1000);
-    
-    // Console styling
-    console.log('%c🎯 Bhugol Gautam Portfolio Initialized', 'color: #00f6ff; font-size: 16px; font-weight: bold;');
-    console.log('%c🎨 Theme: Cyberpunk Mode', 'color: #a3ff12; font-size: 14px;');
-    console.log('%c📱 Device:', window.innerWidth < 768 ? 'Mobile' : 'Desktop', 'color: #9d4edd; font-size: 14px;');
-    console.log('%c🔮 Try the Konami Code! ⬆⬆⬇⬇⬅➡⬅➡BA', 'color: #ff6b6b; font-size: 12px; font-style: italic;');
 });
+
+// Performance optimization
+window.addEventListener('load', () => {
+    // Remove unused CSS after load
+    const unusedStyles = document.querySelectorAll('style[data-temp]');
+    unusedStyles.forEach(style => style.remove());
+    
+    // Lazy load images
+    const images = document.querySelectorAll('img[data-src]');
+    const imageObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.getAttribute('data-src');
+                img.removeAttribute('data-src');
+                imageObserver.unobserve(img);
+            }
+        });
+    });
+    
+    images.forEach(img => imageObserver.observe(img));
+});
+
+// Accessibility improvements
+document.addEventListener('keydown', (e) => {
+    // Skip to main content
+    if (e.ctrlKey && e.key === 'Enter') {
+        const mainContent = document.querySelector('main');
+        if (mainContent) {
+            mainContent.focus();
+            mainContent.scrollIntoView();
+        }
+    }
+    
+    // Close modals with Escape
+    if (e.key === 'Escape') {
+        const openModal = document.querySelector('.modal.show');
+        if (openModal) {
+            openModal.classList.remove('show');
+        }
+    }
+});
+
+// Contact form handling (if needed)
+function initializeContactForm() {
+    const contactForm = document.getElementById('contact-form');
+    if (!contactForm) return;
+    
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        // Get form data
+        const formData = new FormData(contactForm);
+        const data = Object.fromEntries(formData);
+        
+        // Here you would normally send the data to a server
+        console.log('Contact form data:', data);
+        
+        showToast('Message sent successfully!', 'success');
+        contactForm.reset();
+    });
+}
+
+// Error handling
+window.addEventListener('error', (e) => {
+    console.error('JavaScript error:', e.error);
+    // Don't show error toasts to users, just log them
+});
+
+// Service worker registration (for PWA features)
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+                console.log('SW registered: ', registration);
+            })
+            .catch(registrationError => {
+                console.log('SW registration failed: ', registrationError);
+            });
+    });
+}
+
+// Custom Cursor Implementation
+function initializeCustomCursor() {
+    // Check if device supports hover (desktop)
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        return;
+    }
+
+    const cursor = document.getElementById('custom-cursor');
+    const cursorDot = cursor.querySelector('.cursor-dot');
+    const cursorRing = cursor.querySelector('.cursor-ring');
+    
+    let mouseX = 0, mouseY = 0;
+    let cursorX = 0, cursorY = 0;
+    let trails = [];
+    
+    // Mouse movement handler
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        
+        // Create cursor trail
+        if (Math.random() > 0.8) {
+            createCursorTrail(mouseX, mouseY);
+        }
+    });
+    
+    // Hover effects for interactive elements
+    const hoverElements = document.querySelectorAll(
+        'a, button, .terminal-btn, .certificate-card, .project-card, .nav-link, .theme-toggle'
+    );
+    
+    hoverElements.forEach(element => {
+        element.addEventListener('mouseenter', () => {
+            cursor.classList.add('hover');
+            triggerPhysicsEffect(element, 'physics-shake');
+        });
+        
+        element.addEventListener('mouseleave', () => {
+            cursor.classList.remove('hover');
+        });
+        
+        element.addEventListener('click', () => {
+            cursor.classList.add('click');
+            triggerPhysicsEffect(element, 'physics-bounce');
+            setTimeout(() => cursor.classList.remove('click'), 200);
+        });
+    });
+    
+    // Terminal-specific cursor style
+    const terminalElements = document.querySelectorAll('.terminal-window, .terminal-body, .terminal-line');
+    terminalElements.forEach(element => {
+        element.addEventListener('mouseenter', () => {
+            cursor.classList.add('terminal');
+        });
+        
+        element.addEventListener('mouseleave', () => {
+            cursor.classList.remove('terminal');
+        });
+    });
+    
+    // Smooth cursor follow animation
+    function animateCursor() {
+        // Smooth interpolation
+        cursorX += (mouseX - cursorX) * 0.1;
+        cursorY += (mouseY - cursorY) * 0.1;
+        
+        cursor.style.left = cursorX + 'px';
+        cursor.style.top = cursorY + 'px';
+        
+        requestAnimationFrame(animateCursor);
+    }
+    
+    animateCursor();
+    
+    // Create cursor trail effect
+    function createCursorTrail(x, y) {
+        const trail = document.createElement('div');
+        trail.className = 'cursor-trail';
+        trail.style.left = x + 'px';
+        trail.style.top = y + 'px';
+        document.body.appendChild(trail);
+        
+        // Remove trail after animation
+        setTimeout(() => {
+            if (trail.parentNode) {
+                trail.parentNode.removeChild(trail);
+            }
+        }, 500);
+    }
+    
+    // Hide cursor when leaving window
+    document.addEventListener('mouseleave', () => {
+        cursor.style.opacity = '0';
+    });
+    
+    document.addEventListener('mouseenter', () => {
+        cursor.style.opacity = '1';
+    });
+}
+
+// Physics Effects System
+function initializePhysicsEffects() {
+    // Add physics effects to various elements on interaction
+    const interactiveElements = document.querySelectorAll(
+        '.about-card, .skill-category, .project-card, .certificate-card, .contact-item, .social-link'
+    );
+    
+    interactiveElements.forEach(element => {
+        element.addEventListener('mouseenter', () => {
+            if (Math.random() > 0.7) {
+                triggerPhysicsEffect(element, getRandomPhysicsEffect());
+            }
+        });
+        
+        element.addEventListener('click', () => {
+            triggerPhysicsEffect(element, 'physics-bounce');
+        });
+    });
+    
+    // Note: Skill bars have their own clean animation system, no physics needed
+    
+    // Add glitch effect to terminal elements occasionally
+    const terminalElements = document.querySelectorAll('.terminal-title, .prompt, .command');
+    terminalElements.forEach(element => {
+        if (Math.random() > 0.8) {
+            element.setAttribute('data-text', element.textContent);
+            element.classList.add('glitch-effect');
+        }
+    });
+    
+    // Shake elements when Konami code is activated
+    document.addEventListener('keydown', (e) => {
+        if (e.code === 'KeyA' && e.altKey) {
+            const allCards = document.querySelectorAll('.about-card, .skill-category, .project-card, .certificate-card');
+            allCards.forEach((card, index) => {
+                setTimeout(() => {
+                    triggerPhysicsEffect(card, 'physics-shake');
+                }, index * 100);
+            });
+        }
+    });
+    
+    // Add physics to buttons on click
+    const buttons = document.querySelectorAll('.terminal-btn, .cta-button, .theme-toggle');
+    buttons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            triggerPhysicsEffect(button, 'physics-bounce');
+            
+            // Create mini explosion effect
+            createExplosionEffect(e.clientX, e.clientY);
+        });
+    });
+}
+
+// Trigger physics effect on element
+function triggerPhysicsEffect(element, effectClass) {
+    element.classList.remove('physics-shake', 'physics-bounce', 'physics-wobble');
+    
+    requestAnimationFrame(() => {
+        element.classList.add(effectClass);
+        
+        // Remove effect after animation completes
+        setTimeout(() => {
+            element.classList.remove(effectClass);
+        }, 800);
+    });
+}
+
+// Get random physics effect
+function getRandomPhysicsEffect() {
+    const effects = ['physics-shake', 'physics-bounce', 'physics-wobble'];
+    return effects[Math.floor(Math.random() * effects.length)];
+}
+
+// Create explosion effect for button clicks
+function createExplosionEffect(x, y) {
+    const particleCount = 8;
+    
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.style.cssText = `
+            position: fixed;
+            left: ${x}px;
+            top: ${y}px;
+            width: 4px;
+            height: 4px;
+            background: var(--text-primary);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+        `;
+        
+        document.body.appendChild(particle);
+        
+        // Random direction and distance
+        const angle = (Math.PI * 2 * i) / particleCount;
+        const velocity = 50 + Math.random() * 50;
+        const endX = x + Math.cos(angle) * velocity;
+        const endY = y + Math.sin(angle) * velocity;
+        
+        particle.animate([
+            {
+                left: x + 'px',
+                top: y + 'px',
+                opacity: 1,
+                transform: 'scale(1)'
+            },
+            {
+                left: endX + 'px',
+                top: endY + 'px',
+                opacity: 0,
+                transform: 'scale(0.1)'
+            }
+        ], {
+            duration: 500 + Math.random() * 300,
+            easing: 'ease-out'
+        }).onfinish = () => {
+            if (particle.parentNode) {
+                particle.parentNode.removeChild(particle);
+            }
+        };
+    }
+}
+
+// Add screen shake effect for dramatic moments
+function triggerScreenShake(intensity = 10, duration = 500) {
+    const body = document.body;
+    let startTime = null;
+    
+    function shake(timestamp) {
+        if (!startTime) startTime = timestamp;
+        const elapsed = timestamp - startTime;
+        
+        if (elapsed < duration) {
+            const progress = elapsed / duration;
+            const currentIntensity = intensity * (1 - progress);
+            
+            const x = (Math.random() - 0.5) * currentIntensity;
+            const y = (Math.random() - 0.5) * currentIntensity;
+            
+            body.style.transform = `translate(${x}px, ${y}px)`;
+            requestAnimationFrame(shake);
+        } else {
+            body.style.transform = '';
+        }
+    }
+    
+    requestAnimationFrame(shake);
+}
+
+// Enhanced secret mode activation with more effects
+function activateSecretMode() {
+    showToast('🎮 Secret mode activated! Welcome to the Matrix!', 'success');
+    
+    // Add special effects
+    document.body.style.filter = 'hue-rotate(180deg)';
+    triggerScreenShake(15, 1000);
+    
+    // Add random physics effects to all cards
+    const allCards = document.querySelectorAll('.about-card, .skill-category, .project-card, .certificate-card');
+    allCards.forEach((card, index) => {
+        setTimeout(() => {
+            triggerPhysicsEffect(card, getRandomPhysicsEffect());
+        }, index * 200);
+    });
+    
+    setTimeout(() => {
+        document.body.style.filter = '';
+        showToast('Matrix mode deactivated. Reality restored.', 'success');
+    }, 5000);
+}
+
+// Export functions for testing (if needed)
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        showToast,
+        scrollToSection,
+        downloadCV,
+        triggerPhysicsEffect,
+        triggerScreenShake
+    };
+}
