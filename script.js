@@ -528,26 +528,88 @@ function scrollToSection(sectionId) {
 }
 
 function downloadCV() {
-    // Create a placeholder CV download
-    // Replace this with your actual CV file path
+    // Create CV download link
     const link = document.createElement('a');
-    link.href = '#'; // Replace with actual CV URL
+    link.href = 'cv.pdf'; // Your CV file
     link.download = 'Bhugol_Gautam_CV.pdf';
     
-    // Show toast since no actual file is available
+    // Check if file exists, if not show message
+    fetch('cv.pdf')
+        .then(response => {
+            if (response.ok) {
+                // File exists, download it
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                // Show success toast
+                showToast('CV download started!', 'success');
+            } else {
+                throw new Error('File not found');
+            }
+        })
+        .catch(() => {
+            // File doesn't exist, show message
+            showToast('CV file not found. Please contact me directly for my resume!', 'info');
+        });
+}
+
+// Helper function to show toasts
+function showToast(message, type = 'success') {
+    // Remove existing toasts
+    const existingToasts = document.querySelectorAll('.toast');
+    existingToasts.forEach(toast => toast.remove());
+
+    // Create new toast
     const toast = document.createElement('div');
-    toast.className = 'toast';
-    toast.textContent = 'CV download feature will be available soon!';
+    toast.className = `toast ${type}`;
+    toast.textContent = message;
+    
+    // Add styles
+    toast.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 10000;
+        padding: 12px 24px;
+        border-radius: 8px;
+        color: white;
+        font-family: 'Inter', sans-serif;
+        font-weight: 500;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        max-width: 400px;
+        word-wrap: break-word;
+    `;
+    
+    // Set background color based on type
+    switch(type) {
+        case 'success':
+            toast.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+            break;
+        case 'error':
+            toast.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
+            break;
+        case 'info':
+            toast.style.background = 'linear-gradient(135deg, #3b82f6, #2563eb)';
+            break;
+        default:
+            toast.style.background = 'linear-gradient(135deg, #6b7280, #4b5563)';
+    }
+    
     document.body.appendChild(toast);
     
-    setTimeout(() => toast.classList.add('show'), 100);
+    // Show toast
     setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => toast.remove(), 300);
-    }, 3000);
+        toast.style.transform = 'translateX(0)';
+    }, 100);
     
-    // For actual implementation:
-    // link.click();
+    // Hide toast after 4 seconds
+    setTimeout(() => {
+        toast.style.transform = 'translateX(100%)';
+        setTimeout(() => toast.remove(), 300);
+    }, 4000);
 }
 
 function openModal(modalId) {
