@@ -3,614 +3,536 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bhugol Gautam - AI Developer & Game Creator</title>
+    <title>Bhugol Gautam - AI Developer & Full-Stack Engineer</title>
     <link rel="icon" href="loki.png" type="image/png">
     
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- AOS Animation Library -->
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Custom Styles -->
     <link rel="stylesheet" href="styles.css">
-    <link rel="shortcut icon" href="loki.png" type="image/x-icon">
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div id="loading-screen">
-        <div class="loading-content">
-            <div class="terminal-loader">
-                <div class="loader-text">
-                    <span class="loading-prompt">bhugol@portfolio:~$ </span>
-                    <span class="typing-text">Initializing system...</span>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">
+                <span class="logo-bracket">&lt;</span>
+                <span class="logo-text">BG</span>
+                <span class="logo-bracket">/&gt;</span>
+            </a>
+            
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <a href="cv.pdf" download class="btn-download">
+                    <i class="fas fa-download"></i>
+                    <span>Resume</span>
+                </a>
+            </div>
+            
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="badge-dot"></span>
+                    Available for opportunities
                 </div>
-                <div class="loading-bar">
-                    <div class="loading-progress"></div>
+                
+                <h1 class="hero-title">
+                    Hi, I'm <span class="gradient-text">Bhugol Gautam</span>
+                </h1>
+                
+                <h2 class="hero-subtitle">
+                    AI Developer & Full-Stack Engineer
+                </h2>
+                
+                <p class="hero-description">
+                    Building intelligent systems and scalable applications. Passionate about AI, machine learning, 
+                    and creating innovative solutions that make a difference.
+                </p>
+                
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">5+</div>
+                        <div class="stat-label">Projects</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">3+</div>
+                        <div class="stat-label">Technologies</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">2+</div>
+                        <div class="stat-label">Years Learning</div>
+                    </div>
                 </div>
-                <div class="system-logs">
-                    <div class="log-line">Loading AI modules...</div>
-                    <div class="log-line">Connecting to neural networks...</div>
-                    <div class="log-line">System ready!</div>
+                
+                <div class="hero-cta">
+                    <a href="#projects" class="btn btn-primary">
+                        View My Work
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="#contact" class="btn btn-secondary">
+                        Get In Touch
+                    </a>
+                </div>
+                
+                <div class="hero-social">
+                    <a href="https://github.com/13hugol" target="_blank" class="social-icon">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/bhugol-gautam-b33300310/" target="_blank" class="social-icon">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="mailto:bhugolgautam1@gmail.com" class="social-icon">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="code-window">
+                    <div class="window-header">
+                        <div class="window-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <div class="window-title">developer.js</div>
+                    </div>
+                    <div class="window-body">
+                        <pre><code><span class="code-keyword">const</span> <span class="code-variable">developer</span> = {
+  <span class="code-property">name</span>: <span class="code-string">"Bhugol Gautam"</span>,
+  <span class="code-property">role</span>: <span class="code-string">"AI Developer"</span>,
+  <span class="code-property">location</span>: <span class="code-string">"Kathmandu, Nepal"</span>,
+  <span class="code-property">education</span>: <span class="code-string">"Coventry University"</span>,
+  <span class="code-property">skills</span>: [
+    <span class="code-string">"Python"</span>,
+    <span class="code-string">"JavaScript"</span>,
+    <span class="code-string">"C#"</span>,
+    <span class="code-string">"Unity"</span>
+  ],
+  <span class="code-property">passion</span>: <span class="code-string">"Building AI solutions"</span>
+};</code></pre>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+        
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+            <span>Scroll to explore</span>
+        </div>
+    </section>
 
-    <!-- Header -->
-    <header class="header" id="header">
-        <nav class="navbar">
-            <div class="nav-brand">
-                <div class="logo">
-                    <svg viewBox="0 0 50 50" class="logo-svg">
-                        <text x="25" y="32" text-anchor="middle" class="logo-text">BG</text>
-                    </svg>
-                </div>
-                <div class="brand-text">
-                    <div class="brand-line1">Bhugol Gautam</div>
-                    <div class="brand-line2">AI_DEVELOPER.exe</div>
-                </div>
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Get to know me</span>
+                <h2 class="section-title">About Me</h2>
             </div>
             
-            <!-- Desktop Navigation -->
-            <ul class="nav-menu">
-                <li class="nav-item"><a href="#hero" class="nav-link">Home</a></li>
-                <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
-                <li class="nav-item"><a href="#skills" class="nav-link">Skills</a></li>
-                <li class="nav-item"><a href="#projects" class="nav-link">Projects</a></li>
-                <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
-                <li class="nav-item"><a href="#certificates" class="nav-link">Certs</a></li>
-            </ul>
-
-            <!-- Theme Toggle -->
-            <button class="theme-toggle" id="theme-toggle">
-                <i class="fas fa-moon"></i>
-            </button>
-
-            <!-- Mobile Menu Toggle -->
-            <div class="hamburger" id="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Building the Future with AI & Code</h3>
+                    <p>
+                        I'm a passionate developer currently studying at Coventry University, specializing in 
+                        AI development and full-stack engineering. My journey in tech is driven by curiosity 
+                        and a desire to create innovative solutions.
+                    </p>
+                    <p>
+                        From building real-time task marketplaces to creating immersive 3D games, I love 
+                        exploring different domains of software development. My focus is on AI and machine 
+                        learning, where I'm constantly learning and building projects that push boundaries.
+                    </p>
+                    
+                    <div class="about-highlights">
+                        <div class="highlight-item">
+                            <i class="fas fa-code"></i>
+                            <div>
+                                <h4>Full-Stack Development</h4>
+                                <p>Building scalable web applications with modern technologies</p>
+                            </div>
+                        </div>
+                        <div class="highlight-item">
+                            <i class="fas fa-brain"></i>
+                            <div>
+                                <h4>AI & Machine Learning</h4>
+                                <p>Exploring neural networks and computer vision applications</p>
+                            </div>
+                        </div>
+                        <div class="highlight-item">
+                            <i class="fas fa-gamepad"></i>
+                            <div>
+                                <h4>Game Development</h4>
+                                <p>Creating engaging experiences with Unity and C#</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-image">
+                    <div class="image-wrapper">
+                        <img src="profile.png" alt="Bhugol Gautam">
+                        <div class="image-overlay"></div>
+                    </div>
+                </div>
             </div>
-        </nav>
-    </header>
+        </div>
+    </section>
 
-    <!-- Main Content -->
-    <main>
-        <!-- Hero Section -->
-        <section id="hero" class="hero">
-            <div class="matrix-rain"></div>
-            <div class="particles"></div>
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">My work</span>
+                <h2 class="section-title">Featured Projects</h2>
+            </div>
             
-            <div class="container">
-                <div class="hero-content">
-                    <!-- Left Column: Terminal Window -->
-                    <div class="hero-left">
-                        <!-- Profile Picture -->
-                        <div class="profile-section" data-aos="fade-right">
-                            <div class="profile-image">
-                                <img src="profile.png" alt="Bhugol Gautam" id="profile-pic">
-                                <div class="profile-border"></div>
-                                <div class="profile-glow"></div>
-                            </div>
-                            <div class="profile-info">
-                                <h2 class="profile-name">Bhugol Gautam</h2>
-                                <p class="profile-title">AI Developer & Game Creator</p>
-                                <div class="profile-status">
-                                    <div class="status-dot"></div>
-                                    <span>Available for collaboration</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Right Column: Terminal Window -->
-                    <div class="terminal-window" data-aos="fade-up">
-                        <div class="terminal-header">
-                            <div class="terminal-controls">
-                                <span class="control red"></span>
-                                <span class="control yellow"></span>
-                                <span class="control green"></span>
-                            </div>
-                            <div class="terminal-title">bhugol@portfolio:~</div>
-                        </div>
-                        
-                        <div class="terminal-body">
-                            <div class="terminal-line">
-                                <span class="prompt">bhugol@portfolio:~$ </span>
-                                <span class="command">whoami</span>
-                            </div>
-                            <div class="terminal-output">Bhugol Gautam</div>
-                            
-                            <div class="terminal-line">
-                                <span class="prompt">bhugol@portfolio:~$ </span>
-                                <span class="command">cat ~/.profile</span>
-                            </div>
-                            <div class="terminal-output profile-output">
-                                <div class="profile-line"><span class="key">ROLE:</span> AI Developer & Game Creator</div>
-                                <div class="profile-line"><span class="key">UNIVERSITY:</span> Coventry University</div>
-                                <div class="profile-line"><span class="key">FOCUS:</span> AI, ML, Computer Vision</div>
-                                <div class="profile-line"><span class="key">STATUS:</span> Building AI foundation</div>
-                            </div>
-                            
-                            <div class="terminal-line">
-                                <span class="prompt">bhugol@portfolio:~$ </span>
-                                <span class="command">echo "$PHILOSOPHY"</span>
-                            </div>
-                            <div class="terminal-output philosophy">
-                                "Jack of all trades, master of none, but oftentimes better than master of one."
-                            </div>
-                            
-                            <div class="terminal-line">
-                                <span class="prompt">bhugol@portfolio:~$ </span>
-                                <span class="command">ls -la ~/skills/</span>
-                            </div>
-                            <div class="terminal-output skills-list">
-                                <div class="skill-item">drwxr-xr-x python/</div>
-                                <div class="skill-item">drwxr-xr-x csharp/</div>
-                                <div class="skill-item">drwxr-xr-x javascript/</div>
-                                <div class="skill-item">drwxr-xr-x unity/</div>
-                                <div class="skill-item">drwxr-xr-x machine-learning/ <span class="learning">(learning...)</span></div>
-                            </div>
-                            
-                            <div class="terminal-line">
-                                <span class="prompt">bhugol@portfolio:~$ </span>
-                                <span class="command">./quick_actions.sh</span>
-                            </div>
-                            <div class="terminal-actions">
-                                <button class="terminal-btn" onclick="downloadCV()">
-                                    <i class="fas fa-download"></i> ./download_cv.sh
-                                </button>
-                                <button class="terminal-btn" onclick="scrollToSection('projects')">
-                                    <i class="fas fa-folder"></i> ./view_projects.sh
-                                </button>
-                            </div>
-                            
-                            <div class="terminal-line cursor">
-                                <span class="prompt">bhugol@portfolio:~$ </span>
-                                <span class="cursor-blink">_</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- System Status Panel -->
-                    <div class="status-panel" data-aos="fade-left" data-aos-delay="300">
-                        <div class="status-header">
-                            <i class="fas fa-server"></i>
-                            <h3>SYSTEM STATUS</h3>
-                        </div>
-                        <div class="status-content">
-                            <div class="status-stats">
-                                <div class="stat-item">
-                                    <span class="stat-label">Uptime:</span>
-                                    <span class="stat-value">24/7 Learning Mode</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span class="stat-label">CPU:</span>
-                                    <span class="stat-value">AI Processing Unit</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span class="stat-label">Memory:</span>
-                                    <span class="stat-value">Expanding Knowledge</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span class="stat-label">Processes:</span>
-                                    <span class="stat-value">∞ Ideas Running</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span class="stat-label">Network:</span>
-                                    <span class="stat-value">Connected to Future</span>
-                                </div>
-                            </div>
-                            
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- About Section -->
-        <section id="about" class="about">
-            <div class="container">
-                <h2 class="section-title" data-aos="fade-up">About & Learning Path</h2>
-                
-                <div class="about-content">
-                    <div class="about-card" data-aos="fade-up" data-aos-delay="100">
-                        <h3>My Journey</h3>
-                        <p>Building the foundation for AI development through hands-on experience with cutting-edge technologies. From game development to machine learning, I explore the intersection of creativity and artificial intelligence.</p>
-                        
-                        <ul class="journey-points">
-                            <li><i class="fas fa-robot"></i> AI & Machine Learning Enthusiast</li>
-                            <li><i class="fas fa-gamepad"></i> Game Development Creator</li>
-                            <li><i class="fas fa-cogs"></i> System Innovation Advocate</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="about-card" data-aos="fade-up" data-aos-delay="200">
-                        <h3>Current Focus</h3>
-                        <div class="focus-grid">
-                            <div class="focus-item">
-                                <i class="fas fa-brain"></i>
-                                <span>Exploring Neural Networks & Deep Learning</span>
-                            </div>
-                            <div class="focus-item">
-                                <i class="fas fa-eye"></i>
-                                <span>Computer Vision Applications</span>
-                            </div>
-                            <div class="focus-item">
-                                <i class="fas fa-gamepad"></i>
-                                <span>AI-Powered Game Mechanics</span>
-                            </div>
-                            <div class="focus-item">
-                                <i class="fas fa-code"></i>
-                                <span>Full-Stack Development</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Skills Section -->
-        <section id="skills" class="skills">
-            <div class="container">
-                <h2 class="section-title" data-aos="fade-up">Skills & Expertise</h2>
-                
-                <div class="skills-grid">
-                    <div class="skill-category" data-aos="fade-up" data-aos-delay="100">
-                        <h3>Programming Languages</h3>
-                        <div class="category-skills">
-                            <div class="skill-item">
-                                <div class="skill-header">
-                                    <span class="skill-name">Python</span>
-                                    <span class="skill-level" data-level="85">0%</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-progress" data-width="85"></div>
-                                </div>
-                            </div>
-                            
-                            <div class="skill-item">
-                                <div class="skill-header">
-                                    <span class="skill-name">C#</span>
-                                    <span class="skill-level" data-level="80">0%</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-progress" data-width="80"></div>
-                                </div>
-                            </div>
-                            
-                            <div class="skill-item">
-                                <div class="skill-header">
-                                    <span class="skill-name">JavaScript</span>
-                                    <span class="skill-level" data-level="75">0%</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-progress" data-width="75"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-category" data-aos="fade-up" data-aos-delay="200">
-                        <h3>Frameworks & Technology</h3>
-                        <div class="category-skills">
-                            <div class="skill-item">
-                                <div class="skill-header">
-                                    <span class="skill-name">Unity</span>
-                                    <span class="skill-level" data-level="75">0%</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-progress" data-width="75"></div>
-                                </div>
-                            </div>
-                            
-                            <div class="skill-item">
-                                <div class="skill-header">
-                                    <span class="skill-name">Web Development</span>
-                                    <span class="skill-level" data-level="70">0%</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-progress" data-width="70"></div>
-                                </div>
-                            </div>
-                            
-                            <div class="skill-item">
-                                <div class="skill-header">
-                                    <span class="skill-name">Android System</span>
-                                    <span class="skill-level" data-level="65">0%</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-progress" data-width="65"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-category" data-aos="fade-up" data-aos-delay="300">
-                        <h3>Specialization Areas</h3>
-                        <div class="specialty-skills">
-                            <div class="specialty-item">
-                                <i class="fas fa-gamepad"></i>
-                                <div class="specialty-content">
-                                    <h4>Game Development</h4>
-                                    <div class="specialty-level" data-level="80">80%</div>
-                                </div>
-                            </div>
-                            
-                            <div class="specialty-item">
-                                <i class="fas fa-server"></i>
-                                <div class="specialty-content">
-                                    <h4>Backend Systems</h4>
-                                    <div class="specialty-level" data-level="75">75%</div>
-                                </div>
-                            </div>
-                            
-                            <div class="specialty-item">
-                                <i class="fas fa-cogs"></i>
-                                <div class="specialty-content">
-                                    <h4>System Modification</h4>
-                                    <div class="specialty-level" data-level="70">70%</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-category future-goals" data-aos="fade-up" data-aos-delay="400">
-                        <h3>Future Goals</h3>
-                        <div class="category-skills">
-                            <div class="skill-item learning">
-                                <div class="skill-header">
-                                    <span class="skill-name">Machine Learning</span>
-                                    <span class="skill-level" data-level="25">0%</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-progress learning" data-width="25"></div>
-                                </div>
-                                <span class="learning-badge">Learning</span>
-                            </div>
-                            
-                            <div class="skill-item learning">
-                                <div class="skill-header">
-                                    <span class="skill-name">Computer Vision</span>
-                                    <span class="skill-level" data-level="20">0%</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-progress learning" data-width="20"></div>
-                                </div>
-                                <span class="learning-badge">Learning</span>
-                            </div>
-                            
-                            <div class="skill-item learning">
-                                <div class="skill-header">
-                                    <span class="skill-name">Neural Networks</span>
-                                    <span class="skill-level" data-level="30">0%</span>
-                                </div>
-                                <div class="skill-bar">
-                                    <div class="skill-progress learning" data-width="30" ></div>
-                                </div>
-                                <span class="learning-badge">Learning</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Projects Section -->
-        <section id="projects" class="projects">
-            <div class="container">
-                <h2 class="section-title" data-aos="fade-up">Featured Projects</h2>
-                
-                <div class="projects-grid">
-                    <div class="project-card" data-aos="fade-up" data-aos-delay="100">
-                        <div class="project-header">
-                            <h3>KaamParyo</h3>
+            <div class="projects-grid">
+                <!-- Project 1 -->
+                <div class="project-card featured">
+                    <div class="project-image">
+                        <div class="project-overlay">
                             <a href="https://github.com/13hugol/kaamparyo" target="_blank" class="project-link">
                                 <i class="fab fa-github"></i>
                             </a>
                         </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3>KaamParyo</h3>
+                            <span class="project-badge">Featured</span>
+                        </div>
                         <p class="project-description">
-                            Nepal's first real-time task marketplace with live GPS tracking. Connects people who need tasks done with skilled taskers, featuring GTA V-style live tracking and smart matching algorithms.
+                            Nepal's first real-time task marketplace with live GPS tracking. Features include 
+                            real-time matching, Socket.IO chat, escrow payments, and GalliMaps integration.
                         </p>
-                        <div class="project-tags">
-                            <span class="tag">Full-Stack</span>
-                            <span class="tag">Node.js</span>
-                            <span class="tag">Socket.IO</span>
-                            <span class="tag">MongoDB</span>
+                        <div class="project-tech">
+                            <span>Node.js</span>
+                            <span>MongoDB</span>
+                            <span>Socket.IO</span>
+                            <span>Redis</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/13hugol/kaamparyo" target="_blank" class="project-btn">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                            <a href="https://kaamparyo.vercel.app" target="_blank" class="project-btn">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
                         </div>
                     </div>
-                    
-                    <div class="project-card" data-aos="fade-up" data-aos-delay="200">
-                        <div class="project-header">
-                            <h3>Bahun-D-Run</h3>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="project-overlay">
                             <a href="https://github.com/13hugol/Bahun-D-Run" target="_blank" class="project-link">
                                 <i class="fab fa-github"></i>
                             </a>
                         </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3>Bahun-D-Run</h3>
+                        </div>
                         <p class="project-description">
-                            Immersive 3D endless runner game with dynamic world curving, power-ups, and character customization. Built with Unity for Android, featuring object pooling and 60+ FPS performance.
+                            Immersive 3D endless runner game with dynamic world curving, power-ups, and character 
+                            customization. Built with Unity for Android with 60+ FPS performance.
                         </p>
-                        <div class="project-tags">
-                            <span class="tag">Game Development</span>
-                            <span class="tag">Unity</span>
-                            <span class="tag">C#</span>
+                        <div class="project-tech">
+                            <span>Unity</span>
+                            <span>C#</span>
+                            <span>Android</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/13hugol/Bahun-D-Run" target="_blank" class="project-btn">
+                                <i class="fab fa-github"></i> Code
+                            </a>
                         </div>
                     </div>
-                    
-                    <div class="project-card" data-aos="fade-up" data-aos-delay="300">
-                        <div class="project-header">
-                            <h3>NewHoly</h3>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="project-overlay">
                             <a href="https://github.com/13hugol/NewHoly" target="_blank" class="project-link">
                                 <i class="fab fa-github"></i>
                             </a>
                         </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3>NewHoly School Platform</h3>
+                        </div>
                         <p class="project-description">
-                            Comprehensive digital platform for New Holy Cross School featuring public website and admin CMS. Includes admission portal, content management, and Cloudinary integration.
+                            Comprehensive digital platform for New Holy Cross School featuring public website, 
+                            admin CMS, admission portal, and content management with Cloudinary integration.
                         </p>
-                        <div class="project-tags">
-                            <span class="tag">Full-Stack</span>
-                            <span class="tag">Express.js</span>
-                            <span class="tag">MongoDB</span>
+                        <div class="project-tech">
+                            <span>Express.js</span>
+                            <span>MongoDB</span>
+                            <span>JWT</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/13hugol/NewHoly" target="_blank" class="project-btn">
+                                <i class="fab fa-github"></i> Code
+                            </a>
                         </div>
                     </div>
-                    
-                    <div class="project-card" data-aos="fade-up" data-aos-delay="400">
-                        <div class="project-header">
-                            <h3>Exhibitio Khwopa</h3>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="project-overlay">
                             <a href="https://github.com/13hugol/Exhibitio_Khwopa" target="_blank" class="project-link">
                                 <i class="fab fa-github"></i>
                             </a>
                         </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3>Exhibitio Khwopa</h3>
+                        </div>
                         <p class="project-description">
-                            Interactive exhibition system with QR code generation and real-time scanning. Features Nepali text-to-speech greetings and cloud-based membership verification using OpenCV.
+                            Interactive exhibition system with QR code generation, real-time scanning, and Nepali 
+                            text-to-speech greetings using OpenCV and computer vision.
                         </p>
-                        <div class="project-tags">
-                            <span class="tag">Computer Vision</span>
-                            <span class="tag">Python</span>
-                            <span class="tag">OpenCV</span>
+                        <div class="project-tech">
+                            <span>Python</span>
+                            <span>OpenCV</span>
+                            <span>gTTS</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/13hugol/Exhibitio_Khwopa" target="_blank" class="project-btn">
+                                <i class="fab fa-github"></i> Code
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Contact Section -->
-        <section id="contact" class="contact">
-            <div class="container">
-                <h2 class="section-title" data-aos="fade-up">Get In Touch</h2>
-                
-                <div class="contact-content" data-aos="fade-up" data-aos-delay="200">
-                    <div class="contact-intro">
-                        <p>I'm always open to discussing new opportunities, projects, and collaborations. Whether you have a question about AI, need help with a project, or just want to chat about technology, feel free to reach out!</p>
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">What I know</span>
+                <h2 class="section-title">Skills & Technologies</h2>
+            </div>
+            
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <div class="category-icon">
+                        <i class="fas fa-code"></i>
                     </div>
-                    
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <i class="fas fa-envelope"></i>
-                            <div class="contact-details">
-                                <h3>Email</h3>
-                                <a href="mailto:bhugolgautam1@gmail.com">bhugolgautam1@gmail.com</a>
+                    <h3>Languages</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">
+                            <span>Python</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 85%"></div>
                             </div>
                         </div>
-                        
-                        <div class="contact-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <div class="contact-details">
-                                <h3>Location</h3>
-                                <p>Kathmandu, Nepal</p>
+                        <div class="skill-item">
+                            <span>JavaScript</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 75%"></div>
                             </div>
                         </div>
-                        
-                        <div class="contact-item">
-                            <i class="fas fa-graduation-cap"></i>
-                            <div class="contact-details">
-                                <h3>Education</h3>
-                                <p>Student at Coventry University</p>
+                        <div class="skill-item">
+                            <span>C#</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 80%"></div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="social-links">
-                        <a href="https://github.com/13hugol" target="_blank" class="social-link">
-                            <i class="fab fa-github"></i>
-                            <span>GitHub</span>
-                        </a>
-                        <a href="https://www.linkedin.com/in/bhugol-gautam-b33300310/" target="_blank" class="social-link">
-                            <i class="fab fa-linkedin"></i>
-                            <span>LinkedIn</span>
-                        </a>
-                        <a href="https://www.facebook.com/Bhugol.gamer/" target="_blank" class="social-link">
-                            <i class="fab fa-facebook"></i>
-                            <span>Facebook</span>
-                        </a>
-                        <a href="https://www.instagram.com/loki616_/" target="_blank" class="social-link">
-                            <i class="fab fa-instagram"></i>
-                            <span>Instagram</span>
-                        </a>
-                    </div>
-                    
-                    <div class="contact-cta">
-                        <a href="mailto:bhugolgautam1@gmail.com" class="cta-button">
-                            <i class="fas fa-paper-plane"></i>
-                            Send Email
-                        </a>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- Certificates Section -->
-        <section id="certificates" class="certificates">
-            <div class="container">
-                <h2 class="section-title" data-aos="fade-up">Certificates & Achievements</h2>
-                
-                <div class="certificates-grid">
-                    <div class="certificate-card" data-aos="zoom-in" data-aos-delay="100" onclick="openCertModal('opencv-cert')">
-                        <div class="cert-icon">
-                            <i class="fas fa-camera-retro"></i>
-                        </div>
-                        <h3>OpenCV Certification</h3>
-                        <p>Computer Vision</p>
+                <div class="skill-category">
+                    <div class="category-icon">
+                        <i class="fas fa-layer-group"></i>
                     </div>
-                    
-                    <div class="certificate-card" data-aos="zoom-in" data-aos-delay="200" onclick="openCertModal('it-help-cert')">
-                        <div class="cert-icon">
-                            <i class="fas fa-tools"></i>
+                    <h3>Frameworks</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">
+                            <span>Node.js / Express</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 80%"></div>
+                            </div>
                         </div>
-                        <h3>IT Help Team Event Certificate</h3>
-                        <p>Technical Support</p>
+                        <div class="skill-item">
+                            <span>Unity Engine</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>Socket.IO</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 70%"></div>
+                            </div>
+                        </div>
                     </div>
-                    
-                    <div class="certificate-card" data-aos="zoom-in" data-aos-delay="300" onclick="openCertModal('unity-cert')">
-                        <div class="cert-icon">
-                            <i class="fab fa-unity"></i>
+                </div>
+
+                <div class="skill-category">
+                    <div class="category-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3>Tools & Databases</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">
+                            <span>MongoDB</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 75%"></div>
+                            </div>
                         </div>
-                        <h3>Unity Game Development Certificate</h3>
-                        <p>Game Development</p>
+                        <div class="skill-item">
+                            <span>Git / GitHub</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>OpenCV</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 65%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category learning">
+                    <div class="category-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Currently Learning</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">
+                            <span>Machine Learning</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill learning-fill" style="width: 30%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>Neural Networks</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill learning-fill" style="width: 25%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>Computer Vision</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill learning-fill" style="width: 35%"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Let's connect</span>
+                <h2 class="section-title">Get In Touch</h2>
+            </div>
+            
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Let's work together</h3>
+                    <p>
+                        I'm always open to discussing new projects, creative ideas, or opportunities to be part 
+                        of your vision. Feel free to reach out!
+                    </p>
+                    
+                    <div class="contact-methods">
+                        <a href="mailto:bhugolgautam1@gmail.com" class="contact-method">
+                            <div class="method-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="method-info">
+                                <h4>Email</h4>
+                                <p>bhugolgautam1@gmail.com</p>
+                            </div>
+                        </a>
+                        
+                        <a href="https://github.com/13hugol" target="_blank" class="contact-method">
+                            <div class="method-icon">
+                                <i class="fab fa-github"></i>
+                            </div>
+                            <div class="method-info">
+                                <h4>GitHub</h4>
+                                <p>@13hugol</p>
+                            </div>
+                        </a>
+                        
+                        <a href="https://www.linkedin.com/in/bhugol-gautam-b33300310/" target="_blank" class="contact-method">
+                            <div class="method-icon">
+                                <i class="fab fa-linkedin"></i>
+                            </div>
+                            <div class="method-info">
+                                <h4>LinkedIn</h4>
+                                <p>Bhugol Gautam</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <p>&copy; 2024 Bhugol Gautam. All rights reserved.</p>
-                <p class="footer-tagline">Built with 👍 using HTML, CSS, and JavaScript</p>
+                <div class="footer-left">
+                    <div class="footer-logo">
+                        <span class="logo-bracket">&lt;</span>
+                        <span class="logo-text">BG</span>
+                        <span class="logo-bracket">/&gt;</span>
+                    </div>
+                    <p>&copy; 2024 Bhugol Gautam. All rights reserved.</p>
+                </div>
+                
+                <div class="footer-social">
+                    <a href="https://github.com/13hugol" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/bhugol-gautam-b33300310/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="mailto:bhugolgautam1@gmail.com"><i class="fas fa-envelope"></i></a>
+                </div>
             </div>
         </div>
     </footer>
 
-    <!-- Certificate Modal -->
-    <div id="cert-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <div class="modal-body">
-                <img id="cert-image" src="" alt="Certificate">
-                <div class="modal-info">
-                    <h3 id="cert-title"></h3>
-                    <p id="cert-description"></p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Custom Cursor -->
-    <div id="custom-cursor">
-        <div class="cursor-dot"></div>
-        <div class="cursor-ring"></div>
-    </div>
-
-    <!-- Toast Notifications -->
-    <div id="toast-container"></div>
-
-    <!-- Scripts -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
