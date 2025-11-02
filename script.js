@@ -73,24 +73,31 @@ navLinks.forEach(link => {
 
 // Animate skill bars on scroll
 const skillBars = document.querySelectorAll('.skill-fill');
+let skillsAnimated = false;
 
 const animateSkills = () => {
-    skillBars.forEach(bar => {
-        const barPosition = bar.getBoundingClientRect().top;
-        const screenPosition = window.innerHeight;
+    const skillsSection = document.querySelector('.skills');
+    if (!skillsSection) return;
+    
+    const sectionPosition = skillsSection.getBoundingClientRect().top;
+    const screenPosition = window.innerHeight / 1.3;
+    
+    if (sectionPosition < screenPosition && !skillsAnimated) {
+        skillsAnimated = true;
         
-        if (barPosition < screenPosition) {
-            const width = bar.style.width;
+        skillBars.forEach(bar => {
+            const targetWidth = bar.style.width;
             bar.style.width = '0%';
+            
             setTimeout(() => {
-                bar.style.width = width;
+                bar.style.width = targetWidth;
             }, 100);
-        }
-    });
+        });
+    }
 };
 
 window.addEventListener('scroll', animateSkills);
-animateSkills(); // Initial check
+window.addEventListener('load', animateSkills);
 
 // Intersection Observer for fade-in animations
 const observerOptions = {
