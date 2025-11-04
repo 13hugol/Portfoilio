@@ -1,0 +1,368 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "color": {
+    "background": {
+      "pure-black": {
+        "$value": "#000000",
+        "$type": "color",
+        "$description": "OLED-optimized hero, sidebar, matrix rain base"
+      },
+      "near-black": {
+        "$value": "#0a0a0a",
+        "$type": "color",
+        "$description": "Main background surface"
+      },
+      "dark-surface": {
+        "$value": "#141414",
+        "$type": "color",
+        "$description": "Elevated cards, project containers (Level 1)"
+      },
+      "hover-surface": {
+        "$value": "#1e1e1e",
+        "$type": "color",
+        "$description": "Interactive hover states (Level 2)"
+      }
+    },
+    "matrix": {
+      "green-primary": {
+        "$value": "#00FF41",
+        "$type": "color",
+        "$description": "Terminal phosphor green - primary accent, CTAs, code highlights"
+      },
+      "green-hover": {
+        "$value": "#33FF66",
+        "$type": "color",
+        "$description": "Hover brightness boost"
+      },
+      "green-glow": {
+        "$value": "rgba(0, 255, 65, 0.5)",
+        "$type": "color",
+        "$description": "Glow effects, shadows, phosphor simulation"
+      },
+      "green-muted": {
+        "$value": "#22c55e",
+        "$type": "color",
+        "$description": "Desaturated secondary accents, icons"
+      }
+    },
+    "nepali": {
+      "lapis-blue": {
+        "$value": "#1A237E",
+        "$type": "color",
+        "$description": "Thangka lapis lazuli - hyperlinks, cultural badges"
+      },
+      "malachite-green": {
+        "$value": "#2E7D32",
+        "$type": "color",
+        "$description": "Thangka malachite - success states, secondary CTAs"
+      },
+      "warm-gold": {
+        "$value": "#FFD700",
+        "$type": "color",
+        "$description": "Gold leaf metaphor - dividers at 20% opacity, highlights"
+      },
+      "dhaka-ochre": {
+        "$value": "#D4A574",
+        "$type": "color",
+        "$description": "Tehrathum Dhaka natural dye - tertiary accents"
+      }
+    },
+    "text": {
+      "primary": {
+        "$value": "#E4E4E7",
+        "$type": "color",
+        "$description": "Zinc-200, 15.2:1 contrast - primary text, headlines"
+      },
+      "secondary": {
+        "$value": "#A1A1AA",
+        "$type": "color",
+        "$description": "Zinc-400, 8.9:1 contrast - secondary text, descriptions"
+      },
+      "tertiary": {
+        "$value": "#71717A",
+        "$type": "color",
+        "$description": "Zinc-500, 5.2:1 contrast - captions, metadata"
+      },
+      "matrix": {
+        "$value": "#00FF41",
+        "$type": "color",
+        "$description": "12.8:1 contrast - terminal output, code blocks"
+      }
+    },
+    "border": {
+      "subtle": {
+        "$value": "rgba(255, 255, 255, 0.1)",
+        "$type": "color",
+        "$description": "Card borders, separators"
+      },
+      "moderate": {
+        "$value": "rgba(255, 255, 255, 0.15)",
+        "$type": "color",
+        "$description": "Hover state borders"
+      },
+      "gold-divider": {
+        "$value": "rgba(255, 215, 0, 0.2)",
+        "$type": "color",
+        "$description": "Cultural section dividers with Dhaka motif"
+      }
+    },
+    "semantic": {
+      "error": {
+        "$value": "#DC2626",
+        "$type": "color",
+        "$description": "Form validation errors"
+      },
+      "success": {
+        "$value": "#2E7D32",
+        "$type": "color",
+        "$description": "Success states - uses Nepali malachite green"
+      },
+      "warning": {
+        "$value": "#D4A574",
+        "$type": "color",
+        "$description": "Warning states - uses Dhaka ochre"
+      }
+    }
+  },
+  "typography": {
+    "family": {
+      "monospace": {
+        "$value": "'JetBrains Mono', 'Fira Code', 'Courier New', monospace",
+        "$type": "fontFamily",
+        "$description": "Terminal interfaces, code blocks, hero typing"
+      },
+      "devanagari": {
+        "$value": "'Noto Sans Devanagari', system-ui",
+        "$type": "fontFamily",
+        "$description": "Nepali text, cultural quotes - shirorekha preserved"
+      },
+      "sans-primary": {
+        "$value": "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+        "$type": "fontFamily",
+        "$description": "Body text, descriptions"
+      },
+      "sans-display": {
+        "$value": "'Space Grotesk', 'Inter', sans-serif",
+        "$type": "fontFamily",
+        "$description": "Section headlines (non-code)"
+      }
+    },
+    "size": {
+      "hero": {
+        "$value": "3.5rem",
+        "$type": "dimension",
+        "$description": "56px - Terminal boot sequence intro"
+      },
+      "h1": {
+        "$value": "2.5rem",
+        "$type": "dimension",
+        "$description": "40px - Section headers"
+      },
+      "h2": {
+        "$value": "1.75rem",
+        "$type": "dimension",
+        "$description": "28px - Project titles"
+      },
+      "body-large": {
+        "$value": "1.125rem",
+        "$type": "dimension",
+        "$description": "18px - Intro paragraphs"
+      },
+      "body": {
+        "$value": "1rem",
+        "$type": "dimension",
+        "$description": "16px - Standard text"
+      },
+      "code": {
+        "$value": "0.875rem",
+        "$type": "dimension",
+        "$description": "14px - Terminal text, code blocks"
+      },
+      "caption": {
+        "$value": "0.8125rem",
+        "$type": "dimension",
+        "$description": "13px - Metadata, timestamps"
+      }
+    },
+    "weight": {
+      "regular": {
+        "$value": 400,
+        "$type": "fontWeight"
+      },
+      "semibold": {
+        "$value": 600,
+        "$type": "fontWeight"
+      },
+      "bold": {
+        "$value": 700,
+        "$type": "fontWeight"
+      }
+    },
+    "lineHeight": {
+      "tight": {
+        "$value": 1.1,
+        "$type": "number",
+        "$description": "Hero, large headlines"
+      },
+      "snug": {
+        "$value": 1.3,
+        "$type": "number",
+        "$description": "Headings"
+      },
+      "normal": {
+        "$value": 1.5,
+        "$type": "number",
+        "$description": "Body text"
+      },
+      "relaxed": {
+        "$value": 1.6,
+        "$type": "number",
+        "$description": "Large body, Devanagari (diacritic space)"
+      }
+    },
+    "letterSpacing": {
+      "tight": {
+        "$value": "-0.02em",
+        "$type": "dimension",
+        "$description": "Hero text"
+      },
+      "normal": {
+        "$value": "0em",
+        "$type": "dimension",
+        "$description": "Standard tracking"
+      },
+      "wide": {
+        "$value": "0.01em",
+        "$type": "dimension",
+        "$description": "Small text, captions"
+      }
+    }
+  },
+  "spacing": {
+    "xs": {
+      "$value": "0.5rem",
+      "$type": "dimension",
+      "$description": "8px - Icon padding, inline spacing"
+    },
+    "sm": {
+      "$value": "1rem",
+      "$type": "dimension",
+      "$description": "16px - Element gaps, button padding"
+    },
+    "md": {
+      "$value": "1.5rem",
+      "$type": "dimension",
+      "$description": "24px - Card padding compact, section gaps"
+    },
+    "lg": {
+      "$value": "2rem",
+      "$type": "dimension",
+      "$description": "32px - Card padding standard, grid gaps"
+    },
+    "xl": {
+      "$value": "3rem",
+      "$type": "dimension",
+      "$description": "48px - Section vertical spacing"
+    },
+    "2xl": {
+      "$value": "4rem",
+      "$type": "dimension",
+      "$description": "64px - Major section separation"
+    },
+    "3xl": {
+      "$value": "6rem",
+      "$type": "dimension",
+      "$description": "96px - Hero section padding vertical"
+    },
+    "4xl": {
+      "$value": "8rem",
+      "$type": "dimension",
+      "$description": "128px - Extra-large hero spacing"
+    }
+  },
+  "borderRadius": {
+    "sharp": {
+      "$value": "0.25rem",
+      "$type": "dimension",
+      "$description": "4px - Terminal windows (authentic feel)"
+    },
+    "small": {
+      "$value": "0.5rem",
+      "$type": "dimension",
+      "$description": "8px - Buttons, tags, small UI"
+    },
+    "medium": {
+      "$value": "0.75rem",
+      "$type": "dimension",
+      "$description": "12px - Cards, images"
+    },
+    "large": {
+      "$value": "1rem",
+      "$type": "dimension",
+      "$description": "16px - Modals, large containers"
+    }
+  },
+  "boxShadow": {
+    "card-base": {
+      "$value": "0 0 0 1px rgba(255,255,255,0.1), 0 4px 12px rgba(0,0,0,0.5)",
+      "$type": "shadow",
+      "$description": "Resting state cards - elevation via glow"
+    },
+    "card-hover": {
+      "$value": "0 0 0 1px rgba(0,255,65,0.3), 0 8px 24px rgba(0,0,0,0.6), 0 0 40px rgba(0,255,65,0.15)",
+      "$type": "shadow",
+      "$description": "Hover with matrix green glow"
+    },
+    "button-primary": {
+      "$value": "0 0 20px rgba(0,255,65,0.5), 0 0 40px rgba(0,255,65,0.3)",
+      "$type": "shadow",
+      "$description": "Matrix green phosphor glow on CTA"
+    },
+    "focus-ring": {
+      "$value": "0 0 0 3px rgba(0,255,65,0.5)",
+      "$type": "shadow",
+      "$description": "Keyboard focus states - WCAG compliant"
+    },
+    "photo-glow": {
+      "$value": "0 0 40px rgba(0,255,65,0.6)",
+      "$type": "shadow",
+      "$description": "Profile photo phosphor edge glow"
+    }
+  },
+  "animation": {
+    "duration": {
+      "fast": {
+        "$value": "150ms",
+        "$type": "duration",
+        "$description": "Icon hover, button state changes"
+      },
+      "standard": {
+        "$value": "250ms",
+        "$type": "duration",
+        "$description": "Card elevation, transitions"
+      },
+      "slow": {
+        "$value": "400ms",
+        "$type": "duration",
+        "$description": "Modals, terminal typing per character"
+      },
+      "breath": {
+        "$value": "2000ms",
+        "$type": "duration",
+        "$description": "Glow pulse, ambient animations"
+      }
+    },
+    "easing": {
+      "default": {
+        "$value": "ease-out",
+        "$type": "cubicBezier",
+        "$description": "90% of transitions"
+      },
+      "sharp": {
+        "$value": "cubic-bezier(0.4, 0.0, 0.2, 1)",
+        "$type": "cubicBezier",
+        "$description": "Sharp tech transitions"
+      }
+    }
+  }
+}
