@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState('hero')
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,8 +48,9 @@ const Navigation = () => {
 
   return (
     <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className={`fixed top-0 left-0 right-0 z-[9999] h-16 transition-all duration-300 ${
         isScrolled 
           ? 'bg-near-black/95 backdrop-blur-lg border-b border-border-subtle' 
@@ -58,44 +60,175 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto px-8 h-full flex items-center justify-between">
         {/* Logo */}
         <motion.div 
-          className="text-matrix-green-primary font-mono text-lg"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+          className="text-matrix-green-primary font-mono text-lg relative group cursor-pointer"
           whileHover={{ scale: 1.05 }}
         >
-          bhugol@portfolio:~$
+          <span className="relative z-10">bhugol@portfolio:~$</span>
+          <motion.span
+            className="absolute -inset-1 bg-matrix-green-primary/20 rounded blur-sm opacity-0 group-hover:opacity-100"
+            transition={{ duration: 0.3 }}
+          />
         </motion.div>
 
         {/* Navigation Links */}
-        <div className="hidden md:flex items-center space-x-6">
-          {navItems.map((item) => (
-            <button
+        <div className="hidden md:flex items-center space-x-3 relative">
+          {navItems.map((item, index) => (
+            <motion.div
               key={item.id}
-              onClick={() => scrollToSection(item.id)}
-              className={`px-4 py-2 rounded-small text-sm font-medium font-mono transition-all duration-200 relative ${
-                activeSection === item.id
-                  ? 'bg-matrix-green-primary text-pure-black shadow-matrix-glow'
-                  : 'bg-dark-surface/50 border border-border-subtle text-text-secondary hover:border-matrix-green-primary/50 hover:text-matrix-green-primary hover:bg-matrix-green-primary/10'
-              }`}
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ 
+                delay: 0.1 * index + 0.3,
+                duration: 0.5,
+                ease: [0.22, 1, 0.36, 1]
+              }}
+              className="relative"
+              onMouseEnter={() => setHoveredItem(item.id)}
+              onMouseLeave={() => setHoveredItem(null)}
             >
-              {item.label}
-              {activeSection === item.id && (
-                <motion.div
-                  layoutId="activeTab"
-                  className="absolute inset-0 rounded-small"
-                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                />
-              )}
-            </button>
+              <motion.button
+                onClick={() => scrollToSection(item.id)}
+                className={`relative px-4 py-2 rounded-small text-sm font-medium font-mono transition-all duration-200 overflow-hidden ${
+                  activeSection === item.id
+                    ? 'text-pure-black'
+                    : 'text-text-secondary'
+                }`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {/* Active background with glow */}
+                <AnimatePresence>
+                  {activeSection === item.id && (
+                    <motion.div
+                      layoutId="activeTab"
+                      className="absolute inset-0 bg-matrix-green-primary rounded-small"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.8 }}
+                      transition={{ 
+                        type: "spring", 
+                        stiffness: 400, 
+                        damping: 30 
+                      }}
+                    >
+                      {/* Pulsing glow effect */}
+                      <motion.div
+                        className="absolute inset-0 bg-matrix-green-primary rounded-small"
+                        animate={{
+                          boxShadow: [
+                            '0 0 20px rgba(0, 255, 65, 0.5)',
+                            '0 0 30px rgba(0, 255, 65, 0.8)',
+                            '0 0 20px rgba(0, 255, 65, 0.5)',
+                          ],
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: "easeInOut"
+                        }}
+                      />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                {/* Hover background */}
+                <AnimatePresence>
+                  {hoveredItem === item.id && activeSection !== item.id && (
+                    <motion.div
+                      className="absolute inset-0 bg-matrix-green-primary/10 border border-matrix-green-primary/50 rounded-small"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                    />
+                  )}
+                </AnimatePresence>
+
+                {/* Default background */}
+                {activeSection !== item.id && hoveredItem !== item.id && (
+                  <div className="absolute inset-0 bg-dark-surface/50 border border-border-subtle rounded-small" />
+                )}
+
+                {/* Text */}
+                <span className="relative z-10">{item.label}</span>
+
+                {/* Scanning line effect on hover */}
+                {hoveredItem === item.id && (
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-matrix-green-primary/30 to-transparent"
+                    initial={{ x: '-100%' }}
+                    animate={{ x: '100%' }}
+                    transition={{
+                      duration: 0.6,
+                      ease: "easeInOut"
+                    }}
+                  />
+                )}
+              </motion.button>
+            </motion.div>
           ))}
         </div>
 
         {/* CTA Button */}
         <motion.button
-          whileHover={{ scale: 1.05, boxShadow: '0 0 30px rgba(0, 255, 65, 0.8)' }}
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.8, duration: 0.5 }}
+          whileHover={{ 
+            scale: 1.05,
+            boxShadow: '0 0 30px rgba(0, 255, 65, 0.8)'
+          }}
           whileTap={{ scale: 0.95 }}
           onClick={() => scrollToSection('contact')}
-          className="bg-matrix-green-primary text-pure-black px-6 py-3 rounded-small font-bold text-sm font-mono hover:bg-matrix-green-hover transition-all duration-200 shadow-matrix-glow border-2 border-matrix-green-primary/20 hover:border-matrix-green-primary"
+          className="relative bg-matrix-green-primary text-pure-black px-6 py-3 rounded-small font-bold text-sm font-mono transition-all duration-200 border-2 border-matrix-green-primary/20 hover:border-matrix-green-primary overflow-hidden group"
         >
-          Contact Me
+          {/* Animated background gradient */}
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-r from-matrix-green-primary via-matrix-green-hover to-matrix-green-primary"
+            animate={{
+              x: ['-100%', '100%'],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+          />
+          
+          {/* Button text */}
+          <span className="relative z-10 flex items-center gap-2">
+            Contact Me
+            <motion.span
+              animate={{ x: [0, 3, 0] }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
+              →
+            </motion.span>
+          </span>
+
+          {/* Glow effect */}
+          <motion.div
+            className="absolute inset-0 opacity-0 group-hover:opacity-100"
+            animate={{
+              boxShadow: [
+                '0 0 20px rgba(0, 255, 65, 0.3)',
+                '0 0 40px rgba(0, 255, 65, 0.6)',
+                '0 0 20px rgba(0, 255, 65, 0.3)',
+              ],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
         </motion.button>
 
         {/* Mobile Menu Button */}
@@ -108,14 +241,30 @@ const Navigation = () => {
         </div>
       </div>
 
-      {/* Scroll Progress Bar */}
+      {/* Scroll Progress Bar with glow */}
       <motion.div
-        className="absolute bottom-0 left-0 h-0.5 bg-matrix-green-primary"
-        style={{
+        className="absolute bottom-0 left-0 h-0.5 bg-matrix-green-primary shadow-[0_0_10px_rgba(0,255,65,0.8)]"
+        initial={{ width: '0%' }}
+        animate={{ 
           width: isScrolled ? '100%' : '0%',
-          transition: 'width 0.1s ease-out'
         }}
-      />
+        transition={{ duration: 0.3, ease: "easeOut" }}
+      >
+        {/* Animated shimmer effect */}
+        {isScrolled && (
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent"
+            animate={{
+              x: ['-100%', '200%'],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+          />
+        )}
+      </motion.div>
     </motion.nav>
   )
 }
