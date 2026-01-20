@@ -263,15 +263,15 @@ const ProjectsSection = ({ projects }: ProjectsSectionProps) => {
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
               <div>
-                <div className="text-2xl font-bold text-matrix-green">5</div>
+                <div className="text-2xl font-bold text-matrix-green">6</div>
                 <div className="text-sm text-text-tertiary">Major Projects</div>
               </div>
               <div>
-                <div className="text-2xl font-bold text-matrix-green">20+</div>
+                <div className="text-2xl font-bold text-matrix-green">25+</div>
                 <div className="text-sm text-text-tertiary">Technologies</div>
               </div>
               <div>
-                <div className="text-2xl font-bold text-matrix-green">3</div>
+                <div className="text-2xl font-bold text-matrix-green">4</div>
                 <div className="text-sm text-text-tertiary">Domains</div>
               </div>
               <div>
