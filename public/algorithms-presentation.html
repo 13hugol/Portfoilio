@@ -3,28 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Algorithms Presentation: Sorting & Searching</title>
+    <title>Algorithms Presentation - Final V4</title>
     
-    <!-- GSAP for High-Performance Animation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    
-    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            /* Theme Colors: Dark Cyber */
             --bg-deep: #050507;
             --text-main: #FFFFFF;
-            
-            --algo-sort: #BB86FC;      /* Purple */
-            --algo-search: #03DAC6;    /* Teal */
-            --color-bad: #CF6679;      /* Red/Error */
-            --color-good: #27C93F;     /* Green/Success */
-            --color-process: #FFD600;  /* Yellow/Working */
-            
-            --glass-bg: rgba(20, 20, 30, 0.4);
+            --accent-primary: #3b82f6;
+            --glass-bg: rgba(255, 255, 255, 0.03);
             --glass-border: rgba(255, 255, 255, 0.08);
+            --font-head: 'Outfit', sans-serif;
+            --font-code: 'JetBrains Mono', monospace;
+            --color-good: #27C93F;
+            --color-bad: #FF5F56;
         }
 
         * { box-sizing: border-box; }
@@ -33,498 +27,304 @@
             margin: 0; padding: 0;
             background-color: var(--bg-deep);
             color: var(--text-main);
-            font-family: 'Outfit', sans-serif;
+            font-family: var(--font-head);
             overflow: hidden;
             height: 100vh; width: 100vw;
         }
 
-        /* --- BACKGROUND FX --- */
-        .moving-orb {
-            position: absolute; width: 50vw; height: 50vw;
-            background: var(--algo-sort);
-            border-radius: 50%;
-            filter: blur(140px);
-            opacity: 0.2;
-            z-index: -1;
+        /* --- BACKGROUND CHANNEL LOGO (Watermark) --- */
+        .channel-watermark {
+            position: fixed;
             top: 50%; left: 50%;
+            width: 70vh; height: 70vh;
             transform: translate(-50%, -50%);
-            pointer-events: none;
+            z-index: -1; pointer-events: none; opacity: 0.06;
+            background-image: url('https://i.ibb.co/Xzpqxny/image.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
         }
-
-        .matrix-grid {
+        
+        /* --- VISUAL FX --- */
+        .noise-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: -1; pointer-events: none;
-            mask-image: radial-gradient(circle, black 40%, transparent 90%);
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48ZmlsdGVyIGlkPSJ4Ij48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC42NSIgbnVtT2N0YXZlcz0iMyIgc3RpdGNoVGlsZXM9InN0aXRjaCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCN4KSIgb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==');
+            pointer-events: none; z-index: 10; opacity: 0.6;
+        }
+        
+        .scanlines {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+            background-size: 100% 4px;
+            pointer-events: none; z-index: 11;
         }
 
-        /* --- SLIDES --- */
-        .slide-container {
-            width: 100vw; height: 100vh;
-            position: relative;
-            perspective: 1000px;
+        .orb {
+            position: absolute; width: 60vw; height: 60vw;
+            background: var(--accent-primary);
+            border-radius: 50%; filter: blur(140px); opacity: 0.15;
+            top: 50%; left: 50%; transform: translate(-50%, -50%);
+            z-index: -2; pointer-events: none; will-change: transform, background;
+            transition: background 1.5s ease;
         }
+
+        /* --- SLIDE SYSTEM --- */
+        .slide-container { width: 100vw; height: 100vh; perspective: 1500px; }
 
         .slide {
-            position: absolute; inset: 0;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            text-align: center;
-            padding: 40px;
-            visibility: hidden; opacity: 0;
-            transform-style: preserve-3d;
+            position: absolute; inset: 0; display: none;
+            flex-direction: column; justify-content: center; align-items: center;
+            padding: 5vw; transform-style: preserve-3d;
         }
 
-        .slide.active { visibility: visible; }
+        .slide.active { display: flex; }
 
-        /* Typography */
         h1 {
-            font-size: 4.5rem; margin-bottom: 20px; line-height: 1;
+            font-size: clamp(3rem, 5vw, 6rem);
             background: linear-gradient(135deg, #fff 0%, #aaa 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-align: center; margin: 0 0 20px 0;
         }
+        h2 { font-size: clamp(2rem, 3vw, 3.5rem); margin-bottom: 30px; text-shadow: 0 5px 15px rgba(0,0,0,0.5);}
         
-        h2 { font-size: 2.8rem; color: #fff; margin-bottom: 30px; letter-spacing: -1px; }
+        .subtitle {
+            font-size: 1.5rem; letter-spacing: 2px; text-transform: uppercase;
+            opacity: 0.8; margin-bottom: 1rem; font-family: var(--font-code); font-weight: 700;
+        }
 
-        p, li { font-size: 1.2rem; color: #ccc; line-height: 1.6; max-width: 800px; }
-        
-        /* --- CARDS & GRID --- */
-        .grid-row {
-            display: flex; gap: 30px; justify-content: center;
-            width: 100%; max-width: 1300px; align-items: stretch;
+        .split-layout {
+            display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 6vw;
+            width: 100%; height: 70%; align-items: center; max-width: 1600px;
         }
+        .text-col { text-align: left; }
+        .visual-col { display: flex; justify-content: center; align-items: center; flex-direction: column;}
+
+        p, li { font-size: 1.25rem; color: #ccc; line-height: 1.7; margin-bottom: 1.5rem; }
+        ul { list-style: none; padding: 0; }
+        li::before { content: "› "; color: white; font-weight: bold; margin-right: 10px; }
 
         .card {
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
-            border-top: 1px solid rgba(255,255,255,0.2);
-            border-radius: 20px; padding: 30px;
-            backdrop-filter: blur(24px);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            flex: 1; text-align: left;
-            transition: transform 0.3s;
-        }
-
-        /* --- VISUALIZERS --- */
-        
-        /* Bar Graph for Sorting */
-        .sort-visual-container {
-            display: flex; align-items: flex-end; justify-content: center; gap: 5px;
-            height: 150px; width: 100%; margin: 20px 0; padding: 10px;
-            border-bottom: 2px solid #333;
-        }
-        .bar {
-            width: 20px; background: var(--algo-sort);
-            border-radius: 4px 4px 0 0;
-            transition: height 0.3s;
+            border-top: 1px solid rgba(255,255,255,0.15);
+            border-radius: 24px; padding: 30px;
+            backdrop-filter: blur(24px); box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            width: 100%; position: relative;
         }
         
-        /* Array Search Box */
-        .array-container {
-            display: flex; gap: 10px; justify-content: center; margin-top: 20px;
-        }
-        .array-node {
-            width: 50px; height: 50px;
-            border: 1px solid #555; background: #111; color: white;
-            display: flex; align-items: center; justify-content: center;
-            font-family: 'JetBrains Mono'; border-radius: 8px;
-            font-weight: bold; position: relative;
-        }
-        .idx-label { position: absolute; bottom: -20px; font-size: 10px; color: #777; }
+        .code-box { background:#222; padding:15px; margin-top:15px; border-radius:8px; font-family: var(--font-code); font-size: 0.9rem; color: #8BE9FD; border: 1px solid #444; }
 
-        /* Terminals */
-        .terminal-box {
-            background: #0d0d12; border: 1px solid #333; border-radius: 12px;
-            font-family: 'JetBrains Mono', monospace; overflow: hidden;
-            width: 100%; max-width: 800px; text-align: left;
-            margin: 20px auto 0;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-        }
-        .term-header { background: #1a1a23; padding: 10px 15px; border-bottom: 1px solid #333; }
-        .term-content { padding: 25px; color: #AAA; min-height: 200px; line-height: 1.8; }
+        /* Detail Cards */
+        .detail-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; width: 100%; max-width: 1600px; }
+        .detail-card { text-align: left; padding: 30px; border-left: 4px solid var(--accent-primary); transition: transform 0.3s; display: flex; flex-direction: column; justify-content: flex-start; }
+        .detail-card:hover { transform: translateY(-5px); background: rgba(255,255,255,0.06); }
+        .rw-list li strong { color: white; display:block; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; }
         
-        .code-keyword { color: #bb86fc; } /* purple */
-        .code-func { color: #03dac6; }    /* teal */
-        .code-num { color: #cf6679; }     /* red */
-
-        /* Nav */
-        .controls { position: fixed; bottom: 30px; right: 30px; display: flex; gap: 10px; z-index: 100; }
-        button {
-            width: 50px; height: 50px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2);
-            background: rgba(0,0,0,0.5); color: white; cursor: pointer; font-size: 20px; 
-            backdrop-filter: blur(10px); transition: 0.3s;
-        }
-        button:hover { background: white; color: black; }
+        /* Terminal */
+        .terminal { background: #111; border: 1px solid #333; border-radius: 12px; font-family: var(--font-code); width: 100%; max-width: 750px; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.6); margin-top: 20px; }
+        .term-bar { background: #1e1e1e; padding: 10px 15px; display: flex; gap: 8px; border-bottom: 1px solid #333; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .term-body { padding: 25px; min-height: 150px; color: #cfcfcf; font-size: 1rem; text-align: left; }
         
-        .progress-bar { position: fixed; bottom:0; left:0; height: 4px; background: var(--algo-search); width: 0%; z-index: 200; transition: width 0.5s;}
+        /* Array Visuals */
+        .sort-visual { width: 100%; height: 200px; display: flex; align-items: flex-end; justify-content: center; gap: 10px; }
+        .bar { width: 25px; border-radius: 4px 4px 0 0; position: relative; }
+        
+        .array-row { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
+        .array-item { width: 50px; height: 60px; border: 1px solid #555; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); }
+        .idx-lbl { font-size: 10px; color: #666; margin-bottom: 2px; }
+        .val-lbl { font-size: 20px; font-weight: bold; color: white; }
+        .array-item.active { border-color: #27C93F; background: rgba(39, 201, 63, 0.2); box-shadow: 0 0 15px rgba(39, 201, 63, 0.4); }
 
-        .highlight-text { font-weight: 700; color: white; }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
+        .progress-line { position: fixed; bottom: 0; left: 0; height: 4px; background: white; width: 0%; z-index: 100; transition: width 0.5s ease; }
+        .nav-btn { position: fixed; bottom: 40px; width: 50px; height: 50px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.5); color: #fff; cursor: pointer; backdrop-filter: blur(5px); transition: 0.3s; z-index: 100; }
+        .nav-prev { right: 110px; } .nav-next { right: 40px; }
+        .nav-btn:hover { background: #fff; color: #000; transform: scale(1.1); }
+        .highlight { font-weight: 700; color: white; }
 
     </style>
 </head>
 <body>
 
-    <!-- Ambience -->
-    <div id="orb" class="moving-orb"></div>
-    <div class="matrix-grid"></div>
-    <div class="progress-bar" id="progressBar"></div>
+    <div class="channel-watermark"></div>
+    <div class="noise-overlay"></div>
+    <div class="scanlines"></div>
+    <div class="orb" id="orb"></div>
+    <div class="progress-line" id="progressBar"></div>
 
-    <div class="slide-container" id="shaker">
+    <div class="slide-container" id="container"></div>
 
-        <!-- 0. Title -->
-        <section class="slide active">
-            <h1>Algorithms</h1>
-            <h2 style="color: var(--algo-search); margin-top:0;">Sorting & Searching</h2>
-            <div style="font-size:1.5rem; opacity: 0.7; margin-top:20px;">The Invisible Engine of Computing</div>
-            <p style="margin-top:40px; font-size:0.9rem; letter-spacing: 2px;">PRESS ❯ TO START</p>
-        </section>
-
-        <!-- 1. Intro -->
-        <section class="slide">
-            <h2>Brief Introduction</h2>
-            <div class="grid-row">
-                <div class="card" style="border-left: 4px solid var(--algo-sort)">
-                    <h3>Order from Chaos</h3>
-                    <p>An algorithm is simply a step-by-step instruction set to solve a problem.</p>
-                    <p style="margin-top:15px">Without them, data would be a messy pile. With them, we transform raw data into actionable information.</p>
-                </div>
-                <div class="card" style="border-left: 4px solid var(--algo-search)">
-                    <h3>Two Pillars</h3>
-                    <ul style="padding-left: 20px; margin-top:10px;">
-                        <li style="color: var(--algo-sort)"><strong>Sorting:</strong> Arranging data (A-Z, 1-100).</li>
-                        <li style="color: var(--algo-search)"><strong>Searching:</strong> Finding specific data efficiently.</li>
-                    </ul>
-                    <p style="font-size:0.9rem; opacity:0.8; margin-top:10px;">If you can't sort it, you can't search it efficiently.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 2. Why We Need Them -->
-        <section class="slide">
-            <h2>Why Are They Needed?</h2>
-            <div class="grid-row">
-                <!-- Sorting Reason -->
-                <div class="card">
-                    <h3 style="color: var(--algo-sort);">1. Why Sort?</h3>
-                    <div style="font-family:'JetBrains Mono'; margin: 15px 0; color:#555;">
-                        [9, 2, 5, 1] ➝ <span style="color:var(--algo-sort)">[1, 2, 5, 9]</span>
-                    </div>
-                    <ul>
-                        <li><strong>Performance:</strong> Pre-req for efficient searching.</li>
-                        <li><strong>Readability:</strong> Users need price (Low-High) or Name (A-Z).</li>
-                        <li><strong>Optimization:</strong> Identifying duplicates easily.</li>
-                    </ul>
-                </div>
-                <!-- Searching Reason -->
-                <div class="card">
-                    <h3 style="color: var(--algo-search);">2. Why Search?</h3>
-                    <div style="font-family:'JetBrains Mono'; margin: 15px 0; color:#555;">
-                         Find 'User 404' in 1 Billion rows
-                    </div>
-                    <ul>
-                        <li><strong>Data Retrieval:</strong> Database queries, logins, file systems.</li>
-                        <li><strong>Speed:</strong> Navigating without checking every single item.</li>
-                        <li><strong>Connectivity:</strong> Routing packets on the internet.</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- 3. How Sorting Works (The Big 3) -->
-        <section class="slide">
-            <h2>Sorting Algorithms Explained</h2>
-            <div class="grid-row">
-                <!-- Bubble -->
-                <div class="card" style="flex:0.8">
-                    <h4>🫧 Bubble Sort</h4>
-                    <p style="font-size:0.9rem">Step through the list, compare neighbors, swap if wrong.</p>
-                    <div class="sort-visual-container" id="viz-bubble">
-                        <div class="bar" style="height:30px"></div><div class="bar" style="height:50px"></div><div class="bar" style="height:20px"></div><div class="bar" style="height:80px"></div>
-                    </div>
-                    <div style="font-size:0.8rem; color:#777; text-align:center;">Simple but Slow O(n²)</div>
-                </div>
-
-                <!-- Merge -->
-                <div class="card">
-                    <h4>⚡ Merge Sort</h4>
-                    <p style="font-size:0.9rem">"Divide and Conquer". Split list in half recursively, then merge sorted halves.</p>
-                    <div class="diagram-container" style="height:100px; display:flex; justify-content:center; align-items:center;">
-                        <div style="color: var(--algo-sort); font-family:'JetBrains Mono'">
-                            [8 3 2 9]<br>⬇<br>[8 3] [2 9]<br>⬇<br>[3 8 2 9]
-                        </div>
-                    </div>
-                    <div style="font-size:0.8rem; color:#777; text-align:center; margin-top:10px;">Consistent O(n log n)</div>
-                </div>
-
-                <!-- Quick -->
-                <div class="card">
-                    <h4>🚀 Quick Sort</h4>
-                    <p style="font-size:0.9rem">Pick a "pivot". Throw smaller items to left, larger to right. Repeat.</p>
-                     <div class="diagram-container" style="height:100px; position:relative; display:flex; justify-content:center; align-items:center;">
-                         <div style="width:10px; height:40px; background:white; margin:0 5px;"></div>
-                         <div style="font-size:0.8rem;">⬅ Smaller | <strong>Pivot</strong> | Larger ➡</div>
-                    </div>
-                    <div style="font-size:0.8rem; color:#777; text-align:center; margin-top:10px;">Very Fast usually O(n log n)</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 4. Searching Mechanisms -->
-        <section class="slide">
-            <h2>How Searching Works</h2>
-            <div class="grid-row">
-                <div class="card">
-                    <h3 style="color: #bbb;">🐌 Linear Search</h3>
-                    <p>Check index 0. Is it X? No.<br>Check index 1. Is it X? No.<br>Check index 2...</p>
-                    <div style="background:#222; padding:10px; margin-top:15px; border-radius:8px;">
-                        <code>for (i in list) if i == x return true</code>
-                    </div>
-                    <p style="margin-top:10px; color:var(--color-bad)">Inefficient: O(n)</p>
-                </div>
-                <div class="card" style="border-color: var(--algo-search);">
-                    <h3 style="color: var(--algo-search);">🧠 Binary Search</h3>
-                    <p>Requires <strong>Sorted</strong> list. <br>Go to middle. Is X bigger? Ignore left half.</p>
-                    <div style="background:#222; padding:10px; margin-top:15px; border-radius:8px;">
-                         <code>while low <= high: mid = (L+H)/2...</code>
-                    </div>
-                    <p style="margin-top:10px; color:var(--color-good)">Efficient: O(log n)</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 5. Real World Apps -->
-        <section class="slide">
-            <h2>Practical Real-World Applications</h2>
-            <div class="grid-row" style="flex-wrap: wrap;">
-                
-                <div class="card" style="flex: 1 1 30%;">
-                    <div style="font-size:3rem">🛍️</div>
-                    <h4>E-Commerce</h4>
-                    <p style="font-size:0.9rem">Sorting millions of products by Price, Rating, or Relevance instantly.</p>
-                </div>
-
-                <div class="card" style="flex: 1 1 30%;">
-                    <div style="font-size:3rem">📍</div>
-                    <h4>Pathfinding</h4>
-                    <p style="font-size:0.9rem">Google Maps using specialized search algorithms (A*, Dijkstra) to find shortest routes.</p>
-                </div>
-
-                <div class="card" style="flex: 1 1 30%;">
-                    <div style="font-size:3rem">🧬</div>
-                    <h4>Genomics</h4>
-                    <p style="font-size:0.9rem">DNA sequencing relies heavily on sorting fragments and searching for pattern matches.</p>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- 6. Interactive Sample (Binary Search Step-by-Step) -->
-        <section class="slide">
-            <h2>Binary Search: Step-by-Step</h2>
-            <p>Target: <strong style="color: var(--algo-search); font-size:1.4rem;">42</strong></p>
-            
-            <!-- Visualization -->
-            <div class="array-container" id="bs-array">
-                <!-- Javascript will generate nodes here -->
-            </div>
-
-            <!-- Terminal Code Output -->
-            <div class="terminal-box">
-                <div class="term-header">
-                     <span style="color:#27C93F">●</span> algo_exec.js
-                </div>
-                <div class="term-content" id="code-trace">
-                    <div id="trace-l1" style="opacity:0.3">let low = 0, high = 6;</div>
-                    <div id="trace-l2" style="opacity:0.3">mid = floor((0 + 6) / 2) -> Index 3 (Value: 23)</div>
-                    <div id="trace-l3" style="opacity:0.3">23 < 42 ? Yes. Low = mid + 1</div>
-                    <div id="trace-l4" style="opacity:0.3">New Range: Index 4 to 6... Found!</div>
-                </div>
-            </div>
-
-            <button onclick="runBinarySearchAnim()" style="margin-top:20px; width:auto; padding:0 20px; border-radius:20px; background:var(--algo-search);">
-                Run Visual
-            </button>
-        </section>
-
-        <!-- 7. Thank You -->
-        <section class="slide">
-            <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%;">
-                <div style="font-size:5rem; margin-bottom:30px; animation: float 3s ease-in-out infinite;">🙏</div>
-                <h1 style="margin-bottom:20px;">Thank You!</h1>
-                <p style="font-size:1.3rem; color:#ccc; margin-bottom:50px; max-width:600px;">
-                    I hope this presentation helped clarify how sorting and searching algorithms work
-                </p>
-                
-                <div class="card" style="width:90%; max-width:700px; text-align:center; padding:40px;">
-                    <h2 style="color:var(--algo-search); margin-bottom:20px; margin-top:0;">Any Questions?</h2>
-                    <p style="font-size:1.1rem; opacity:0.8; line-height:1.8;">
-                        Feel free to ask anything about:<br>
-                        <span style="color:var(--algo-sort)">• Sorting Algorithms</span><br>
-                        <span style="color:var(--algo-search)">• Searching Techniques</span><br>
-                        <span style="color:var(--color-process)">• Real-World Applications</span>
-                    </p>
-                </div>
-            </div>
-        </section>
-
-    </div>
-
-    <!-- UI Controls -->
-    <div class="controls">
-        <button onclick="navigate(-1)">❮</button>
-        <button onclick="navigate(1)">❯</button>
-    </div>
+    <button class="nav-btn nav-prev" onclick="nav(-1)">❮</button>
+    <button class="nav-btn nav-next" onclick="nav(1)">❯</button>
 
     <script>
-        gsap.registerPlugin();
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
-        const total = slides.length;
-        const shaker = document.getElementById('shaker');
-        const orb = document.getElementById('orb');
-        
-        // Define sorted array for Slide 6
-        const sortedData = [4, 8, 15, 23, 42, 56, 89]; 
-        let isMoving = false;
+        const slidesConfig = [
+            // 1. Intro
+            { layout: 'centered', themeColor: '#3b82f6', subtitle: "Module 1.0", title: "Searching & Sorting", content: `<div style="margin-top:20px; font-size: 1.1rem; opacity:0.7">Optimizing Data Retrieval</div>` },
+            
+            // 2. Definition
+            { layout: 'split', themeColor: '#8b5cf6', title: "Introduction", leftText: `<p>In computer science, performance is defined by how we <strong>store</strong> and <strong>retrieve</strong> data.</p><ul><li><span class="highlight">Sorting:</span> Creating order from chaos.</li><li><span class="highlight">Searching:</span> Finding the needle in the haystack.</li></ul>`, rightHTML: `<div class="card" style="text-align:center; padding:50px; display:flex; justify-content:center;"><svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:150px;height:150px;filter:drop-shadow(0 0 20px #8b5cf6)"><path d="M4 6H14" /><path d="M4 12H10" /><path d="M4 18H8" /><circle cx="16" cy="14" r="5" stroke="white" stroke-width="2"/><path d="M20 18L22 20" stroke="white" stroke-width="2"/></svg></div>` },
+            
+            // 3. Why Sort
+            { layout: 'split', themeColor: '#FFD600', title: "Why Sort?", leftText: `<p>Sorting enables speed. Unsorted data forces the computer to check every single item.</p><ul><li>Required for <strong>Binary Search</strong>.</li><li>Essential for data presentation.</li></ul>`, rightHTML: `<div class="card"><h3>Impact</h3><p>Unsorted = Slow O(n)</p><p style="color:var(--color-good)">Sorted = Fast O(log n)</p></div>` },
+            
+            // 4. Why Search
+            { layout: 'centered', themeColor: '#10B981', title: "Why Search?", subtitle: "Retrieval", content: `<div style="max-width:800px; text-align:center"><p>Searching is the backbone of databases, search engines, and AI lookups.</p></div>` },
+            
+            // SORTING ALGO SLIDES
+            { layout: 'split', themeColor: '#00C2CB', title: "1. Quick Sort", subtitle: "Divide & Conquer", leftText: `<p>Efficient and Standard.</p><ul><li>Pick Pivot.</li><li>Partition: Small to Left, Large to Right.</li><li>Speed: <code>O(n log n)</code>.</li></ul>`, rightHTML: `<div class="card"><div class="sort-visual"><div class="bar" style="height:30%; background:#444;"></div><div class="bar" style="height:20%; background:#444;"></div><div class="bar" style="height:50%; background:#00C2CB; box-shadow:0 0 20px #00C2CB;"><span>Pivot</span></div><div class="bar" style="height:80%; background:#555;"></div><div class="bar" style="height:90%; background:#555;"></div></div></div>` },
+            { layout: 'split', themeColor: '#FF5F56', title: "2. Bubble Sort", subtitle: "The Basic", leftText: `<p>Repeatedly swaps adjacent elements.</p><ul><li>Swaps neighbors if order is wrong.</li><li>Bubbles largest to top.</li><li><strong>Slow</strong>: <code>O(n²)</code>.</li></ul>`, rightHTML: `<div class="card"><div class="sort-visual"><div class="bar" style="height:30%; background:#444;"></div><div class="bar" style="height:60%; background:#FF5F56;"><span>A</span></div><div class="bar" style="height:40%; background:#FF5F56;"><span>B</span></div><div class="bar" style="height:80%; background:#333;"></div></div></div>` },
+            { layout: 'split', themeColor: '#F472B6', title: "3. Merge Sort", subtitle: "Stable", leftText: `<p>Breaks list to singles, then merges.</p><ul><li>Phase 1: Split.</li><li>Phase 2: Merge in order.</li><li>Reliable <code>O(n log n)</code>.</li></ul>`, rightHTML: `<div class="card"><h3 style="text-align:center; color:#F472B6">Recursive Merge</h3><div style="text-align:center; margin-top:15px; border:1px solid #F472B6; padding:10px;">Sorted [20, 50]</div></div>` },
 
-        // Background Theme logic
-        const themes = [
-            { color: '#BB86FC' }, // Title (Purple)
-            { color: '#03DAC6' }, // Intro (Teal)
-            { color: '#555' },    // Needed (Gray)
-            { color: '#BB86FC' }, // Sort (Purple)
-            { color: '#03DAC6' }, // Search (Teal)
-            { color: '#FFD600' }, // Real World (Yellow)
-            { color: '#CF6679' }, // Code (Red tint)
-            { color: '#FFFFFF' }  // End
+            // --- COMPARISON (SEARCH INTRO) ---
+            { 
+                layout: 'split', 
+                themeColor: '#fff', 
+                title: "How Searching Works",
+                leftText: `
+                    <div class="card" style="margin-bottom:20px; border-left:4px solid #bbb;">
+                        <h3>🐌 Linear Search</h3>
+                        <p>Check index 0. Is it X? No.<br>Check index 1. Is it X? No.<br>Check index 2...</p>
+                        <div class="code-box">for (i in list) if i == x return true</div>
+                        <p style="margin-top:5px; color:var(--color-bad)">Inefficient: O(n)</p>
+                    </div>
+                `, 
+                rightHTML: `
+                    <div class="card" style="border-left:4px solid var(--accent-primary);">
+                        <h3 style="color: var(--accent-primary);">🧠 Binary Search</h3>
+                        <p>Requires <strong>Sorted</strong> list. <br>Go to middle. Is X bigger? Ignore left half.</p>
+                         <div class="code-box">while low <= high: mid = (L+H)/2...</div>
+                        <p style="margin-top:5px; color:var(--color-good)">Efficient: O(log n)</p>
+                    </div>
+                `
+            },
+
+            /* --- NEW: BINARY SEARCH DEMO --- */
+            {
+                layout: 'binary-demo',
+                themeColor: '#27C93F', // Matrix Green
+                title: "Binary Search: Step-by-Step",
+                subtitle: "Finding Target: 42",
+                // Provide visual array logic in logic engine below
+                cmd: "node algo_exec.js",
+                output: [
+                   "let low = 0, high = 6;",
+                   "mid = floor((0 + 6) / 2) -> Index 3 (Value: 23)",
+                   "23 < 42 ? Yes. Low = mid + 1 (Go Right)",
+                   "-----------------------------------",
+                   "New Range: Index 4 to 6",
+                   "Check Index 4 (Value: 42)... MATCH FOUND!" 
+                ]
+            },
+
+            // Real World
+            {
+                layout: 'centered', themeColor: '#FFA000', title: "Real World Applications",
+                content: `
+                    <div class="detail-grid" style="margin-top:30px;">
+                        <div class="card detail-card" style="border-left-color:#FFA000"><h3>🛍️ Retail</h3><ul class="rw-list"><li><strong>Sorting:</strong> "Price: Low to High"</li><li><strong>Search:</strong> Autocomplete products.</li></ul></div>
+                        <div class="card detail-card" style="border-left-color:#E1306C"><h3>📱 Social</h3><ul class="rw-list"><li><strong>Algo:</strong> Feed sorted by Relevance.</li><li><strong>Search:</strong> User ID lookup.</li></ul></div>
+                        <div class="card detail-card" style="border-left-color:#10B981"><h3>🗺️ Maps</h3><ul class="rw-list"><li><strong>Path:</strong> Dijkstra's Graph Search.</li><li><strong>Proximity:</strong> Nearest driver.</li></ul></div>
+                    </div>
+                `
+            },
+
+            // End
+            { layout: 'centered', themeColor: '#3b82f6', title: "Summary", content: `<h3>Questions?</h3>` }
         ];
 
-        // Init First Slide
-        gsap.set(slides[0], { autoAlpha: 1 });
-        initBinaryVisual();
+        /* --- ENGINE --- */
+        const container = document.getElementById('container');
+        const orb = document.getElementById('orb');
+        const progressBar = document.getElementById('progressBar');
+        let currentIdx = 0;
+        let isAnimating = false;
 
-        function navigate(dir) {
-            if(isMoving) return;
-            const nextSlide = currentSlide + dir;
+        slidesConfig.forEach((slideData, index) => {
+            const slideEl = document.createElement('section');
+            slideEl.className = 'slide' + (index === 0 ? ' active' : '');
+            let inner = '';
+            const subHtml = slideData.subtitle ? `<div class="subtitle" style="color:${slideData.themeColor}">${slideData.subtitle}</div>` : '';
 
-            if (nextSlide >= 0 && nextSlide < total) {
-                isMoving = true;
-                
-                // Shake effect
-                gsap.fromTo(shaker, 
-                    { x: -3 }, 
-                    { x: 3, duration: 0.04, repeat: 6, yoyo: true, ease: "rough" }
-                );
-
-                // Orb Transition
-                const th = themes[nextSlide] || themes[0];
-                gsap.to(orb, {
-                    background: th.color,
-                    duration: 1.2,
-                    ease: "power2.inOut"
-                });
-
-                // Slide Transition Logic
-                const tl = gsap.timeline({
-                    onComplete: () => {
-                        isMoving = false;
-                        if(nextSlide === 3) startSortAnim();
-                    }
-                });
-
-                tl.to(slides[currentSlide].children, { y: -50, opacity: 0, duration: 0.3, stagger: 0.05 });
-                tl.set(slides[currentSlide], { autoAlpha: 0 });
-
-                currentSlide = nextSlide;
-                
-                tl.set(slides[currentSlide], { autoAlpha: 1 });
-                tl.fromTo(slides[currentSlide].children, 
-                    { y: 50, opacity: 0 },
-                    { y: 0, opacity: 1, duration: 0.6, ease: "back.out(1.2)", stagger: 0.1 }
-                );
-
-                document.getElementById('progressBar').style.width = ((currentSlide + 1) / total) * 100 + "%";
+            // Handle Layouts
+            if(slideData.layout === 'centered') {
+                inner = `${subHtml}<h1>${slideData.title}</h1>${slideData.content || ''}`;
+            } else if (slideData.layout === 'split') {
+                inner = `<div class="split-layout"><div class="text-col">${subHtml}<h2>${slideData.title}</h2>${slideData.leftText}</div><div class="visual-col">${slideData.rightHTML}</div></div>`;
+            } else if (slideData.layout === 'binary-demo') {
+                // SPECIAL LAYOUT FOR BINARY DEMO
+                inner = `
+                    ${subHtml}
+                    <h2>${slideData.title}</h2>
+                    <div class="array-row">
+                        <div class="array-item"><div class="idx-lbl">0</div><div class="val-lbl">4</div></div>
+                        <div class="array-item"><div class="idx-lbl">1</div><div class="val-lbl">8</div></div>
+                        <div class="array-item"><div class="idx-lbl">2</div><div class="val-lbl">15</div></div>
+                        <div class="array-item"><div class="idx-lbl">3</div><div class="val-lbl">23</div></div>
+                        <div class="array-item active"><div class="idx-lbl">4</div><div class="val-lbl">42</div></div>
+                        <div class="array-item"><div class="idx-lbl">5</div><div class="val-lbl">56</div></div>
+                        <div class="array-item"><div class="idx-lbl">6</div><div class="val-lbl">89</div></div>
+                    </div>
+                    <div class="terminal">
+                        <div class="term-bar"><div class="dot" style="background:#ff5f56"></div><div class="dot" style="background:#ffbd2e"></div><div class="dot" style="background:#27c93f"></div> <span style="font-size:12px; margin-left:10px; opacity:0.5">● algo_exec.js</span></div>
+                        <div class="term-body" id="term-${index}">
+                            <div class="type-out" style="color:#aaa; margin-top:5px;"></div>
+                        </div>
+                    </div>
+                `;
             }
-        }
 
-        // --- Animations for specific slides ---
-
-        // Slide 3: Simple Bar sort visual
-        function startSortAnim() {
-            const bars = document.querySelectorAll('#viz-bubble .bar');
-            const timeline = gsap.timeline({ repeat: -1, repeatDelay: 1 });
-            // Randomly animate heights
-            timeline.to(bars, {
-                height: () => Math.random() * 80 + 20,
-                duration: 0.5, stagger: 0.1, ease: "power2.inOut"
-            })
-            // Then Sort visually (tallest to right)
-            .to(bars[0], { height: 20, backgroundColor: "#CF6679" }) // small
-            .to(bars[1], { height: 40, backgroundColor: "#CF6679" }, "<")
-            .to(bars[2], { height: 70, backgroundColor: "#CF6679" }, "<")
-            .to(bars[3], { height: 100, backgroundColor: "#27C93F" }, "<") // sorted color
-        }
-
-        // Slide 6: Binary Search Logic
-        function initBinaryVisual() {
-            const container = document.getElementById('bs-array');
-            container.innerHTML = '';
-            sortedData.forEach((val, idx) => {
-                const node = document.createElement('div');
-                node.className = 'array-node';
-                node.id = `node-${idx}`;
-                node.innerHTML = `${val} <span class="idx-label">${idx}</span>`;
-                container.appendChild(node);
-            });
-        }
-
-        function runBinarySearchAnim() {
-            // Reset Styles
-            initBinaryVisual();
-            gsap.set('.term-content div', { opacity: 0.3, color: '#AAA' });
-
-            const target = 42;
-            const timeline = gsap.timeline();
-            
-            // Step 1: Initialize
-            timeline.to('#trace-l1', { opacity: 1, color: '#fff', duration: 0.5 });
-            
-            // Step 2: First Middle (Idx 3, Value 23)
-            timeline.to('#node-3', { borderColor: '#FFD600', color: '#FFD600', scale: 1.1, duration: 0.5 }); // Highlight mid
-            timeline.to('#trace-l2', { opacity: 1, color: '#fff' });
-
-            // Step 3: Eliminate Left (0-3) because 23 < 42
-            timeline.to(['#node-0', '#node-1', '#node-2', '#node-3'], { 
-                opacity: 0.2, backgroundColor: '#330000', duration: 0.5 
-            });
-            timeline.to('#trace-l3', { opacity: 1, color: '#fff' });
-
-            // Step 4: New Middle (Idx 5, Value 56) -> Too high
-            timeline.to('#node-5', { borderColor: '#FFD600', color: '#FFD600', scale: 1.1, duration: 0.5 });
-            
-            // Step 5: Eliminate Right -> Find 42 (Idx 4)
-            timeline.to(['#node-5', '#node-6'], { opacity: 0.2 });
-            
-            // Step 6: Found
-            timeline.to('#node-4', { 
-                backgroundColor: '#27C93F', borderColor: '#27C93F', scale: 1.2, duration: 0.5 
-            });
-            timeline.to('#trace-l4', { opacity: 1, color: '#27C93F' });
-        }
-
-        // Keyboard support
-        window.addEventListener('keydown', (e) => {
-            if(e.key === "ArrowRight") navigate(1);
-            if(e.key === "ArrowLeft") navigate(-1);
+            slideEl.innerHTML = inner;
+            container.appendChild(slideEl);
         });
 
+        const slides = document.querySelectorAll('.slide');
+
+        function nav(dir) {
+            if(isAnimating) return;
+            const nextIdx = currentIdx + dir;
+            if(nextIdx < 0 || nextIdx >= slides.length) return;
+            isAnimating = true;
+
+            const nextColor = slidesConfig[nextIdx].themeColor || '#3b82f6';
+            const rndX = Math.random() * 80 + 10; const rndY = Math.random() * 80 + 10;
+            
+            gsap.to(orb, { background: nextColor, left: `${rndX}%`, top: `${rndY}%`, duration: 2, ease: "power2.inOut" });
+            progressBar.style.background = nextColor;
+
+            const tl = gsap.timeline({ onComplete: () => { 
+                isAnimating = false; currentIdx = nextIdx; updateProgress();
+                if(slidesConfig[currentIdx].layout === 'binary-demo') typeWriter(currentIdx);
+            }});
+
+            tl.to(slides[currentIdx], { scale: 0.95, opacity: 0, rotateX: 5, z: -50, duration: 0.5 });
+            tl.set(slides[currentIdx], { display: 'none' });
+            tl.set(slides[nextIdx], { display: 'flex', scale: 1.05, opacity: 0, rotateX: -5 });
+            tl.to(slides[nextIdx], { scale: 1, opacity: 1, rotateX: 0, z: 0, duration: 0.7, ease: "back.out(1)" });
+        }
+
+        function updateProgress() {
+            progressBar.style.width = ((currentIdx + 1) / slides.length) * 100 + '%';
+        }
+        
+        function typeWriter(idx) {
+            const config = slidesConfig[idx];
+            if(!config.output) return;
+            const target = document.querySelector(`#term-${idx} .type-out`);
+            target.innerHTML = ''; 
+            let delay = 0;
+            config.output.forEach(line => {
+                setTimeout(() => { target.innerHTML += `<div style="margin-top:5px">${line}</div>`; }, delay);
+                delay += 800; // Slower for effect
+            });
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if(e.key === "ArrowRight") nav(1);
+            if(e.key === "ArrowLeft") nav(-1);
+        });
+        
+        updateProgress();
     </script>
 </body>
 </html>
