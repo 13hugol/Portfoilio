@@ -10,6 +10,7 @@
     ],
     "module": "ESNext",
     "skipLibCheck": true,
+    "resolveJsonModule": true,
     /* Tailwind stuff */
     "baseUrl": ".",
     "paths": {

@@ -1,201 +1,164 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { Mail, Github, Linkedin, Globe, MapPin } from 'lucide-react'
+import { Mail, Github, Linkedin, Globe, MapPin, ArrowUpRight, Clock } from 'lucide-react'
+
+interface ContactInfo {
+  name: string
+  email: string
+  website: string
+  github: string
+  linkedin: string
+  location: string
+}
 
 interface ContactSectionProps {
-  contactInfo: {
-    name: string
-    email: string
-    website: string
-    github: string
-    linkedin: string
-    location: string
-  }
+  contactInfo: ContactInfo
 }
 
 const ContactSection = ({ contactInfo }: ContactSectionProps) => {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  })
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 })
 
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
+    visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
   }
-
   const itemVariants = {
     hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6 },
-    },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
   }
 
   const contactMethods = [
     {
-      icon: <Mail className="w-5 h-5" />,
+      icon: Mail,
       label: 'Email',
       value: contactInfo.email,
       href: `mailto:${contactInfo.email}`,
-      color: 'text-matrix-green'
+      color: 'text-nepali-lapis-blue',
+      borderColor: 'border-nepali-lapis-blue/30',
+      bgColor: 'bg-nepali-lapis-blue/10',
+      hoverBg: 'hover:bg-nepali-lapis-blue/20',
     },
     {
-      icon: <Github className="w-5 h-5" />,
+      icon: Github,
       label: 'GitHub',
-      value: 'github.com/13hugol',
-      href: `https://${contactInfo.github}`,
-      color: 'text-text-secondary'
+      value: contactInfo.github.replace('https://github.com/', 'github.com/'),
+      href: contactInfo.github.startsWith('http') ? contactInfo.github : `https://${contactInfo.github}`,
+      color: 'text-matrix-green',
+      borderColor: 'border-matrix-green/30',
+      bgColor: 'bg-matrix-green/10',
+      hoverBg: 'hover:bg-matrix-green/20',
     },
     {
-      icon: <Linkedin className="w-5 h-5" />,
+      icon: Linkedin,
       label: 'LinkedIn',
-      value: 'Bhugol Gautam',
-      href: contactInfo.linkedin,
-      color: 'text-nepali-lapis-blue'
+      value: contactInfo.linkedin.replace('https://linkedin.com/in/', 'linkedin.com/in/'),
+      href: contactInfo.linkedin.startsWith('http') ? contactInfo.linkedin : `https://${contactInfo.linkedin}`,
+      color: 'text-nepali-malachite-green',
+      borderColor: 'border-nepali-malachite-green/30',
+      bgColor: 'bg-nepali-malachite-green/10',
+      hoverBg: 'hover:bg-nepali-malachite-green/20',
     },
     {
-      icon: <Globe className="w-5 h-5" />,
+      icon: Globe,
       label: 'Website',
-      value: contactInfo.website,
-      href: `https://${contactInfo.website}`,
-      color: 'text-nepali-malachite-green'
-    }
+      value: contactInfo.website.replace(/^https?:\/\//, ''),
+      href: contactInfo.website.startsWith('http') ? contactInfo.website : `https://${contactInfo.website}`,
+      color: 'text-nepali-warm-gold',
+      borderColor: 'border-nepali-warm-gold/30',
+      bgColor: 'bg-nepali-warm-gold/10',
+      hoverBg: 'hover:bg-nepali-warm-gold/20',
+    },
   ]
 
   return (
-    <section id="contact" className="py-16 relative min-h-screen flex items-center">
-      {/* Background Pattern */}
-      <div 
-        className="absolute inset-0 opacity-5"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2300FF41' fill-opacity='0.1'%3E%3Cpath d='M30 30l15-15h-30z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-        }}
-      />
+    <section id="contact" className="py-16 relative">
+      <div className="max-w-6xl mx-auto px-8 relative z-10">
+        <motion.div ref={ref} variants={containerVariants} initial="hidden" animate={inView ? 'visible' : 'hidden'}>
 
-      <div className="max-w-4xl mx-auto px-8 relative z-10 w-full">
-        <motion.div
-          ref={ref}
-          variants={containerVariants}
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-        >
-          {/* Section Header */}
+          {/* Header */}
           <motion.div variants={itemVariants} className="text-center mb-12">
             <h2 className="text-h1 font-bold text-text-primary mb-4">
-              Contact <span className="text-matrix-green">Terminal</span>
+              Get In <span className="text-matrix-green">Touch</span>
             </h2>
-            <div className="w-24 h-0.5 bg-matrix-green mx-auto mb-4"></div>
+            <div className="w-24 h-0.5 bg-matrix-green mx-auto mb-4" />
             <p className="text-body text-text-secondary max-w-2xl mx-auto">
-              Ready to build something amazing together? Let's connect and discuss your next project.
+              Ready to collaborate on something amazing? Let's connect and build the future together.
             </p>
           </motion.div>
 
-          <div className="max-w-4xl mx-auto space-y-8">
-            {/* Contact Methods - Main Grid */}
-            <motion.div variants={itemVariants} className="grid md:grid-cols-2 gap-6">
-              {contactMethods.map((method, index) => (
+          {/* Contact method cards */}
+          <motion.div variants={itemVariants} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            {contactMethods.map(method => {
+              const Icon = method.icon
+              return (
                 <motion.a
-                  key={index}
+                  key={method.label}
                   href={method.href}
-                  target={method.href.startsWith('http') ? '_blank' : '_self'}
-                  rel={method.href.startsWith('http') ? 'noopener noreferrer' : ''}
-                  variants={itemVariants}
-                  className="bg-dark-surface border border-border-subtle rounded-medium p-8 hover:border-matrix-green/50 transition-all duration-300 group relative overflow-hidden"
-                  whileHover={{ y: -4, scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                  target={method.label !== 'Email' ? '_blank' : undefined}
+                  rel={method.label !== 'Email' ? 'noopener noreferrer' : undefined}
+                  whileHover={{ y: -4, boxShadow: '0 0 20px rgba(0, 255, 65, 0.2)' }}
+                  whileTap={{ scale: 0.97 }}
+                  className={`group flex flex-col p-6 bg-dark-surface border ${method.borderColor} rounded-medium ${method.hoverBg} transition-all duration-300 relative overflow-hidden`}
                 >
-                  {/* Hover glow effect */}
-                  <motion.div
-                    className="absolute inset-0 bg-matrix-green/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  />
-                  
-                  <div className="relative z-10">
-                    <div className={`${method.color} mb-4 transform group-hover:scale-110 transition-transform duration-300`}>
-                      {method.icon}
-                    </div>
-                    <div className="text-lg font-mono font-semibold text-text-primary group-hover:text-matrix-green transition-colors duration-300 mb-2">
-                      {method.label}
-                    </div>
-                    <div className="text-sm text-text-tertiary group-hover:text-text-secondary transition-colors duration-300">
-                      {method.value}
-                    </div>
+                  <div className={`w-12 h-12 ${method.bgColor} border ${method.borderColor} rounded-medium flex items-center justify-center mb-4`}>
+                    <Icon className={`w-6 h-6 ${method.color}`} />
                   </div>
-
-                  {/* Arrow indicator */}
-                  <motion.div
-                    className="absolute top-4 right-4 text-matrix-green opacity-0 group-hover:opacity-100"
-                    initial={{ x: -10 }}
-                    whileHover={{ x: 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    →
-                  </motion.div>
+                  <span className="text-xs text-text-tertiary font-mono mb-1">{method.label}</span>
+                  <span className={`text-sm font-mono ${method.color} break-all`}>{method.value}</span>
+                  <ArrowUpRight className={`w-4 h-4 ${method.color} absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity`} />
                 </motion.a>
-              ))}
+              )
+            })}
+          </motion.div>
+
+          {/* Location + Response time */}
+          <div className="grid md:grid-cols-2 gap-6">
+            <motion.div
+              variants={itemVariants}
+              className="bg-dark-surface border border-border-subtle rounded-medium p-6 flex items-start space-x-4"
+            >
+              <div className="flex-shrink-0 w-12 h-12 bg-matrix-green/10 border border-matrix-green/30 rounded-medium flex items-center justify-center">
+                <MapPin className="w-6 h-6 text-matrix-green" />
+              </div>
+              <div>
+                <p className="text-xs text-text-tertiary font-mono mb-1">current_location</p>
+                <p className="text-text-primary font-semibold">{contactInfo.location}</p>
+                <p className="text-text-secondary text-sm mt-1">Open to remote &amp; on-site opportunities</p>
+              </div>
             </motion.div>
 
-            {/* Location & Availability */}
-            <div className="grid md:grid-cols-2 gap-6">
-              {/* Location */}
-              <motion.div variants={itemVariants} className="bg-dark-surface border border-border-subtle rounded-medium p-6">
-                <div className="flex items-start space-x-3 mb-4">
-                  <div className="text-matrix-green font-mono text-sm">$</div>
-                  <h3 className="text-h2 font-semibold text-text-primary">current_location</h3>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <MapPin className="w-5 h-5 text-nepali-warm-gold" />
-                  <div>
-                    <div className="font-mono text-sm text-text-primary">{contactInfo.location}</div>
-                    <div className="text-xs text-text-tertiary">Available for remote work</div>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Quick Response Note */}
-              <motion.div variants={itemVariants} className="bg-dark-surface/50 border border-border-subtle rounded-medium p-6">
-                <div className="text-matrix-green font-mono text-sm mb-3">
-                  Response Time:
-                </div>
-                <div className="text-text-secondary text-sm space-y-2">
-                  <div className="flex items-center space-x-2">
-                    <span className="w-2 h-2 bg-matrix-green rounded-full animate-pulse"></span>
-                    <span>Email: Within 24 hours</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <span className="w-2 h-2 bg-matrix-green rounded-full animate-pulse"></span>
-                    <span>Project inquiries: 1-2 days</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <span className="w-2 h-2 bg-matrix-green rounded-full animate-pulse"></span>
-                    <span>Remote collaboration: Available</span>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
+            <motion.div
+              variants={itemVariants}
+              className="bg-dark-surface border border-border-subtle rounded-medium p-6 flex items-start space-x-4"
+            >
+              <div className="flex-shrink-0 w-12 h-12 bg-nepali-warm-gold/10 border border-nepali-warm-gold/30 rounded-medium flex items-center justify-center">
+                <Clock className="w-6 h-6 text-nepali-warm-gold" />
+              </div>
+              <div>
+                <p className="text-xs text-text-tertiary font-mono mb-1">response_time</p>
+                <p className="text-text-primary font-semibold">Within 24 hours</p>
+                <p className="text-text-secondary text-sm mt-1">Usually much faster than that</p>
+              </div>
+            </motion.div>
           </div>
 
-          {/* Footer */}
-          <motion.div 
-            variants={itemVariants}
-            className="mt-12 text-center"
-          >
-            <div className="text-text-tertiary font-mono text-sm">
-              <div className="mb-2">© 2025 Bhugol Gautam. All rights reserved.</div>
-              <div className="text-xs">
-                Built with React, TypeScript & TailwindCSS. 
-                <span className="text-matrix-green"> Designed with Cyber-Kathmandu Fusion</span>
-              </div>
-            </div>
-          </motion.div>
         </motion.div>
       </div>
+
+      {/* Footer */}
+      <motion.footer
+        initial={{ opacity: 0 }}
+        animate={inView ? { opacity: 1 } : {}}
+        transition={{ delay: 0.8 }}
+        className="mt-16 border-t border-border-subtle"
+      >
+        <div className="max-w-6xl mx-auto px-8 py-8 text-center">
+          <p className="text-text-tertiary text-sm font-mono">
+            © 2025 {contactInfo.name}. Built with React, TypeScript &amp; TailwindCSS.
+          </p>
+          <p className="text-text-tertiary text-xs mt-1 font-mono">Designed with Cyber-Kathmandu Fusion</p>
+        </div>
+      </motion.footer>
     </section>
   )
 }
