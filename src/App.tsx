@@ -27,6 +27,14 @@ function App() {
 
   const { personalInfo, bio, achievements, skills, projects, education, certifications } = portfolioData;
 
+  // ── Hide scrollbar while canvas is active ─────────────────────────────────
+  useEffect(() => {
+    document.documentElement.classList.toggle('canvas-scrollbar-hidden', !navVisible);
+    return () => {
+      document.documentElement.classList.remove('canvas-scrollbar-hidden');
+    };
+  }, [navVisible]);
+
 
   // ── 1. Preload frames ──────────────────────────────────────────────────────
   useEffect(() => {

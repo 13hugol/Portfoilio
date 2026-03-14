@@ -7,6 +7,20 @@ html, body {
   overflow-x: hidden;
 }
 
+/* Scrollbar hidden during canvas sequence, shown after */
+html.canvas-scrollbar-hidden,
+html.canvas-scrollbar-hidden body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html.canvas-scrollbar-hidden::-webkit-scrollbar,
+html.canvas-scrollbar-hidden body::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  display: none !important;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
