@@ -5,11 +5,17 @@ const serializeError = (error: unknown) => {
   return JSON.stringify(error, null, 2)
 }
 
+interface ErrorBoundaryProps {
+  children: React.ReactNode
+  /** Optional inline fallback — used by Product3D so a Three failure degrades gracefully. */
+  fallback?: React.ReactNode
+}
+
 export class ErrorBoundary extends React.Component<
-  { children: React.ReactNode },
+  ErrorBoundaryProps,
   { hasError: boolean; error: unknown }
 > {
-  constructor(props: { children: React.ReactNode }) {
+  constructor(props: ErrorBoundaryProps) {
     super(props)
     this.state = { hasError: false, error: null }
   }
@@ -20,12 +26,25 @@ export class ErrorBoundary extends React.Component<
 
   render() {
     if (this.state.hasError) {
+      // Prefer an inline fallback if one was provided (e.g. the 3D canvas),
+      // otherwise show the full-page error UI.
+      if (this.props.fallback) return <>{this.props.fallback}</>
+
       return (
-        <div className="p-4 border border-red-500 rounded bg-dark-surface">
-          <h2 className="text-red-500 font-mono mb-2">Something went wrong.</h2>
-          <pre className="text-sm text-text-secondary whitespace-pre-wrap">
-            {serializeError(this.state.error)}
-          </pre>
+        <div className="min-h-screen flex items-center justify-center p-6 bg-ink">
+          <div className="card p-8 max-w-2xl w-full">
+            <div className="label label-faint mb-3">— Error</div>
+            <h2 className="editorial-h text-text text-3xl mb-4">Something went wrong.</h2>
+            <pre className="font-mono text-xs text-muted whitespace-pre-wrap break-all">
+              {serializeError(this.state.error)}
+            </pre>
+            <button
+              onClick={() => window.location.reload()}
+              className="mt-6 bg-text text-ink px-5 py-2.5 font-sans text-sm font-semibold rounded-small"
+            >
+              Reload
+            </button>
+          </div>
         </div>
       )
     }

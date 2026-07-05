@@ -12,12 +12,12 @@ module.exports = {
 			center: true,
 			padding: '2rem',
 			screens: {
-				'2xl': '1400px',
+				'2xl': '1320px',
 			},
 		},
 		extend: {
 			colors: {
-				// Original shadcn colors (kept for compatibility)
+				// shadcn compatibility — repointed to B&W editorial tokens
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
@@ -51,50 +51,36 @@ module.exports = {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))',
 				},
-				
-				// Cyber-Kathmandu Design Tokens
-				pure: {
-					black: '#000000',
-				},
-				'near-black': '#0a0a0a',
-				'dark-surface': '#141414',
-				'hover-surface': '#1e1e1e',
-				
-				matrix: {
-					green: {
-						primary: '#00FF41',
-						hover: '#33FF66',
-						muted: '#22c55e',
-					},
-				},
-				
-				nepali: {
-					'lapis-blue': '#1A237E',
-					'malachite-green': '#2E7D32',
-					'warm-gold': '#FFD700',
-					'dhaka-ochre': '#D4A574',
-				},
-				
-				text: {
-					primary: '#E4E4E7',
-					secondary: '#A1A1AA',
-					tertiary: '#71717A',
-					matrix: '#00FF41',
-				},
+
+				// ── Hermès-editorial B&W tokens ──────────────────────────────
+				ink:          '#0A0A0A', // page bg (near-black, soft on type)
+				paper:        '#F4F1EC', // alt/inverted section (warm off-white)
+				surface:      '#121212', // raised card
+				'surface-2':  '#1A1A1A', // hover surface
+				line:         '#262626', // hairline border
+				'line-strong':'#3A3A3A', // stronger hairline
+				text:         '#F5F5F5', // primary type
+				muted:        '#A1A1A1', // secondary type
+				faint:        '#6E6E6E', // tertiary / dim
+				'pure-white': '#FFFFFF',
+				'pure-black': '#000000',
 			},
 			fontFamily: {
-				'mono': ['JetBrains Mono', 'Fira Code', 'Courier New', 'monospace'],
-				'sans': ['Inter', 'system-ui', 'sans-serif'],
-				'display': ['Space Grotesk', 'Inter', 'sans-serif'],
+				serif:   ['"Cormorant Garamond"', 'Georgia', 'serif'],
+				sans:    ['Inter', 'system-ui', 'sans-serif'],
+				mono:    ['"JetBrains Mono"', 'Fira Code', 'monospace'],
+				display: ['"Space Grotesk"', 'Inter', 'sans-serif'],
 			},
 			fontSize: {
-				'hero': '3.5rem',
-				'h1': '2.5rem',
-				'h2': '1.75rem',
-				'body-large': '1.125rem',
-				'body': '1rem',
-				'code': '0.875rem',
-				'caption': '0.8125rem',
+				'display-xl': ['clamp(3.5rem, 11vw, 10rem)', { lineHeight: '0.92', letterSpacing: '-0.03em' }],
+				'display':    ['clamp(2.75rem, 7vw, 5.5rem)', { lineHeight: '0.95', letterSpacing: '-0.025em' }],
+				'h1':         ['clamp(2rem, 5vw, 3.5rem)', { lineHeight: '1', letterSpacing: '-0.02em' }],
+				'h2':         ['clamp(1.5rem, 3vw, 2.25rem)', { lineHeight: '1.05', letterSpacing: '-0.015em' }],
+				'h3':         ['1.375rem', { lineHeight: '1.2' }],
+				'body-lg':    ['1.125rem', { lineHeight: '1.7' }],
+				'body':       ['1rem', { lineHeight: '1.65' }],
+				'caption':    ['0.8125rem', { lineHeight: '1.5' }],
+				'micro':      ['0.6875rem', { lineHeight: '1.4' }],
 			},
 			spacing: {
 				'xs': '0.5rem',
@@ -107,40 +93,40 @@ module.exports = {
 				'4xl': '8rem',
 			},
 			borderRadius: {
-				'sharp': '0.25rem',
-				'small': '0.5rem',
-				'medium': '0.75rem',
-				'large': '1rem',
+				'sharp': '0',
+				'small': '0.25rem',
+				'medium': '0.5rem',
+				'large': '0.875rem',
+				'pill': '999px',
 			},
 			boxShadow: {
-				'matrix-glow': '0 0 20px rgba(0, 255, 65, 0.5), 0 0 40px rgba(0, 255, 65, 0.3)',
-				'card-base': '0 0 0 1px rgba(255, 255, 255, 0.1), 0 4px 12px rgba(0, 0, 0, 0.5)',
-				'card-hover': '0 0 0 1px rgba(0, 255, 65, 0.3), 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 40px rgba(0, 255, 65, 0.15)',
-				'focus-ring': '0 0 0 3px rgba(0, 255, 65, 0.5)',
-				'photo-glow': '0 0 40px rgba(0, 255, 65, 0.6)',
+				'elevate':     '0 1px 0 0 rgba(255,255,255,0.04), 0 12px 32px rgba(0,0,0,0.6)',
+				'elevate-lg':  '0 1px 0 0 rgba(255,255,255,0.06), 0 24px 64px rgba(0,0,0,0.75)',
+				'card-hover':  '0 0 0 1px rgba(255,255,255,0.18), 0 24px 64px rgba(0,0,0,0.8)',
+				'focus-ring':  '0 0 0 2px rgba(245,245,245,0.55)',
 			},
 			animation: {
-				'typing': 'typing 3.5s steps(40, end)',
-				'blink-caret': 'blink-caret 0.75s step-end infinite',
-				'matrix-rain': 'matrix-rain 2s linear infinite',
-				'glow-pulse': 'glow-pulse 2s ease-in-out infinite',
+				'fade-up':     'fade-up 0.7s cubic-bezier(0.2,0.8,0.2,1) both',
+				'fade-in':     'fade-in 0.6s ease-out both',
+				'marquee':     'marquee 36s linear infinite',
+				'cursor-blink':'cursor-blink 1.05s step-end infinite',
 			},
 			keyframes: {
-				typing: {
-					'from': { width: '0' },
-					'to': { width: '100%' },
+				'fade-up': {
+					'0%':   { opacity: '0', transform: 'translateY(24px)' },
+					'100%': { opacity: '1', transform: 'translateY(0)' },
 				},
-				'blink-caret': {
-					'from, to': { 'border-color': 'transparent' },
-					'50%': { 'border-color': '#00FF41' },
+				'fade-in': {
+					'0%':   { opacity: '0' },
+					'100%': { opacity: '1' },
 				},
-				'matrix-rain': {
-					'0%': { transform: 'translateY(-100vh)' },
-					'100%': { transform: 'translateY(100vh)' },
+				'marquee': {
+					'0%':   { transform: 'translateX(0)' },
+					'100%': { transform: 'translateX(-50%)' },
 				},
-				'glow-pulse': {
-					'0%, 100%': { 'box-shadow': '0 0 20px rgba(0, 255, 65, 0.5)' },
-					'50%': { 'box-shadow': '0 0 30px rgba(0, 255, 65, 0.8)' },
+				'cursor-blink': {
+					'0%, 100%': { opacity: '1' },
+					'50%':      { opacity: '0' },
 				},
 			},
 		},

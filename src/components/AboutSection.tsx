@@ -1,135 +1,109 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
+import { useTilt } from '../hooks/useTilt'
 
 interface AboutSectionProps {
-  data: {
-    summary: string
-    philosophy: string
-    about: string
-  }
-  achievements: Array<{
-    title: string
-    description: string
-  }>
+	data: {
+		summary: string
+		philosophy: string
+		about: string
+	}
+	achievements: Array<{
+		title: string
+		description: string
+	}>
 }
 
 const AboutSection = ({ data, achievements }: AboutSectionProps) => {
-  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 })
+	const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.12 })
+	const tilt = useTilt<HTMLDivElement>(4)
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
-  }
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-  }
+	const container = {
+		hidden: { opacity: 0 },
+		visible: { opacity: 1, transition: { staggerChildren: 0.14 } },
+	}
+	const item = {
+		hidden: { opacity: 0, y: 26 },
+		visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.2, 0.8, 0.2, 1] as const } },
+	}
 
-  return (
-    <section id="about" className="py-16 relative">
-      {/* Dhaka pattern background */}
-      <div
-        className="absolute inset-0 opacity-5"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2300FF41' fill-opacity='0.1'%3E%3Cpath d='M30 30l15-15h-30z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-        }}
-      />
-      <div className="max-w-6xl mx-auto px-8 relative z-10">
-        <motion.div ref={ref} variants={containerVariants} initial="hidden" animate={inView ? 'visible' : 'hidden'}>
+	const bioText = data.about.includes('\n\n')
+		? data.about.split('\n\n').slice(1).join(' ')
+		: data.about
 
-          {/* Header */}
-          <motion.div variants={itemVariants} className="text-center mb-12">
-            <h2 className="text-h1 font-bold text-text-primary mb-4">
-              About <span className="text-matrix-green">System</span>
-            </h2>
-            <div className="w-24 h-0.5 bg-matrix-green mx-auto" />
-          </motion.div>
+	return (
+		<section id="about" className="relative bg-ink py-24 md:py-32">
+			<div className="mx-auto max-w-[1320px] px-6 md:px-8">
+				<motion.div ref={ref} variants={container} initial="hidden" animate={inView ? 'visible' : 'hidden'}>
+					{/* Header */}
+					<motion.div variants={item} className="mb-14 md:mb-20">
+						<div className="label label-faint mb-4">— About / 001</div>
+						<h2 className="editorial-h text-text text-h1 max-w-3xl">
+							Engineer of <span className="font-serif-h-i text-muted">systems</span>,<br />
+							student of <span className="font-serif-h-i text-muted">surfaces</span>.
+						</h2>
+					</motion.div>
 
-          <div className="grid lg:grid-cols-12 gap-8">
-            {/* Bio */}
-            <motion.div variants={itemVariants} className="lg:col-span-7 space-y-6">
-              <div className="bg-dark-surface border border-border-subtle rounded-medium p-6">
-                <div className="flex items-start space-x-3 mb-4">
-                  <div className="text-matrix-green font-mono text-sm">$</div>
-                  <h3 className="text-h2 font-semibold text-text-primary">cat about_me.txt</h3>
-                </div>
-                <div className="ml-6 space-y-4">
-                  <p className="text-body text-text-secondary leading-relaxed">{data.summary}</p>
-                  <div className="border-l-2 border-matrix-green/30 pl-4">
-                    <p className="text-matrix-green font-mono text-sm italic">"{data.philosophy}"</p>
-                  </div>
-                </div>
-              </div>
+					<div className="grid lg:grid-cols-12 gap-8 lg:gap-12">
+						{/* Portrait + identity */}
+						<motion.div variants={item} className="lg:col-span-5">
+							<div ref={tilt.ref} onPointerMove={tilt.onPointerMove} onPointerLeave={tilt.onPointerLeave} className="tilt-host">
+								<div className="tilt-card card overflow-hidden">
+									<div className="aspect-[4/5] bg-surface relative overflow-hidden">
+										<img
+											src="/profile.png"
+											alt="Bhugol Gautam"
+											className="absolute inset-0 h-full w-full object-cover photo-mono"
+											loading="lazy"
+										/>
+										<div className="absolute inset-0 bg-gradient-to-t from-ink via-transparent to-transparent opacity-60" />
+										<div className="absolute bottom-0 left-0 right-0 p-5">
+											<div className="label label-faint mb-1">Nepal · Kathmandu</div>
+											<div className="font-display text-text text-lg">Bhugol Gautam</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</motion.div>
 
-              <motion.div variants={itemVariants} className="bg-dark-surface/50 border border-border-subtle rounded-medium p-6">
-                <div className="flex items-center space-x-2 mb-3">
-                  <span className="text-lg">🇳🇵</span>
-                  <h4 className="text-h2 font-semibold text-text-primary">Kathmandu, Nepal</h4>
-                </div>
-                <p className="text-body text-text-secondary leading-relaxed">
-                  Based in the heart of the Himalayas, bringing a unique cultural perspective to global tech challenges.
-                  Passionate about building solutions that bridge traditional wisdom with modern innovation.
-                </p>
-              </motion.div>
-            </motion.div>
+						{/* Bio + achievements */}
+						<motion.div variants={item} className="lg:col-span-7 flex flex-col">
+							<p className="font-serif-h text-text text-2xl md:text-3xl leading-snug mb-6">
+								{bioText}
+							</p>
+							<p className="font-serif-h-i text-muted text-lg leading-relaxed mb-10 max-w-xl">
+								&ldquo;{data.philosophy}&rdquo;
+							</p>
 
-            {/* Achievements */}
-            <motion.div variants={itemVariants} className="lg:col-span-5">
-              <div className="bg-dark-surface border border-border-subtle rounded-medium p-6">
-                <div className="flex items-start space-x-3 mb-6">
-                  <div className="text-matrix-green font-mono text-sm">$</div>
-                  <h3 className="text-h2 font-semibold text-text-primary">ls achievements/</h3>
-                </div>
-                <div className="space-y-3">
-                  {achievements.map((ach, i) => (
-                    <motion.div
-                      key={i}
-                      variants={itemVariants}
-                      className="flex items-center space-x-3 p-3 rounded-sharp border border-border-subtle hover:border-matrix-green/30 transition-colors duration-200"
-                      whileHover={{ scale: 1.02 }}
-                    >
-                      <div className="w-2 h-2 bg-matrix-green rounded-full flex-shrink-0" />
-                      <div>
-                        <div className="font-mono text-sm text-matrix-green">{ach.title}</div>
-                        <div className="text-xs text-text-tertiary">{ach.description}</div>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
+							<div className="label label-faint mb-4">Achievements</div>
+							<div className="grid sm:grid-cols-2 gap-px bg-line border border-line mb-8">
+								{achievements.map((ach) => (
+									<div key={ach.title} className="bg-ink p-5">
+										<div className="font-mono text-text text-sm">{ach.title}</div>
+										<div className="text-faint text-xs mt-1">{ach.description}</div>
+									</div>
+								))}
+							</div>
 
-                <div className="mt-6 pt-4 border-t border-border-subtle">
-                  <div className="grid grid-cols-3 gap-4 text-center">
-                    <div>
-                      <div className="text-lg font-bold text-matrix-green">185</div>
-                      <div className="text-xs text-text-tertiary">Contributions</div>
-                    </div>
-                    <div>
-                      <div className="text-lg font-bold text-matrix-green">6</div>
-                      <div className="text-xs text-text-tertiary">Major Projects</div>
-                    </div>
-                    <div>
-                      <div className="text-lg font-bold text-matrix-green">8</div>
-                      <div className="text-xs text-text-tertiary">Repositories</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Cultural quote */}
-          <motion.div variants={itemVariants} className="mt-12 text-center">
-            <div className="max-w-3xl mx-auto bg-dark-surface/30 border border-nepali-warm-gold/20 rounded-medium p-6">
-              <div className="text-nepali-warm-gold font-mono text-sm mb-2">/* Cultural Philosophy */</div>
-              <p className="text-body text-text-secondary italic">
-                "Technology is the language, culture is the soul. Building digital experiences that honor heritage while embracing the future."
-              </p>
-            </div>
-          </motion.div>
-        </motion.div>
-      </div>
-    </section>
-  )
+							{/* Stat counters */}
+							<div className="grid grid-cols-3 gap-px bg-line border border-line">
+								{[
+									{ n: '185', l: 'Contributions' },
+									{ n: '6', l: 'Major Projects' },
+									{ n: '8', l: 'Repositories' },
+								].map((s) => (
+									<div key={s.l} className="bg-ink p-5 text-center">
+										<div className="font-serif-h text-text text-4xl">{s.n}</div>
+										<div className="label label-faint mt-2">{s.l}</div>
+									</div>
+								))}
+							</div>
+						</motion.div>
+					</div>
+				</motion.div>
+			</div>
+		</section>
+	)
 }
 
 export default AboutSection

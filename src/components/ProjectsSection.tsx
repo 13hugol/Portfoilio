@@ -1,244 +1,221 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { ExternalLink, Github, ChevronDown, ChevronUp } from 'lucide-react'
+import { ArrowUpRight, Github, Plus, Minus } from 'lucide-react'
 
 interface Project {
-  id: string
-  title: string
-  subtitle: string
-  year: string
-  liveUrl?: string
-  repoUrl?: string
-  description: string
-  techStack: string[]
-  features: string[]
-  highlights?: string
-  performance?: string
+	id: string
+	title: string
+	subtitle: string
+	year: string
+	liveUrl?: string
+	repoUrl?: string
+	description: string
+	techStack: string[]
+	features: string[]
+	highlights?: string
+	performance?: string
 }
 
 interface ProjectsSectionProps {
-  projects: Project[]
+	projects: Project[]
 }
 
-const ProjectsSection = ({ projects }: ProjectsSectionProps) => {
-  const [expandedProject, setExpandedProject] = useState<string | null>(null)
-  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 })
+export default function ProjectsSection({ projects }: ProjectsSectionProps) {
+	const [open, setOpen] = useState<string | null>(null)
+	const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.06 })
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
-  }
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-  }
+	const container = {
+		hidden: { opacity: 0 },
+		visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
+	}
+	const item = {
+		hidden: { opacity: 0, y: 30 },
+		visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.2, 0.8, 0.2, 1] as const } },
+	}
 
-  const toggleProject = (id: string) =>
-    setExpandedProject(expandedProject === id ? null : id)
+	const toggle = (id: string) => setOpen((cur) => (cur === id ? null : id))
 
-  return (
-    <section id="projects" className="py-16 relative">
-      <div
-        className="absolute inset-0 opacity-5"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='50' height='50' viewBox='0 0 50 50' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2300FF41' fill-opacity='0.1'%3E%3Cpath d='M25 25c13.807 0 25-11.193 25-25S38.807 0 25 0 0 11.193 0 25s11.193 25 25 25z'/%3E%3C/g%3E%3C/svg%3E")`,
-        }}
-      />
-      <div className="max-w-6xl mx-auto px-8 relative z-10">
-        <motion.div ref={ref} variants={containerVariants} initial="hidden" animate={inView ? 'visible' : 'hidden'}>
+	return (
+		<section id="projects" className="relative bg-ink py-24 md:py-32 border-t border-line">
+			<div className="mx-auto max-w-[1320px] px-6 md:px-8">
+				<motion.div ref={ref} variants={container} initial="hidden" animate={inView ? 'visible' : 'hidden'}>
+					{/* Header */}
+					<motion.div variants={item} className="mb-16 md:mb-24">
+						<div className="grid lg:grid-cols-12 gap-6 items-end">
+							<div className="lg:col-span-8">
+								<div className="label label-faint mb-4">— Selected work / 004</div>
+								<h2 className="editorial-h text-text text-h1">
+									Things I have <span className="font-serif-h-i text-muted">built</span>.
+								</h2>
+							</div>
+							<div className="lg:col-span-4 lg:text-right">
+								<p className="text-muted text-body max-w-sm lg:ml-auto">
+									Six shipped projects across full-stack web, real-time systems, games,
+									and computer vision.
+								</p>
+							</div>
+						</div>
+						<div className="rule mt-10" />
+					</motion.div>
 
-          {/* Header */}
-          <motion.div variants={itemVariants} className="text-center mb-12">
-            <h2 className="text-h1 font-bold text-text-primary mb-4">
-              Featured <span className="text-matrix-green">Projects</span>
-            </h2>
-            <div className="w-24 h-0.5 bg-matrix-green mx-auto mb-4" />
-            <p className="text-body text-text-secondary max-w-2xl mx-auto">
-              A showcase of full-stack applications, games, and computer vision systems
-            </p>
-          </motion.div>
+					{/* Editorial alternating spreads */}
+					<div className="divide-y divide-line">
+						{projects.map((p, i) => {
+							const isOpen = open === p.id
+							const flip = i % 2 === 1
+							return (
+								<motion.article
+									key={p.id}
+									variants={item}
+									className="group py-10 md:py-14"
+								>
+									<div className={`grid lg:grid-cols-12 gap-6 lg:gap-10 items-start ${flip ? 'lg:[direction:rtl]' : ''}`}>
+										{/* Oversized index numeral */}
+										<div className="lg:col-span-2 lg:[direction:ltr]">
+											<div className="font-serif-h text-faint text-7xl md:text-8xl leading-none">
+												{String(i + 1).padStart(2, '0')}
+											</div>
+											<div className="label label-faint mt-2">{p.year}</div>
+										</div>
 
-          {/* Projects list */}
-          <div className="space-y-8">
-            {projects.map((project, index) => (
-              <motion.div
-                key={project.id}
-                variants={itemVariants}
-                className="bg-dark-surface border border-border-subtle rounded-medium overflow-hidden hover:shadow-card-hover transition-all duration-300"
-                whileHover={{ y: -2 }}
-              >
-                {/* Terminal window header */}
-                <div className="bg-hover-surface border-b border-border-subtle px-6 py-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <div className="flex space-x-2">
-                        <div className="w-3 h-3 bg-red-500 rounded-full" />
-                        <div className="w-3 h-3 bg-yellow-500 rounded-full" />
-                        <div className="w-3 h-3 bg-green-500 rounded-full" />
-                      </div>
-                      <span className="text-xs text-text-tertiary font-mono">
-                        {project.id}@terminal
-                      </span>
-                    </div>
-                    <span className="text-xs text-text-tertiary font-mono">{project.year}</span>
-                  </div>
-                </div>
+										{/* Title + meta */}
+										<div className="lg:col-span-6 lg:[direction:ltr]">
+											<div className="flex items-baseline gap-3 mb-2">
+												<h3 className="font-display text-text text-2xl md:text-4xl">{p.title}</h3>
+												<ArrowUpRight className="w-5 h-5 text-faint group-hover:text-text transition-colors" />
+											</div>
+											<p className="font-serif-h-i text-muted text-lg md:text-xl mb-5">{p.subtitle}</p>
+											<p className="text-muted text-body leading-relaxed max-w-xl">{p.description}</p>
 
-                <div className="p-6">
-                  <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
-                    <div className="flex-1">
-                      <div className="flex items-start space-x-3 mb-2">
-                        <div className="text-matrix-green font-mono text-sm mt-1">$</div>
-                        <div>
-                          <h3 className="text-h2 font-semibold text-text-primary mb-1">{project.title}</h3>
-                          <p className="text-body text-text-secondary mb-3">{project.subtitle}</p>
-                        </div>
-                      </div>
+											<div className="flex flex-wrap gap-2 mt-6">
+												{p.liveUrl && (
+													<a
+														href={p.liveUrl.startsWith('http') ? p.liveUrl : `https://${p.liveUrl}`}
+														target="_blank"
+														rel="noopener noreferrer"
+														data-cursor="hover"
+														className="inline-flex items-center gap-2 bg-text text-ink px-4 py-2 font-sans text-sm font-semibold hover:bg-pure-white transition-colors rounded-small"
+													>
+														Live <ArrowUpRight className="w-3.5 h-3.5" />
+													</a>
+												)}
+												{p.repoUrl && (
+													<a
+														href={p.repoUrl.startsWith('http') ? p.repoUrl : `https://${p.repoUrl}`}
+														target="_blank"
+														rel="noopener noreferrer"
+														data-cursor="hover"
+														className="inline-flex items-center gap-2 border border-line text-text px-4 py-2 font-sans text-sm font-semibold hover:border-text transition-colors rounded-small"
+													>
+														<Github className="w-3.5 h-3.5" /> Source
+													</a>
+												)}
+											</div>
+										</div>
 
-                      <p className="text-body text-text-secondary leading-relaxed mb-4">{project.description}</p>
+										{/* Spec rail */}
+										<div className="lg:col-span-4 lg:[direction:ltr]">
+											<div className="border border-line bg-surface p-5">
+												<div className="label label-faint mb-3">Stack</div>
+												<div className="flex flex-wrap gap-1.5 mb-5">
+													{p.techStack.map((t) => (
+														<span
+															key={t}
+															className="inline-block border border-line px-2 py-0.5 font-mono text-xs text-muted"
+														>
+															{t}
+														</span>
+													))}
+												</div>
+												<div className="grid grid-cols-2 gap-px bg-line border border-line">
+													<div className="bg-surface px-3 py-2">
+														<div className="label label-faint">Features</div>
+														<div className="font-serif-h text-text text-2xl mt-1">{p.features.length}</div>
+													</div>
+													<div className="bg-surface px-3 py-2">
+														<div className="label label-faint">Domain</div>
+														<div className="font-mono text-text text-xs mt-2 truncate">
+															{p.techStack[0] ?? '—'}
+														</div>
+													</div>
+												</div>
 
-                      {/* Tech stack */}
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {project.techStack.map(tech => (
-                          <span
-                            key={tech}
-                            className="inline-block bg-matrix-green/10 border border-matrix-green/30 text-matrix-green px-2 py-1 rounded-small text-xs font-mono"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
+												<button
+													onClick={() => toggle(p.id)}
+													data-cursor="hover"
+													className="mt-4 w-full flex items-center justify-between font-mono text-xs text-muted hover:text-text transition-colors focus-ring rounded-small py-1"
+												>
+													<span>{isOpen ? 'Hide detail' : 'Read detail'}</span>
+													{isOpen ? <Minus className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
+												</button>
+											</div>
+										</div>
+									</div>
 
-                      {/* Action buttons */}
-                      <div className="flex flex-wrap gap-3">
-                        {project.liveUrl && (
-                          <motion.a
-                            href={project.liveUrl.startsWith('http') ? project.liveUrl : `https://${project.liveUrl}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="inline-flex items-center space-x-2 bg-matrix-green text-pure-black px-4 py-2 rounded-small font-semibold text-sm font-mono hover:bg-matrix-green-hover transition-colors duration-200"
-                          >
-                            <ExternalLink className="w-4 h-4" />
-                            <span>Live Demo</span>
-                          </motion.a>
-                        )}
-                        {project.repoUrl && (
-                          <motion.a
-                            href={project.repoUrl.startsWith('http') ? project.repoUrl : `https://${project.repoUrl}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="inline-flex items-center space-x-2 border-2 border-matrix-green text-matrix-green px-4 py-2 rounded-small font-semibold text-sm font-mono hover:bg-matrix-green hover:text-pure-black transition-colors duration-200"
-                          >
-                            <Github className="w-4 h-4" />
-                            <span>Source Code</span>
-                          </motion.a>
-                        )}
-                        <motion.button
-                          onClick={() => toggleProject(project.id)}
-                          whileHover={{ scale: 1.05, boxShadow: '0 0 20px rgba(0, 255, 65, 0.3)' }}
-                          whileTap={{ scale: 0.95 }}
-                          className={`inline-flex items-center space-x-2 px-5 py-3 rounded-small font-bold text-sm font-mono transition-all duration-200 ${
-                            expandedProject === project.id
-                              ? 'bg-matrix-green text-pure-black shadow-matrix-glow border-2 border-matrix-green/20'
-                              : 'bg-dark-surface border-2 border-matrix-green/50 text-matrix-green hover:bg-matrix-green/10 hover:border-matrix-green'
-                          }`}
-                        >
-                          <span>{expandedProject === project.id ? 'Hide Details' : 'View Details'}</span>
-                          {expandedProject === project.id ? (
-                            <ChevronUp className="w-4 h-4" />
-                          ) : (
-                            <ChevronDown className="w-4 h-4" />
-                          )}
-                        </motion.button>
-                      </div>
-                    </div>
-                  </div>
+									{/* Inline detail drawer */}
+									<AnimatePresence initial={false}>
+										{isOpen && (
+											<motion.div
+												initial={{ height: 0, opacity: 0 }}
+												animate={{ height: 'auto', opacity: 1 }}
+												exit={{ height: 0, opacity: 0 }}
+												transition={{ duration: 0.35, ease: [0.2, 0.8, 0.2, 1] }}
+												className="overflow-hidden"
+											>
+												<div className="grid lg:grid-cols-12 gap-6 lg:gap-10 pt-8 mt-2 border-t border-line/60">
+													<div className="lg:col-start-3 lg:col-span-6">
+														<div className="label label-faint mb-3">Features</div>
+														<ul className="grid sm:grid-cols-2 gap-x-6 gap-y-2">
+															{p.features.map((f, fi) => (
+																<li key={fi} className="flex items-start gap-2 text-sm text-muted">
+																	<span className="font-mono text-faint text-[0.6rem] mt-1.5">{String(fi + 1).padStart(2, '0')}</span>
+																	<span>{f}</span>
+																</li>
+															))}
+														</ul>
+													</div>
+													<div className="lg:col-span-4">
+														{p.highlights && (
+															<>
+																<div className="label label-faint mb-3">Highlights</div>
+																<p className="font-serif-h-i text-text text-lg leading-relaxed border-l border-line-strong pl-4 mb-5">
+																	{p.highlights}
+																</p>
+															</>
+														)}
+														{p.performance && (
+															<>
+																<div className="label label-faint mb-2">Performance</div>
+																<p className="text-sm text-muted leading-relaxed">{p.performance}</p>
+															</>
+														)}
+													</div>
+												</div>
+											</motion.div>
+										)}
+									</AnimatePresence>
+								</motion.article>
+							)
+						})}
+					</div>
 
-                  {/* Expanded details */}
-                  <AnimatePresence>
-                    {expandedProject === project.id && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="mt-6 pt-6 border-t border-border-subtle overflow-hidden"
-                      >
-                        <div className="grid md:grid-cols-2 gap-6">
-                          <div>
-                            <h4 className="text-lg font-semibold text-text-primary mb-3 font-mono">
-                              <span className="text-matrix-green">$</span> Features
-                            </h4>
-                            <ul className="space-y-2">
-                              {project.features.map((f, i) => (
-                                <li key={i} className="flex items-start space-x-2 text-sm text-text-secondary">
-                                  <span className="text-matrix-green mt-1">▸</span>
-                                  <span>{f}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                          <div>
-                            <h4 className="text-lg font-semibold text-text-primary mb-3 font-mono">
-                              <span className="text-matrix-green">$</span> Highlights
-                            </h4>
-                            <div className="bg-matrix-green/5 border border-matrix-green/20 rounded-sharp p-4">
-                              <p className="text-sm text-text-secondary">{project.highlights}</p>
-                            </div>
-                            {project.performance && (
-                              <div className="mt-4">
-                                <h5 className="text-sm font-semibold text-nepali-warm-gold mb-2 font-mono">Performance</h5>
-                                <p className="text-sm text-text-secondary">{project.performance}</p>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-
-                {index < projects.length - 1 && (
-                  <div className="h-px bg-gradient-to-r from-transparent via-nepali-warm-gold/20 to-transparent" />
-                )}
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Project stats */}
-          <motion.div variants={itemVariants} className="mt-12 bg-dark-surface border border-border-subtle rounded-medium p-6">
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="text-matrix-green font-mono text-sm">$</div>
-              <h3 className="text-h2 font-semibold text-text-primary">project_stats.sh</h3>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-              <div>
-                <div className="text-2xl font-bold text-matrix-green">{projects.length}</div>
-                <div className="text-sm text-text-tertiary">Major Projects</div>
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-matrix-green">25+</div>
-                <div className="text-sm text-text-tertiary">Technologies</div>
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-matrix-green">4</div>
-                <div className="text-sm text-text-tertiary">Domains</div>
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-matrix-green">2025</div>
-                <div className="text-sm text-text-tertiary">Active Year</div>
-              </div>
-            </div>
-          </motion.div>
-        </motion.div>
-      </div>
-    </section>
-  )
+					{/* Footer stat strip */}
+					<motion.div variants={item} className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-px bg-line border border-line">
+						{[
+							{ n: String(projects.length), l: 'Major Projects' },
+							{ n: '25+', l: 'Technologies' },
+							{ n: '4', l: 'Domains' },
+							{ n: '2025', l: 'Active Year' },
+						].map((s) => (
+							<div key={s.l} className="bg-ink p-6 text-center">
+								<div className="font-serif-h text-text text-4xl">{s.n}</div>
+								<div className="label label-faint mt-2">{s.l}</div>
+							</div>
+						))}
+					</motion.div>
+				</motion.div>
+			</div>
+		</section>
+	)
 }
-
-export default ProjectsSection
