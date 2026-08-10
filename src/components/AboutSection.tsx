@@ -68,7 +68,7 @@ const AboutSection = ({ data, achievements }: AboutSectionProps) => {
 
 						{/* Bio + achievements */}
 						<motion.div variants={item} className="lg:col-span-7 flex flex-col">
-							<p className="font-serif-h text-text text-2xl md:text-3xl leading-snug mb-6">
+							<p className="font-serif-h-i text-text text-2xl md:text-3xl leading-snug mb-6">
 								{bioText}
 							</p>
 							<p className="font-serif-h-i text-muted text-lg leading-relaxed mb-10 max-w-xl">

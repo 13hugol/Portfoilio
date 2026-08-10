@@ -118,20 +118,22 @@ const EducationSection = ({ education, certifications, learningPath }: Education
 									<div className="label label-faint">Certifications</div>
 								</div>
 
-								<div className="space-y-5">
-									{certifications.map((cert, i) => (
-										<motion.div
-											key={i}
-											initial={{ opacity: 0, x: -16 }}
-											animate={inView ? { opacity: 1, x: 0 } : {}}
-											transition={{ delay: 0.25 + i * 0.1, duration: 0.5 }}
-											className="pb-5 border-b border-line last:border-0 last:pb-0"
-										>
-											<p className="font-display text-text text-base">{cert.title}</p>
-											<p className="text-faint text-sm mt-1">{cert.description}</p>
-										</motion.div>
-									))}
-								</div>
+								{certifications.length > 0 && (
+									<div className="space-y-5">
+										{certifications.map((cert, i) => (
+											<motion.div
+												key={i}
+												initial={{ opacity: 0, x: -16 }}
+												animate={inView ? { opacity: 1, x: 0 } : {}}
+												transition={{ delay: 0.25 + i * 0.1, duration: 0.5 }}
+												className="pb-5 border-b border-line last:border-0 last:pb-0"
+											>
+												<p className="font-display text-text text-base">{cert.title}</p>
+												<p className="text-faint text-sm mt-1">{cert.description}</p>
+											</motion.div>
+										))}
+									</div>
+								)}
 
 								<div className="mt-8 pt-6 border-t border-line">
 									<p className="font-serif-h-i text-muted text-lg leading-relaxed">

@@ -13,7 +13,7 @@
   "bio": {
     "summary": "Full-stack and Unity developer focused on real-time systems, computer vision, and scalable, user-centric products. Shipped production web apps, mobile-optimized games, and CV tools with clean APIs, geospatial search, and responsive UIs.",
     "philosophy": "Jack of all master of none but often times better than master of one",
-    "about": "BSc (Hons) Computer Science with AI student at Softwarica College (Coventry University affiliate) building production-grade AI systems. \n\nI design and ship end-to-end solutions — from RAG pipelines with hybrid search and knowledge graphs for Nepali legal AI, to real-time voice-to-voice agents using Deepgram and Pipecat, to hyperlocal task marketplaces with GPS tracking. \n\nCurrently building Jarvis — a Gemini Live voice interface that bridges into Hermes Agent for full desktop control. I work across the stack: Python/FastAPI backends, React/Three.js frontends, WebSocket real-time systems, and Unity game development."
+    "about": "BSc (Hons) Computer Science with AI student at Softwarica College (Coventry University affiliate) building production-grade AI systems. \n\nYou know I love you"
   },
   "achievements": [
     {
@@ -176,41 +176,6 @@
       "highlights": "Full-stack school platform with CMS, CI/CD pipeline, and cloud asset management"
     },
     {
-      "id": "exhibitio-khwopa",
-      "title": "Exhibitio_Khwopa",
-      "subtitle": "QR-Based Exhibition System",
-      "year": "2025",
-      "repoUrl": "github.com/13hugol/Exhibitio_Khwopa",
-      "description": "Real-time webcam QR scanning with OpenCV + pyzbar, Nepali TTS greetings via gTTS. Cloud member verification with friendly fallback for non-members.",
-      "techStack": ["Python", "OpenCV", "pyzbar", "pandas", "qrcode", "gTTS"],
-      "features": [
-        "Real-time QR code scanning using webcam",
-        "OpenCV computer vision integration",
-        "Nepali Text-to-Speech greetings via gTTS",
-        "Cloud-based member verification via GitHub Gist",
-        "Friendly fallback for non-members",
-        "QR code generation for participants"
-      ],
-      "highlights": "Delivered a real-time CV system with QR detection and Nepali TTS"
-    },
-    {
-      "id": "algorithms-presentation",
-      "title": "Algorithms Presentation",
-      "subtitle": "Interactive Sorting & Searching Demo",
-      "year": "2025",
-      "liveUrl": "bhugolgautam.com.np/algorithms-presentation.html",
-      "description": "Interactive presentation on sorting and searching algorithms with live visualizations, animated transitions, and step-by-step binary search demo.",
-      "techStack": ["HTML5", "CSS3", "Vanilla JS", "GSAP"],
-      "features": [
-        "8 interactive slides with animated transitions",
-        "Live sorting visualizations (Bubble, Merge, Quick Sort)",
-        "Step-by-step binary search animation",
-        "Terminal-style code execution display",
-        "Keyboard navigation support"
-      ],
-      "highlights": "Educational presentation with real-time algorithm visualizations and interactive demos"
-    },
-    {
       "id": "portfolio",
       "title": "Portfolio Website",
       "subtitle": "React + Three.js",
@@ -236,12 +201,7 @@
       "year": "2025 – Present",
       "studyFocus": ["Programming (Python, C++)", "Machine Learning & Deep Learning", "Generative AI & LLMs", "Data Science", "Cyber Security", "Advanced Algorithms", "Software Engineering", "Computer Architecture & Networking"]
     },
-  "certifications": [
-    {
-      "title": "OpenCV Certification",
-      "description": "Computer Vision Fundamentals"
-    }
-  ],
+  "certifications": [],
   "learningPath": [
     "Advanced RAG & Hybrid Search Architectures",
     "Real-Time Voice Agent Engineering",
