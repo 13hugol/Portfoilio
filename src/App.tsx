@@ -207,11 +207,11 @@ function App() {
 						>
 							<div className="label label-faint mb-5">— Practice</div>
 							<h2 className="editorial-h text-text text-4xl md:text-6xl lg:text-7xl mb-7">
-								Full-Stack · <span className="font-serif-h-i">AI</span> · Game&nbsp;Dev
+								This is me
 							</h2>
 							<div className="max-w-2xl mb-7 border border-line bg-surface/70 backdrop-blur-md px-7 py-6">
 								<p className="font-sans text-base md:text-lg text-text leading-relaxed">
-									{bioText}
+									Jack of all master of none
 								</p>
 							</div>
 							<div className="flex flex-wrap gap-2 justify-center max-w-xl">

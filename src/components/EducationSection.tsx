@@ -19,9 +19,10 @@ interface Education {
 interface EducationSectionProps {
 	education: Education
 	certifications: Certification[]
+	learningPath?: string[]
 }
 
-const EducationSection = ({ education, certifications }: EducationSectionProps) => {
+const EducationSection = ({ education, certifications, learningPath }: EducationSectionProps) => {
 	const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.12 })
 	const tilt = useTilt<HTMLDivElement>(3)
 
@@ -34,7 +35,7 @@ const EducationSection = ({ education, certifications }: EducationSectionProps) 
 		visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.2, 0.8, 0.2, 1] as const } },
 	}
 
-	const learningPath = ['Advanced ML & Deep Learning', 'Distributed Systems', 'Open Source Contribution']
+	const path = learningPath ?? ['Advanced ML & Deep Learning', 'Distributed Systems', 'Open Source Contribution']
 
 	return (
 		<section id="education" className="relative bg-ink py-24 md:py-32 border-t border-line">
@@ -90,7 +91,7 @@ const EducationSection = ({ education, certifications }: EducationSectionProps) 
 								<div className="mt-8 pt-6 border-t border-line">
 									<div className="label label-faint mb-3">Learning path · 2025</div>
 									<ul className="space-y-2">
-										{learningPath.map((p) => (
+										{path.map((p) => (
 											<li key={p} className="flex items-start gap-2 text-sm text-muted">
 												<span className="text-faint mt-1">—</span>
 												<span>{p}</span>

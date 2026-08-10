@@ -1,70 +1,116 @@
 {
   "personalInfo": {
     "name": "Bhugol Gautam",
-    "title": "AI & Full-Stack Developer • Unity Game Developer",
-    "tagline": "Jack of all master of none but often times better than master of one",
+    "title": "Full-Stack . AI . Game Dev",
+    "tagline": "Building intelligent systems that bridge language, voice, and real-time interaction.",
     "location": "Kathmandu, Nepal",
     "website": "bhugolgautam.com.np",
-    "email": "bhugolgautam1@gmail.com",
+    "email": "bhugol.gautam1@gmail.com",
     "github": "github.com/13hugol",
     "linkedin": "https://www.linkedin.com/in/bhugol-gautam-b33300310/",
     "avatar": "/profile.png"
   },
   "bio": {
-    "summary": "Technical Skills\n\nFull-stack and Unity developer focused on real-time systems, computer vision, and scalable, user-centric products. Shipped production web apps, mobile-optimized games, and CV tools with clean APIs, geospatial search, and responsive UIs.",
+    "summary": "Full-stack and Unity developer focused on real-time systems, computer vision, and scalable, user-centric products. Shipped production web apps, mobile-optimized games, and CV tools with clean APIs, geospatial search, and responsive UIs.",
     "philosophy": "Jack of all master of none but often times better than master of one",
-    "about": "Technical Skills\n\nFull-stack and Unity developer focused on real-time systems, computer vision, and scalable, user-centric products. Shipped production web apps, mobile-optimized games, and CV tools with clean APIs, geospatial search, and responsive UIs."
+    "about": "BSc (Hons) Computer Science with AI student at Softwarica College (Coventry University affiliate) building production-grade AI systems. \n\nI design and ship end-to-end solutions — from RAG pipelines with hybrid search and knowledge graphs for Nepali legal AI, to real-time voice-to-voice agents using Deepgram and Pipecat, to hyperlocal task marketplaces with GPS tracking. \n\nCurrently building Jarvis — a Gemini Live voice interface that bridges into Hermes Agent for full desktop control. I work across the stack: Python/FastAPI backends, React/Three.js frontends, WebSocket real-time systems, and Unity game development."
   },
   "achievements": [
     {
-      "title": "Quickdraw",
-      "description": "GitHub Achievement - Quick to open issues"
+      "title": "Nepal's First Legal AI",
+      "description": "Built Wakil AI — bilingual legal RAG pipeline with hybrid search (Qdrant + BM25 + Knowledge Graph) for Nepali law"
     },
     {
-      "title": "Pull Shark",
-      "description": "GitHub Achievement - Prolific pull request contributor"
+      "title": "Real-Time Voice AI",
+      "description": "Engineered low-latency voice-to-voice pipeline (Pipecat + Deepgram + XTTS) with near-human conversational latency"
     },
     {
-      "title": "YOLO",
-      "description": "GitHub Achievement - Repository creator"
+      "title": "Hyperlocal Marketplace",
+      "description": "Built KaamParyo — Nepal's first real-time task marketplace with live GPS tracking and geospatial search"
     },
     {
-      "title": "185 Contributions",
-      "description": "GitHub contributions in the last year"
+      "title": "Gemini Live Bridge",
+      "description": "Built Jarvis — raw WebSocket bridge between Gemini Live API and Hermes Agent with OAuth audio streaming"
     }
   ],
   "skills": {
-    "Languages": ["Python", "C#", "JavaScript", "HTML/CSS"],
-    "Backend": ["Node.js", "Express", "REST", "JWT", "MongoDB", "Mongoose"],
-    "Frontend": ["Vanilla JS", "Bootstrap", "Responsive UI", "GSAP"],
-    "Real-Time": ["Socket.IO", "WebSockets", "Redis (Upstash)"],
-    "Cloud/DevOps": ["Vercel", "GitHub Pages", "Cloudinary", "CI/CD (GitHub Actions)"],
-    "Databases": ["MongoDB Atlas", "Redis"],
-    "Game Dev": ["Unity", "C#", "Object Pooling", "Procedural Gen"],
-    "CV & TTS": ["OpenCV", "pyzbar", "gTTS"],
-    "Maps/Geo": ["GalliMaps", "Geospatial queries"]
+    "AI & LLMs": ["RAG Pipelines", "Qdrant Vector Search", "BM25", "Knowledge Graphs", "Gemini API", "Gemini Live", "Pipecat", "LLM Evaluation"],
+    "Backend": ["Python", "FastAPI", "Node.js", "Express", "REST APIs", "JWT", "MongoDB", "Redis", "PostgreSQL"],
+    "Frontend": ["React 18", "TypeScript", "Tailwind CSS", "Framer Motion", "Three.js", "GSAP", "Vite"],
+    "Real-Time": ["WebSockets", "Socket.IO", "Gemini Live WebSocket", "Deepgram", "XTTS", "LiveKit"],
+    "Voice & Audio": ["STT/TTS Pipelines", "Audio Streaming", "WebRTC", "OAuth Audio", "Voice Agents"],
+    "Cloud/DevOps": ["Vercel", "Netlify", "Cloudinary", "GitHub Actions", "CI/CD"],
+    "Game Dev": ["Unity", "C#", "Object Pooling", "Procedural Generation"],
+    "CV & Tools": ["OpenCV", "pyzbar", "gTTS", "Hermes Agent", "MCP"],
+    "Maps/Geo": ["GalliMaps", "Geospatial Queries"]
   },
   "projects": [
     {
-      "id": "algorithms-presentation",
-      "title": "Algorithms Presentation",
-      "subtitle": "Interactive Sorting & Searching Demo",
-      "year": "2025",
-      "liveUrl": "bhugolgautam.com.np/algorithms-presentation.html",
-      "description": "Interactive presentation on sorting and searching algorithms with live visualizations, animated transitions, and step-by-step binary search demo. Features GSAP animations, matrix grid effects, and terminal-style code execution.",
-      "techStack": ["HTML5", "CSS3", "Vanilla JS", "GSAP"],
+      "id": "wakil-ai",
+      "title": "Wakil AI",
+      "subtitle": "Bilingual Legal AI for Nepal",
+      "year": "2026",
+      "repoUrl": "github.com/13hugol/wakil-ai",
+      "description": "Sophisticated legal RAG pipeline combining Qdrant vector search, BM25, and a Knowledge Graph to provide accurate legal citations for Nepali law. Integrates Gemini for real-time voice consultation via LiveKit.",
+      "techStack": ["Python", "FastAPI", "Qdrant", "BM25", "Knowledge Graph", "Gemini", "LiveKit"],
       "features": [
-        "8 interactive slides with smooth transitions",
-        "Live sorting algorithm visualizations (Bubble, Merge, Quick Sort)",
-        "Step-by-step binary search animation",
-        "Terminal-style code execution display",
-        "Matrix grid background effects",
-        "Animated orb with color transitions",
-        "Keyboard navigation support",
-        "Progress bar tracking",
-        "Responsive design for presentations"
+        "Hybrid search (Vector + Keyword) for high-precision legal retrieval",
+        "Bilingual support for Nepali and English legal documents",
+        "Real-time voice-to-voice legal consultation",
+        "Citation-backed responses to prevent hallucinations",
+        "Knowledge Graph for mapping legal relationships"
       ],
-      "highlights": "Created an engaging educational presentation with real-time algorithm visualizations and interactive demos"
+      "highlights": "Most comprehensive AI legal assistant for Nepal — processing hundreds of legal documents with verifiable citations."
+    },
+    {
+      "id": "vibevolume",
+      "title": "VibeVolume",
+      "subtitle": "Real-Time Voice AI Agent",
+      "year": "2026",
+      "repoUrl": "github.com/13hugol/vibevolume",
+      "description": "Low-latency voice-to-voice pipeline implementing the STT → LLM → TTS flow. Built with Pipecat for orchestration, Deepgram for lightning-fast transcription, and XTTS for emotive voice synthesis.",
+      "techStack": ["Python", "Pipecat", "Deepgram", "XTTS", "WebSockets"],
+      "features": [
+        "Ultra-low latency conversational loop",
+        "Human-like emotive voice synthesis via XTTS",
+        "Real-time interruptible speech handling",
+        "Scalable pipeline for autonomous AI voice agents"
+      ],
+      "highlights": "Achieved near-human conversational latency, enabling fluid real-time AI interactions."
+    },
+    {
+      "id": "jarvis",
+      "title": "Jarvis",
+      "subtitle": "Gemini Live Voice Bridge → Hermes",
+      "year": "2026",
+      "repoUrl": "github.com/13hugol/jarvis",
+      "description": "Raw WebSocket bridge connecting Gemini Live API (gemini-3.1-flash-live-preview) to Hermes Agent. Handles OAuth-based bidirectional audio streaming, session management, reconnection with exponential backoff, and graceful turn completion.",
+      "techStack": ["Python", "WebSockets", "Gemini Live API", "OAuth", "Audio Streaming"],
+      "features": [
+        "Bidirectional real-time audio streaming with Gemini Live",
+        "OAuth token authentication (no AI Studio key required)",
+        "Automatic reconnection with exponential backoff",
+        "Graceful conversation turn handling",
+        "Echo suppression and AudioContext management",
+        "Keepalive heartbeat for idle connection maintenance"
+      ],
+      "highlights": "Engineered a production-grade real-time voice bridge between Google's Gemini Live API and a local agent framework."
+    },
+    {
+      "id": "sahayogi",
+      "title": "Sahayogi",
+      "subtitle": "Skill Bartering Platform",
+      "year": "2026",
+      "repoUrl": "github.com/13hugol/Sahayogi",
+      "description": "Community-driven marketplace where users exchange skills instead of money. Features a robust matching system to connect people with complementary needs and offerings.",
+      "techStack": ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS"],
+      "features": [
+        "Skill-based matching algorithm",
+        "User trust and rating system",
+        "Real-time communication for skill negotiation",
+        "Intuitive dashboard for managing skill exchanges"
+      ],
+      "highlights": "Promoting a collaborative economy through an intuitive, full-stack skill-sharing ecosystem."
     },
     {
       "id": "kaamparyo",
@@ -74,7 +120,7 @@
       "liveUrl": "kaamparyo.vercel.app",
       "repoUrl": "github.com/13hugol/kaamparyo",
       "description": "Live GPS tracking (GalliMaps), real-time chat (Socket.IO), OTP auth, escrow payments, hot zones & rewards. 20+ REST endpoints, Redis session mgmt, geospatial queries, serverless deployment on Vercel.",
-      "techStack": ["Node.js", "Express", "MongoDB", "Redis (Upstash)", "Socket.IO", "JWT", "Multer", "Cloudinary", "Vanilla JS", "Bootstrap"],
+      "techStack": ["Node.js", "Express", "MongoDB", "Redis (Upstash)", "Socket.IO", "JWT", "Cloudinary", "GalliMaps"],
       "features": [
         "Live GPS tracking with GalliMaps integration",
         "Real-time chat using Socket.IO",
@@ -94,25 +140,19 @@
       "subtitle": "3D Endless Runner (Unity, Android)",
       "year": "2025",
       "repoUrl": "github.com/13hugol/Bahun-D-Run",
-      "description": "Curved world, 3-lane movement, jump/slide, power-ups; 60+ FPS with object pooling & floating origin. Procedural track generation, physics-based controller, animation state machine. Stack: Unity 2020.3.11f1, C#, OpenGL ES 3.0 (Android)",
-      "techStack": ["Unity 2020.3.11f1", "C#", "OpenGL ES 3.0 (Android)"],
+      "description": "Curved world, 3-lane movement, jump/slide, power-ups; 60+ FPS with object pooling & floating origin. Procedural track generation, physics-based controller, animation state machine.",
+      "techStack": ["Unity 2020.3.11f1", "C#", "OpenGL ES 3.0", "Android"],
       "features": [
         "Curved world mechanics with dynamic visual effects",
         "3-lane movement system with fluid transitions",
         "Jump and slide mechanics",
         "Power-ups: Flying and Magnet abilities",
         "Coin collection system with persistence",
-        "Object pooling for performance optimization",
-        "Floating origin technique for precision",
-        "60+ FPS on mid-range Android devices",
+        "Object pooling for 60+ FPS performance",
         "Procedural track generation",
-        "Physics-based controller system",
-        "Animation state machine",
-        "Character customization system (body, top, bottom, shoes, eyes, eyelashes)",
-        "Layered audio system with context-aware SFX",
-        "Particle effects and dynamic lighting"
+        "Character customization system",
+        "Layered audio with context-aware SFX"
       ],
-      "performance": "60+ FPS on mid-range Android devices",
       "highlights": "Shipped a mobile-optimized 3D Unity game with procedural systems and performance tuning"
     },
     {
@@ -122,32 +162,18 @@
       "year": "2025",
       "repoUrl": "github.com/13hugol/NewHoly",
       "liveUrl": "new-holy.vercel.app",
-      "description": "Public website + admin CMS: news/events, gallery, student columns, online admissions, image uploads. JWT admin auth, REST API, CORS & validation, CI/CD deploy (GitHub Actions). Stack: Node.js, Express, MongoDB Atlas, HTML/CSS/JS, Multer, Cloudinary, GitHub Pages",
+      "description": "Public website + admin CMS with news/events, photo gallery, student columns, online admissions. JWT auth, REST API, CI/CD pipeline via GitHub Actions.",
       "techStack": ["Node.js", "Express", "MongoDB Atlas", "HTML/CSS/JS", "Multer", "Cloudinary", "GitHub Pages"],
       "features": [
-        "Public website with multiple pages",
-        "Admin CMS with secure login (JWT)",
-        "News & Events management",
-        "Photo Gallery with image uploads",
-        "Student Columns section",
+        "Admin CMS with secure JWT authentication",
+        "News & Events management system",
+        "Photo Gallery with Cloudinary image uploads",
         "Online admissions system",
-        "Faculty Profiles",
-        "Downloads section",
-        "FAQ section",
-        "Contact information page",
-        "Dashboard for operational overview",
-        "Content Management with rich text editor",
-        "Admission management system",
-        "Contact form management",
-        "Image upload system with Cloudinary",
-        "User authentication and authorization",
-        "Responsive design for mobile and desktop",
-        "Performance optimizations (lazy loading, WebP images, minification)",
-        "Security features (HTTPS, XSS protection, CSRF protection)",
+        "Student Columns & Faculty Profiles",
         "CI/CD with GitHub Actions",
-        "Multiple deployment options"
+        "Responsive design for mobile and desktop"
       ],
-      "highlights": "Deployed multiple full-stack apps with serverless, CI/CD, and cloud asset pipelines"
+      "highlights": "Full-stack school platform with CMS, CI/CD pipeline, and cloud asset management"
     },
     {
       "id": "exhibitio-khwopa",
@@ -155,69 +181,93 @@
       "subtitle": "QR-Based Exhibition System",
       "year": "2025",
       "repoUrl": "github.com/13hugol/Exhibitio_Khwopa",
-      "description": "Real-time webcam QR scanning with OpenCV + pyzbar, Nepali TTS greetings via gTTS. Cloud member verification (GitHub Gist) with friendly non-member fallback. Stack: Python, OpenCV, pyzbar, pandas, qrcode, gTTS",
+      "description": "Real-time webcam QR scanning with OpenCV + pyzbar, Nepali TTS greetings via gTTS. Cloud member verification with friendly fallback for non-members.",
       "techStack": ["Python", "OpenCV", "pyzbar", "pandas", "qrcode", "gTTS"],
       "features": [
         "Real-time QR code scanning using webcam",
         "OpenCV computer vision integration",
         "Nepali Text-to-Speech greetings via gTTS",
-        "Cloud-based member verification using GitHub Gist",
+        "Cloud-based member verification via GitHub Gist",
         "Friendly fallback for non-members",
-        "QR code generation for participants",
-        "Python-based workflow with modular design",
-        "Cross-platform compatibility"
+        "QR code generation for participants"
       ],
       "highlights": "Delivered a real-time CV system with QR detection and Nepali TTS"
     },
     {
+      "id": "algorithms-presentation",
+      "title": "Algorithms Presentation",
+      "subtitle": "Interactive Sorting & Searching Demo",
+      "year": "2025",
+      "liveUrl": "bhugolgautam.com.np/algorithms-presentation.html",
+      "description": "Interactive presentation on sorting and searching algorithms with live visualizations, animated transitions, and step-by-step binary search demo.",
+      "techStack": ["HTML5", "CSS3", "Vanilla JS", "GSAP"],
+      "features": [
+        "8 interactive slides with animated transitions",
+        "Live sorting visualizations (Bubble, Merge, Quick Sort)",
+        "Step-by-step binary search animation",
+        "Terminal-style code execution display",
+        "Keyboard navigation support"
+      ],
+      "highlights": "Educational presentation with real-time algorithm visualizations and interactive demos"
+    },
+    {
       "id": "portfolio",
       "title": "Portfolio Website",
-      "subtitle": "Terminal-Themed",
+      "subtitle": "React + Three.js",
       "year": "2025",
       "liveUrl": "bhugolgautam.com.np",
       "repoUrl": "github.com/13hugol/Portfoilio",
-      "description": "Terminal-style UI, matrix rain, particles, dark/light themes; responsive and performance-optimized. Stack: HTML5, CSS3, Vanilla JS, Font Awesome, Google Fonts, AOS",
-      "techStack": ["HTML5", "CSS3", "Vanilla JS", "Font Awesome", "Google Fonts", "AOS"],
+      "description": "Modern React SPA with Three.js scroll-sequence background animation, Framer Motion page transitions, and dark editorial aesthetic. Built with Vite for fast builds and optimal performance.",
+      "techStack": ["React 18", "TypeScript", "Three.js", "Framer Motion", "Tailwind CSS", "Vite"],
       "features": [
-        "Terminal-inspired user interface design",
-        "Matrix rain background animation",
-        "Particle effects system",
-        "Dark and light theme toggle",
-        "Responsive design for all devices",
-        "Performance optimizations",
-        "Modern typography with Font Awesome icons",
-        "AOS (Animate On Scroll) integration"
+        "Three.js canvas scroll-sequence background animation (285 frames)",
+        "Framer Motion staggered animations with spring physics",
+        "Custom magnetic hover and tilt effects on interactive elements",
+        "Dark editorial design system with monochromatic palette",
+        "Fully responsive across all device sizes",
+        "Vite-powered optimized production builds"
       ]
     }
   ],
   "education": {
-    "degree": "Coventry University Undergraduate Student"
-  },
+      "degree": "BSc (Hons) Computer Science with AI",
+      "institution": "Softwarica College (Coventry University Affiliate)",
+      "field": "Artificial Intelligence",
+      "year": "2025 – Present",
+      "studyFocus": ["Programming (Python, C++)", "Machine Learning & Deep Learning", "Generative AI & LLMs", "Data Science", "Cyber Security", "Advanced Algorithms", "Software Engineering", "Computer Architecture & Networking"]
+    },
   "certifications": [
     {
       "title": "OpenCV Certification",
-      "description": "Computer Vision"
+      "description": "Computer Vision Fundamentals"
     }
   ],
+  "learningPath": [
+    "Advanced RAG & Hybrid Search Architectures",
+    "Real-Time Voice Agent Engineering",
+    "Gemini Live & Multimodal AI Integration",
+    "Desktop Automation & Agent Frameworks"
+  ],
   "keywords": [
-    "Node.js",
-    "Express",
-    "MongoDB",
+    "RAG",
+    "LLMs",
+    "Qdrant",
+    "Vector Search",
+    "Knowledge Graphs",
+    "Gemini Live",
+    "Voice AI",
+    "Pipecat",
+    "Deepgram",
     "WebSockets",
-    "Socket.IO",
-    "Redis",
-    "JWT",
-    "REST APIs",
+    "Real-Time Systems",
+    "FastAPI",
+    "React",
+    "TypeScript",
+    "Three.js",
     "Unity",
-    "C#",
     "OpenCV",
-    "gTTS",
-    "Cloudinary",
-    "Vercel",
-    "GitHub Actions",
-    "Responsive UI",
-    "Geospatial Queries",
-    "GalliMaps",
-    "GSAP"
+    "Hermes Agent",
+    "Full-Stack",
+    "Python"
   ]
 }
